@@ -43,7 +43,6 @@ permissionset 50000 "NV8 PermissionSet"
         tabledata "NV8 Temp Table - Item Stat" = RIMD,
         tabledata "NV8 Transfer Planning Line" = RIMD,
         tabledata "NV8 User Location Access" = RIMD,
-        tabledata "ENVAllocation Entry" = RIMD,
         table "NV8 Bin Content Buff-Uneeda" = X,
         table "NV8 Bin Location" = X,
         table "NV8 Config Material-Grits" = X,
@@ -85,6 +84,5 @@ permissionset 50000 "NV8 PermissionSet"
         table "NV8 Split Roll Details" = X,
         table "NV8 Temp Table - Item Stat" = X,
         table "NV8 Transfer Planning Line" = X,
-        table "NV8 User Location Access" = X,
-        table "ENVAllocation Entry" = X;
+        table "NV8 User Location Access" = X;
 }

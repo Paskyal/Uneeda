@@ -249,19 +249,19 @@ tableextension 50001 "NV8 Location" extends Location //14
         }
         field(85062; "NV8 Meters on Hand"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Remaining Length meters" where("Item No." = field("NV8 Item Filter"),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Remaining Length meters" where("Item No." = field("NV8 Item Filter"),
                                                                                    "Location Code" = field(Code),
-                                                                                   "Location Code" = field(filter(Totaling))));
+                                                                                   "Location Code" = field(filter("NV8 Totaling"))));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(85064; "NV8 Jumbo Meters on Hand"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Remaining Length meters" where("Item No." = field("NV8 Item Filter"),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Remaining Length meters" where("Item No." = field("NV8 Item Filter"),
                                                                                    "Location Code" = field(Code),
-                                                                                   "Location Code" = field(filter(Totaling)),
-                                                                                   "Material Type" = const(Jumbo)));
+                                                                                   "Location Code" = field(filter("NV8 Totaling")),
+                                                                                   "NV8 Material Type" = const(Jumbo)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;

@@ -27,10 +27,10 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             begin
                 "NV8 Consignment Customer" := "NV8 Consignment Location Code" <> '';  //EC1.SAL1.01
                 if Location.Get("NV8 Consignment Location Code") then begin
-                    if (Location."Consignment Customer Code" <> '') and (Location."Consignment Customer Code" <> "No.") then
-                        Error('Location %1 is already assigned to %2', Location.Code, Location."Consignment Customer Code");
-                    Location."Consignment Location" := true;
-                    Location."Consignment Customer Code" := "No.";
+                    if (Location."NV8 Consignment Customer Code" <> '') and (Location."NV8 Consignment Customer Code" <> "No.") then
+                        Error('Location %1 is already assigned to %2', Location.Code, Location."NV8 Consignment Customer Code");
+                    Location."NV8 Consignment Location" := true;
+                    Location."NV8 Consignment Customer Code" := "No.";
                     Location.Modify();
                 end;
             end;
@@ -74,10 +74,10 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                 else
                     Cont.SetRange("No.", '');
 
-                if "AP Contact No." <> '' then
+                if "NV8 AP Contact No." <> '' then
                     if Cont.Get("Primary Contact No.") then;
                 if Page.RunModal(0, Cont) = Action::LookupOK then
-                    Validate("AP Contact No.", Cont."No.");
+                    Validate("NV8 AP Contact No.", Cont."No.");
             end;
 
             trigger OnValidate()
@@ -85,10 +85,10 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                 Cont: Record Contact;
                 ContBusRel: Record "Contact Business Relation";
             begin
-                "AP Contact Name" := '';
-                "AP Contact E-Mail" := '';
-                if "AP Contact No." <> '' then begin
-                    Cont.Get("AP Contact No.");
+                "NV8 AP Contact Name" := '';
+                "NV8 AP Contact E-Mail" := '';
+                if "NV8 AP Contact No." <> '' then begin
+                    Cont.Get("NV8 AP Contact No.");
 
                     ContBusRel.SetCurrentkey("Link to Table", "No.");
                     ContBusRel.SetRange("Link to Table", ContBusRel."link to table"::Customer);
@@ -99,8 +99,8 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                         Error(Text003, Cont."No.", Cont.Name, "No.", Name);
 
                     if Cont.Type = Cont.Type::Person then begin
-                        "AP Contact Name" := Cont.Name;
-                        "AP Contact E-Mail" := Cont."E-Mail";
+                        "NV8 AP Contact Name" := Cont.Name;
+                        "NV8 AP Contact E-Mail" := Cont."E-Mail";
                     end;
                 end;
             end;
@@ -111,13 +111,15 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                RMSetup: Record "Marketing Setup";
             begin
                 if RMSetup.Get() then
                     if RMSetup."Bus. Rel. Code for Customers" <> '' then
-                        if (xRec."AP Contact Name" = '') and (xRec."AP Contact No." = '') then begin
+                        if (xRec."NV8 AP Contact Name" = '') and (xRec."NV8 AP Contact No." = '') then begin
                             Modify();
                             UpdateContFromCust.OnModify(Rec);
-                            UpdateContFromCust.InsertNewAPContactPerson(Rec, false);
+                            // UpdateContFromCust.InsertNewAPContactPerson(Rec, false); //TODo PAP uncomment
                             Modify(true);
                         end
             end;
@@ -165,15 +167,17 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                ShipTo: Record "Ship-to Address";
             begin
                 //>> UE105
                 if Confirm('Update All Ship-To?', false) then begin
                     ShipTo.SetRange("Customer No.", "No.");
-                    if ShipTo.FindFirst then
+                    if ShipTo.FindFirst() then
                         repeat
-                            ShipTo.Validate("Shipment Method Threshold", "Shipment Method Threshold");
-                            ShipTo.Modify;
-                        until ShipTo.Next = 0;
+                            ShipTo.Validate("NV8 Shipment Method Threshold", "NV8 Shipment Method Threshold");
+                            ShipTo.Modify();
+                        until ShipTo.Next() = 0;
                 end;
                 //<< UE-105
             end;
@@ -218,7 +222,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         field(50021; "NV8 Longest Days to Pay"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = max("Cust. Ledger Entry"."Days to Pay" where("Customer No." = field("No."),
+            CalcFormula = max("Cust. Ledger Entry"."NV8 Days to Pay" where("Customer No." = field("No."),
                                                                         "Document Type" = const(Invoice),
                                                                         "Document Date" = field("Date Filter")));
             DecimalPlaces = 0 : 0;
@@ -229,7 +233,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         field(50022; "NV8 Average Days to Pay"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = average("Cust. Ledger Entry"."Days to Pay" where("Customer No." = field("No."),
+            CalcFormula = average("Cust. Ledger Entry"."NV8 Days to Pay" where("Customer No." = field("No."),
                                                                             "Document Type" = const(Invoice),
                                                                             "Document Date" = field("Date Filter")));
             DecimalPlaces = 0 : 0;
@@ -246,7 +250,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             AutoFormatType = 1;
             CalcFormula = sum("Detailed Cust. Ledg. Entry"."Amount (LCY)" where("Customer No." = field("No."),
-                                                                                 "Initial EntryCH Grace Due Date" = field(upperlimit("Date Filter")),
+                                                                                 "NV8 InitEntryCH Grace Due Date" = field(upperlimit("Date Filter")),
                                                                                  "Initial Entry Global Dim. 1" = field("Global Dimension 1 Filter"),
                                                                                  "Initial Entry Global Dim. 2" = field("Global Dimension 2 Filter"),
                                                                                  "Currency Code" = field("Currency Filter")));
@@ -258,10 +262,10 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         field(50029; "NV8 Customer Source"; Code[20])
         {
             Description = 'Customer Source, DC082718';
-            TableRelation = "Customer Source Code"."Source Code";
+            TableRelation = "NV8 Customer Source Code"."Source Code";
             DataClassification = CustomerContent;
         }
-        field(50040; "NV8 Bill-To No. Pstd.Sample Orders"; Integer)
+        field(50040; "NV8 Bill-To No.Pstd.Samp.Ord"; Integer)
         {
             CalcFormula = count("Sales Shipment Header" where("Bill-to Customer No." = field("No."),
                                                                "Sell-to Customer No." = filter('206162')));
@@ -281,22 +285,26 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                ShipTo: Record "Ship-to Address";
             begin
                 //>> UE-105
-                if "Freight Chg. Never" then begin
-                    "Free Freight" := true;
-                    "Freight Chg.  Always" := false;
-                    "Freight Chg. Threshhold" := false;
-                end else
-                    "Free Freight" := false;
+                if "NV8 Freight Chg. Never" then begin
+                    //"Free Freight" := true; //PAP 14000000
+                    "NV8 Freight Chg.  Always" := false;
+                    "NV8 Freight Chg. Threshhold" := false;
+                end;
+                //PAP 14000000
+                // else
+                // "Free Freight" := false; 
 
                 if Confirm('Update All Ship-To?', false) then begin
                     ShipTo.SetRange("Customer No.", "No.");
-                    if ShipTo.FindFirst then
+                    if ShipTo.FindFirst() then
                         repeat
-                            ShipTo.Validate("Freight Chg. Never", "Freight Chg. Never");
-                            ShipTo.Modify;
-                        until ShipTo.Next = 0;
+                            ShipTo.Validate("NV8 Freight Chg. Never", "NV8 Freight Chg. Never");
+                            ShipTo.Modify();
+                        until ShipTo.Next() = 0;
                 end;
                 //<< UE-105
             end;
@@ -307,24 +315,26 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                ShipTo: Record "Ship-to Address";
             begin
                 //>> UE-105
-                if "Freight Chg.  Always" then begin
+                if "NV8 Freight Chg.  Always" then begin
                     //>> UE-635
                     // "Free Freight" := FALSE;
-                    "Free Freight" := true;  //for first invoice
-                                             //<< UE-635
-                    "Freight Chg. Never" := false;
-                    "Freight Chg. Threshhold" := false;
+                    // "Free Freight" := true;  //for first invoice //PAP references 14000000 field
+                    //<< UE-635
+                    "NV8 Freight Chg. Never" := false;
+                    "NV8 Freight Chg. Threshhold" := false;
                 end;
 
                 if Confirm('Update All Ship-To?', false) then begin
                     ShipTo.SetRange("Customer No.", "No.");
-                    if ShipTo.FindFirst then
+                    if ShipTo.FindFirst() then
                         repeat
-                            ShipTo.Validate("Freight Chg.  Always", "Freight Chg.  Always");
-                            ShipTo.Modify;
-                        until ShipTo.Next = 0;
+                            ShipTo.Validate("NV8 Freight Chg.  Always", "NV8 Freight Chg.  Always");
+                            ShipTo.Modify();
+                        until ShipTo.Next() = 0;
                 end;
 
                 //<< UE-105
@@ -336,24 +346,26 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                ShipTo: Record "Ship-to Address";
             begin
                 //>> UE-105
-                if "Freight Chg. Threshhold" then begin
+                if "NV8 Freight Chg. Threshhold" then begin
                     //>> UE-635     2/27/19
                     // "Free Freight" := FALSE;
-                    "Free Freight" := true;  //for first invoice
-                                             //<< UE-635  2/27/19
-                    "Freight Chg. Never" := false;
-                    "Freight Chg.  Always" := false;
+                    // "Free Freight" := true;  //for first invoice  //PAP 14000000range
+                    //<< UE-635  2/27/19
+                    "NV8 Freight Chg. Never" := false;
+                    "NV8 Freight Chg.  Always" := false;
                 end;
 
                 if Confirm('Update All Ship-To?', false) then begin
                     ShipTo.SetRange("Customer No.", "No.");
-                    if ShipTo.FindFirst then
+                    if ShipTo.FindFirst() then
                         repeat
-                            ShipTo.Validate("Freight Chg. Threshhold", "Freight Chg. Threshhold");
-                            ShipTo.Modify;
-                        until ShipTo.Next = 0;
+                            ShipTo.Validate("NV8 Freight Chg. Threshhold", "NV8 Freight Chg. Threshhold");
+                            ShipTo.Modify();
+                        until ShipTo.Next() = 0;
                 end;
 
                 //<< UE-105
@@ -365,22 +377,26 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                ShipTo: Record "Ship-to Address";
             begin
                 //>> UE-635
-                if "No Free Freight" then begin
-                    Validate("Free Freight", false);
-                    "Freight Chg.  Always" := false;
-                    "Freight Chg. Threshhold" := false;
-                end else
-                    Validate("Free Freight", true);
+                if "NV8 No Free Freight" then begin
+                    //Validate("Free Freight", false);  //PAP 14000000
+                    "NV8 Freight Chg.  Always" := false;
+                    "NV8 Freight Chg. Threshhold" := false;
+                end;
+                // PAP 14000000
+                //  else
+                //     Validate("Free Freight", true);
 
                 if Confirm('Update All Ship-To?', false) then begin
                     ShipTo.SetRange("Customer No.", "No.");
-                    if ShipTo.FindFirst then
+                    if ShipTo.FindFirst() then
                         repeat
-                            ShipTo.Validate("No Free Freight", "No Free Freight");
-                            ShipTo.Modify;
-                        until ShipTo.Next = 0;
+                            ShipTo.Validate("NV8 No Free Freight", "NV8 No Free Freight");
+                            ShipTo.Modify();
+                        until ShipTo.Next() = 0;
                 end;
                 //<< UE-635
             end;
@@ -402,18 +418,18 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionMembers = Partial,Complete;
             DataClassification = CustomerContent;
         }
-        field(52000; "Sales Item ($)"; Decimal)
+        field(52000; "NV8 Sales Item ($)"; Decimal)
         {
             CalcFormula = sum("Sales Invoice Line"."Line Amount" where("Sell-to Customer No." = field("No."),
-                                                                        "Sales Type" = const(Revenue),
+                                                                        "NV8 Sales Type" = const(Revenue),
                                                                         Quantity = filter(> 0),
                                                                         "Posting Date" = field("Date Filter")));
             Description = 'UNE-129';
             FieldClass = FlowField;
         }
-        field(52001; "Credits Item ($)"; Decimal)
+        field(52001; "NV8 Credits Item ($)"; Decimal)
         {
-            CalcFormula = sum("Sales Cr.Memo Line"."Line Amount" where("Sales Type" = const(Revenue),
+            CalcFormula = sum("Sales Cr.Memo Line"."Line Amount" where("NV8 Sales Type" = const(Revenue),
                                                                         "Sell-to Customer No." = field("No."),
                                                                         Quantity = filter(> 0),
                                                                         "Posting Date" = field("Date Filter")));
@@ -421,4 +437,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             FieldClass = FlowField;
         }
     }
+    var
+        UpdateContFromCust: Codeunit "CustCont-Update";
+        Text003: label 'Contact %1 %2 is not related to customer %3 %4.';
 }

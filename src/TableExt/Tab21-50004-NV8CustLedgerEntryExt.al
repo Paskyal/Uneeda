@@ -30,16 +30,16 @@ tableextension 50004 "NV8 Cust. Ledger Entry" extends "Cust. Ledger Entry" //21
             DataClassification = CustomerContent;
             Description = 'UNE-148';
         }
-        field(52000; "Sales Item ($)"; Decimal)
+        field(52000; "NV8 Sales Item ($)"; Decimal)
         {
-            CalcFormula = sum("Sales Invoice Line"."Line Amount" where("Sales Type" = const(Revenue),
+            CalcFormula = sum("Sales Invoice Line"."Line Amount" where("NV8 Sales Type" = const(Revenue),
                                                                         "Document No." = field("Document No.")));
             Description = 'UNE-168';
             FieldClass = FlowField;
         }
-        field(52001; "Credits Item ($)"; Decimal)
+        field(52001; "NV8 Credits Item ($)"; Decimal)
         {
-            CalcFormula = sum("Sales Cr.Memo Line"."Line Amount" where("Sales Type" = const(Revenue),
+            CalcFormula = sum("Sales Cr.Memo Line"."Line Amount" where("NV8 Sales Type" = const(Revenue),
                                                                         "Document No." = field("Document No.")));
             Description = 'UNE-168';
             FieldClass = FlowField;
