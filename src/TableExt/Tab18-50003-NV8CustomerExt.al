@@ -22,6 +22,8 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
 
             trigger OnValidate()
+            var
+                Location: Record Location;
             begin
                 "NV8 Consignment Customer" := "NV8 Consignment Location Code" <> '';  //EC1.SAL1.01
                 if Location.Get("NV8 Consignment Location Code") then begin
@@ -29,7 +31,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                         Error('Location %1 is already assigned to %2', Location.Code, Location."Consignment Customer Code");
                     Location."Consignment Location" := true;
                     Location."Consignment Customer Code" := "No.";
-                    Location.Modify;
+                    Location.Modify();
                 end;
             end;
         }
@@ -67,7 +69,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                 ContBusRel.SetCurrentkey("Link to Table", "No.");
                 ContBusRel.SetRange("Link to Table", ContBusRel."link to table"::Customer);
                 ContBusRel.SetRange("No.", "No.");
-                if ContBusRel.FindFirst then
+                if ContBusRel.FindFirst() then
                     Cont.SetRange("Company No.", ContBusRel."Contact No.")
                 else
                     Cont.SetRange("No.", '');
@@ -91,7 +93,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                     ContBusRel.SetCurrentkey("Link to Table", "No.");
                     ContBusRel.SetRange("Link to Table", ContBusRel."link to table"::Customer);
                     ContBusRel.SetRange("No.", "No.");
-                    ContBusRel.FindFirst;
+                    ContBusRel.FindFirst();
 
                     if Cont."Company No." <> ContBusRel."Contact No." then
                         Error(Text003, Cont."No.", Cont.Name, "No.", Name);
@@ -110,10 +112,10 @@ tableextension 50003 "NV8 Customer" extends Customer //18
 
             trigger OnValidate()
             begin
-                if RMSetup.Get then
+                if RMSetup.Get() then
                     if RMSetup."Bus. Rel. Code for Customers" <> '' then
                         if (xRec."AP Contact Name" = '') and (xRec."AP Contact No." = '') then begin
-                            Modify;
+                            Modify();
                             UpdateContFromCust.OnModify(Rec);
                             UpdateContFromCust.InsertNewAPContactPerson(Rec, false);
                             Modify(true);

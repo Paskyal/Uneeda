@@ -110,7 +110,7 @@ tableextension 50001 "NV8 Location" extends Location //14
             TableRelation = Territory;
             DataClassification = CustomerContent;
         }
-        field(68120; "NV8 Allocator Bus. Posting Group"; Code[10])
+        field(68120; "NV8 Allocator Bus. Posting Gr"; Code[10])
         {
             Caption = 'Gen. Bus. Posting Group';
             TableRelation = "Gen. Business Posting Group";
@@ -239,10 +239,11 @@ tableextension 50001 "NV8 Location" extends Location //14
             trigger OnLookup()
             var
                 SalesReps: Record "Salesperson/Purchaser";
+                SalesRepsAllLbl: Label '%1', Comment = '%1="NV8 Sales Reps (All)"';
             begin
                 SalesReps.Reset();
-                SalesReps.SetFilter(Code, StrSubstNo('%1', "Sales Reps (All)"));
-                if Act = Page.RunModal(0, SalesReps) then
+                SalesReps.SetFilter(Code, StrSubstNo(SalesRepsAllLbl, "NV8 Sales Reps (All)"));
+                if Action::LookupOK = Page.RunModal(0, SalesReps) then
                   ;
             end;
         }
@@ -271,7 +272,7 @@ tableextension 50001 "NV8 Location" extends Location //14
             CalcFormula = sum("Reservation Entry"."Quantity (Base)" where("Reservation Status" = const(Reservation),
                                                                            "Item No." = field("NV8 Item Filter"),
                                                                            "Location Code" = field(Code),
-                                                                           "Location Code" = field(filter(Totaling)),
+                                                                           "Location Code" = field(filter("NV8 Totaling")),
                                                                            Positive = const(true)));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -283,7 +284,7 @@ tableextension 50001 "NV8 Location" extends Location //14
             CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Status = filter(Planned .. Released),
                                                                                 "Item No." = field("NV8 Item Filter"),
                                                                                 "Location Code" = field(Code),
-                                                                                "Location Code" = field(filter(Totaling))));
+                                                                                "Location Code" = field(filter("NV8 Totaling"))));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -311,7 +312,7 @@ tableextension 50001 "NV8 Location" extends Location //14
             FieldClass = FlowFilter;
             TableRelation = "User Setup";
         }
-        field(85260; "NV8 Include In Min. Qty. Forecast"; Boolean)
+        field(85260; "NV8 Include InMin.Qty.Forecast"; Boolean)
         {
             DataClassification = CustomerContent;
         }
