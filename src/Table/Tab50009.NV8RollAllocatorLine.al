@@ -31,7 +31,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
     fields
     {
-        field(1; "Item Ledger Entry No."; Integer)
+        field(1; "NV8 Item Ledger Entry No."; Integer)
         {
         }
         field(2; "Line No."; Integer)
@@ -164,12 +164,12 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
                 if "Entry Type" in ["entry type"::"Positive Adjmt.", "entry type"::Output] then
-                    "Allocated Quantity" := -Quantity
+                    "NV8 Allocated Quantity" := -Quantity
                 else
-                    "Allocated Quantity" := Quantity;
+                    "NV8 Allocated Quantity" := Quantity;
             end;
         }
-        field(14; "Allocated Quantity"; Decimal)
+        field(14; "NV8 Allocated Quantity"; Decimal)
         {
             DecimalPlaces = 0 : 5;
         }
@@ -425,7 +425,7 @@ Table 50009 "NV8 Roll Allocator Line"
         }
         field(68201; "Cons. Material"; Code[10])//TODO PAP Uncomment
         {
-            // CalcFormula = lookup("Prod. Order Component".Material where("Prod. Order No." = field("Prod. Order No."),
+            // CalcFormula = lookup("Prod. Order Component"."NV8 Material" where("Prod. Order No." = field("Prod. Order No."),
             //                                                              Grit = filter(<> 0)));
             // Editable = false;
             // FieldClass = FlowField;
@@ -433,7 +433,7 @@ Table 50009 "NV8 Roll Allocator Line"
         }
         field(68206; "Cons. Grit"; Code[10])//TODO PAP Uncomment
         {
-            // CalcFormula = lookup("Prod. Order Component".Grit where("Prod. Order No." = field("Prod. Order No."),
+            // CalcFormula = lookup("Prod. Order Component"."NV8 Grit" where("Prod. Order No." = field("Prod. Order No."),
             //                                                          Grit = filter(<> 0)));
             // Editable = false;
             // FieldClass = FlowField;
@@ -557,7 +557,7 @@ Table 50009 "NV8 Roll Allocator Line"
                 UpdatePieces();
             end;
         }
-        field(85051; "Unit Width Inches"; Decimal)
+        field(85051; "NV8 Unit Width Inches"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 2 : 5;
@@ -566,20 +566,20 @@ Table 50009 "NV8 Roll Allocator Line"
 
             trigger OnValidate()
             begin
-                Temp := ROUND("Unit Width Inches", 1, '<') * 100;
-                Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
+                Temp := ROUND("NV8 Unit Width Inches", 1, '<') * 100;
+                Temp := Temp + ROUND((("NV8 Unit Width Inches" MOD 1) * 64), 1, '<');
 
                 Validate("Unit Width Code", Format(Temp, 5, '<integer>'));
             end;
         }
-        field(85052; "Unit Length meters"; Decimal)
+        field(85052; "NV8 Unit Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 2 : 5;
 
             trigger OnValidate()
             begin
-                "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
+                "Unit Length Inches" := ROUND("NV8 Unit Length meters" * 39, 0.00001);
                 UpdatePieces();
             end;
         }
@@ -590,7 +590,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
             trigger OnValidate()
             begin
-                "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
+                "NV8 Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
                 UpdatePieces();
             end;
         }
@@ -609,7 +609,7 @@ Table 50009 "NV8 Roll Allocator Line"
             // begin
             //     ConfiguratorSetup.Get;
             //     ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
-            //     "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
+            //     "NV8 Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
             //     "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
             //     UpdatePieces;
             // end;
@@ -626,7 +626,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85059; "Cost Per meter"; Decimal)
@@ -666,7 +666,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85083; "Overage Length meters"; Decimal)
@@ -677,7 +677,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85084; "Original Unit Length meters"; Decimal)
@@ -688,7 +688,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85085; "Overage Unit Length meters"; Decimal)
@@ -699,7 +699,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85100; "Configurator No."; Code[100])
@@ -777,7 +777,7 @@ Table 50009 "NV8 Roll Allocator Line"
             //                     Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 1)
             //                 else
             //                     Remaining := '';
-            //                 if ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, Component) then begin
+            //                 if ConfiguratorMaterialGrit.Get(ConfiguratorItem."NV8 Material", Component) then begin
             //                     ConfiguratorItem.Validate(Grit, Component);
             //                     Found := true;
             //                 end;
@@ -874,7 +874,7 @@ Table 50009 "NV8 Roll Allocator Line"
         field(85321; "Allocated Quantity (Total)"; Decimal)
         {
             // BlankZero = true;  //TODO PAP Uncomment
-            // CalcFormula = sum("Roll Allocator Line"."Allocated Quantity" where("Item Ledger Entry No." = field("Item Ledger Entry No."),
+            // CalcFormula = sum("Roll Allocator Line"."NV8 Allocated Quantity" where("NV8 Item Ledger Entry No." = field("NV8 Item Ledger Entry No."),
             //                                                                     "Line No." = filter(> 0)));
             // DecimalPlaces = 0 : 5;
             // Editable = false;
@@ -937,28 +937,28 @@ Table 50009 "NV8 Roll Allocator Line"
 
     keys
     {
-        key(Key1; "Item Ledger Entry No.", "Line No.")
+        key(Key1; "NV8 Item Ledger Entry No.", "Line No.")
         {
             Clustered = true;
-            SumIndexFields = Quantity, "Quantity (Base)", "Allocated Quantity";
+            SumIndexFields = Quantity, "Quantity (Base)", "NV8 Allocated Quantity";
         }
         key(Key2; "Entry Type", "Item No.", "Variant Code", "Location Code", "Bin Code", "Posting Date")
         {
-            SumIndexFields = "Quantity (Base)", "Allocated Quantity";
+            SumIndexFields = "Quantity (Base)", "NV8 Allocated Quantity";
         }
         key(Key3; "Entry Type", "Item No.", "Variant Code", "New Location Code", "New Bin Code", "Posting Date")
         {
-            SumIndexFields = "Quantity (Base)", "Allocated Quantity";
+            SumIndexFields = "Quantity (Base)", "NV8 Allocated Quantity";
         }
         key(Key4; "Allocated By", "Sort No.")
         {
-            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "Allocated Quantity";
+            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "NV8 Allocated Quantity";
         }
         key(Key5; "Allocated By", "Configurator No.", "Sort No.")
         {
-            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "Allocated Quantity";
+            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "NV8 Allocated Quantity";
         }
-        key(Key6; "Unit Width Inches", "Unit Length meters")
+        key(Key6; "NV8 Unit Width Inches", "NV8 Unit Length meters")
         {
         }
         key(Key7; "Roll ID")
@@ -1020,25 +1020,23 @@ Table 50009 "NV8 Roll Allocator Line"
         PhysInvtEntered: Boolean;
         GLSetupRead: Boolean;
         MfgSetupRead: Boolean;
-        // ConfiguratorSetup: Record "Configurator Setup"; //TODO PAP Uncomment
-        // ConfiguratorItem: Record "Configurator Item";
-        // ConfiguratorMaterial: Record "Configurator Material";
+        ConfiguratorSetup: Record "NV8 Configurator Setup";
+        ConfiguratorItem: Record "NV8 Configurator Item";
+        ConfiguratorMaterial: Record "NV8 Configurator Material";
         ConfiguratorFound: Boolean;
-        //TODO PAP Uncomment
-        // ConfiguratorShape: Record "Configurator Shape";
-        // ConfiguratorJoint: Record "Configurator Joint";
-        // ConfiguratorGrit: Record "Configurator Grit";
-        // ConfiguratorMaterialGrit: Record "Configurator Material-Grits";
+        ConfiguratorShape: Record "NV8 Configurator Shape";
+        ConfiguratorJoint: Record "NV8 Configurator Joint";
+        ConfiguratorGrit: Record "NV8 Configurator Grit";
+        ConfiguratorMaterialGrit: Record "NV8 Config Material-Grits";
         Found: Boolean;
         Component: Code[100];
         Remaining: Code[100];
         Temp: Integer;
         InvQty: Decimal;
-        //TODO PAP Uncomment
-        // RollAllocatorLine: Record "KBM KABOOM BOOMBase CP Type";
-        // ZeroLine: Record "KBM KABOOM BOOMBase CP Type";
+        RollAllocatorLine: Record "NV8 Roll Allocator Line";
+        ZeroLine: Record "NV8 Roll Allocator Line";
         ZeroLineFound: Boolean;
-        // PostedRollAllocatorLine: Record "KBM KABOOM Project Funding"; //TODO PAP Uncomment
+        PostedRollAllocatorLine: Record "NV8 Posted Roll Allocator Line";
         ModifyItemLedgerEntry: Record "Item Ledger Entry";
         ModifyEntry: Codeunit "Item Jnl.-Post Line";
         NextLineNo: Integer;
@@ -1211,26 +1209,26 @@ Table 50009 "NV8 Roll Allocator Line"
     begin
         // if (ConfiguratorItem.Get(Item."Configurator No.")) then begin
         //     "Configurator No." := Item."Configurator No.";
-        //     ConfiguratorShape.Get(ConfiguratorItem.Shape);
+        //     ConfiguratorShape.Get(ConfiguratorItem."NV8 Shape");
         //     if ConfiguratorShape."Dimensioned Roll" then begin
-        //         if ConfiguratorMaterial.Get(ConfiguratorItem.Material) then begin
+        //         if ConfiguratorMaterial.Get(ConfiguratorItem."NV8 Material") then begin
         //             case true of
-        //                 ("Unit Width Inches" >= ConfiguratorMaterial."Jumbo Min. Width") and
-        //               ("Unit Length meters" >= ConfiguratorMaterial."Jumbo Min. Length"):
+        //                 ("NV8 Unit Width Inches" >= ConfiguratorMaterial."Jumbo Min. Width") and
+        //               ("NV8 Unit Length meters" >= ConfiguratorMaterial."Jumbo Min. Length"):
         //                     "Material Type" := "material type"::Jumbo;
-        //                 ("Unit Width Inches" >= ConfiguratorMaterial."Narrow Remnant Min. Width") and
-        //               ("Unit Length meters" >= ConfiguratorMaterial."Narrow Remnant Min. Length"):
+        //                 ("NV8 Unit Width Inches" >= ConfiguratorMaterial."Narrow Remnant Min. Width") and
+        //               ("NV8 Unit Length meters" >= ConfiguratorMaterial."Narrow Remnant Min. Length"):
         //                     "Material Type" := "material type"::"Narrow Remnant";
-        //                 ("Unit Width Inches" >= ConfiguratorMaterial."Short Remnant Min. Width") and
-        //               ("Unit Length meters" >= ConfiguratorMaterial."Short Remnant Min. Length"):
+        //                 ("NV8 Unit Width Inches" >= ConfiguratorMaterial."Short Remnant Min. Width") and
+        //               ("NV8 Unit Length meters" >= ConfiguratorMaterial."Short Remnant Min. Length"):
         //                     "Material Type" := "material type"::"Short Remnant";
         //                 else
         //                     "Material Type" := "material type"::Scrap;
         //             end;
         //         end;
         //     end else begin
-        //         "Unit Width Inches" := ConfiguratorItem."Quantity 1";
-        //         "Unit Length meters" := ROUND(ConfiguratorItem."Quantity 2" / 39, 0.00001);
+        //         "NV8 Unit Width Inches" := ConfiguratorItem."Quantity 1";
+        //         "NV8 Unit Length meters" := ROUND(ConfiguratorItem."Quantity 2" / 39, 0.00001);
         //         "Unit Length Inches" := ConfiguratorItem."Quantity 2";
         //     end;
         // end;
@@ -1241,9 +1239,9 @@ Table 50009 "NV8 Roll Allocator Line"
     begin
         // TODO PAP Uncomment
         // UpdateConfiguration;
-        // "Unit Area m2" := ROUND("Unit Width Inches" * "Unit Length meters" / 39, 0.00001);
+        // "Unit Area m2" := ROUND("NV8 Unit Width Inches" * "NV8 Unit Length meters" / 39, 0.00001);
         // "Total Area m2" := Pieces * "Unit Area m2";
-        // "Total Length meters" := Pieces * "Unit Length meters";
+        // "Total Length meters" := Pieces * "NV8 Unit Length meters";
 
         // if "Entry Type" <> "entry type"::Output then begin
         //     if "Material Type" = "material type"::" " then begin
@@ -1279,9 +1277,9 @@ Table 50009 "NV8 Roll Allocator Line"
     procedure UpdateQuantity()
     begin
         exit;
-        "Unit Area m2" := ROUND("Unit Width Inches" * "Unit Length meters" / 39, 0.00001);
+        "Unit Area m2" := ROUND("NV8 Unit Width Inches" * "NV8 Unit Length meters" / 39, 0.00001);
         "Total Area m2" := Pieces * "Unit Area m2";
-        "Total Length meters" := Pieces * "Unit Length meters";
+        "Total Length meters" := Pieces * "NV8 Unit Length meters";
 
         if "Material Type" = "material type"::" " then begin
             Validate(Quantity, Pieces);
@@ -1298,9 +1296,9 @@ Table 50009 "NV8 Roll Allocator Line"
                 Pieces := ROUND(Quantity / "Unit Area m2");
         end;
 
-        "Unit Area m2" := ROUND("Unit Width Inches" * "Unit Length meters" / 39, 0.00001);
+        "Unit Area m2" := ROUND("NV8 Unit Width Inches" * "NV8 Unit Length meters" / 39, 0.00001);
         "Total Area m2" := Pieces * "Unit Area m2";
-        "Total Length meters" := Pieces * "Unit Length meters";
+        "Total Length meters" := Pieces * "NV8 Unit Length meters";
     end;
 
 
@@ -1342,8 +1340,8 @@ Table 50009 "NV8 Roll Allocator Line"
         //VALIDATE("Item No.",ItemLedgEntry."Item No.");
         //VALIDATE("Location Code",ItemLedgEntry."Location Code");
         // "Unit Cost" :=
-        //VALIDATE("Unit Width Inches",ItemLedgEntry."Unit Width Inches");
-        //"Unit Length meters" := ItemLedgEntry."Unit Length meters";
+        //VALIDATE("NV8 Unit Width Inches",ItemLedgEntry."NV8 Unit Width Inches");
+        //"NV8 Unit Length meters" := ItemLedgEntry."NV8 Unit Length meters";
         //VALIDATE("Unit Length Inches",ItemLedgEntry."Unit Length Inches");
         //"Unit Area m2" := ItemLedgEntry."Unit Area m2";
         //"Unit Width Code" := ItemLedgEntry."Unit Width Code";
@@ -1359,19 +1357,19 @@ Table 50009 "NV8 Roll Allocator Line"
     end;
 
 
-    procedure ValidateReadyToPost(CalledLocal: Boolean)  // TODO PAP Uncomment
+    procedure ValidateReadyToPost(CalledLocal: Boolean)
     begin
-        // if CalledLocal then begin
-        //     RollAllocatorLine.Reset;
-        //     RollAllocatorLine.SetRange("Item Ledger Entry No.", "Item Ledger Entry No.");
-        //     RollAllocatorLine.SetFilter("Line No.", '<>%1', "Line No.");
-        //     if RollAllocatorLine.Find('-') then
-        //         repeat
-        //             RollAllocatorLine."Ready To Post" := "Ready To Post";
-        //             RollAllocatorLine.ValidateReadyToPost(false);
-        //             RollAllocatorLine.Modify;
-        //         until RollAllocatorLine.Next = 0;
-        // end;
+        if CalledLocal then begin
+            RollAllocatorLine.Reset();
+            RollAllocatorLine.SetRange("NV8 Item Ledger Entry No.", "NV8 Item Ledger Entry No.");
+            RollAllocatorLine.SetFilter("Line No.", '<>%1', "Line No.");
+            if RollAllocatorLine.Find('-') then
+                repeat
+                    RollAllocatorLine."Ready To Post" := "Ready To Post";
+                    RollAllocatorLine.ValidateReadyToPost(false);
+                    RollAllocatorLine.Modify();
+                until RollAllocatorLine.Next() = 0;
+        end;
     end;
 
 
@@ -1407,9 +1405,9 @@ Table 50009 "NV8 Roll Allocator Line"
         ItemJnlLine.Validate("Item No.", ItemLedgEntry."Item No.");
         ItemJnlLine.Validate("Applies-to Entry", ItemLedgEntry."Entry No.");
         ItemJnlLine.Validate("Location Code", ItemLedgEntry."Location Code");
-        ItemJnlLine.Validate(Pieces, ItemLedgEntry."Remaining Pieces");
-        ItemJnlLine.Validate("Unit Width Inches", ItemLedgEntry."Unit Width Inches");
-        ItemJnlLine.Validate("Unit Length meters", ItemLedgEntry."Unit Length meters");
+        ItemJnlLine.Validate("NV8 Pieces", ItemLedgEntry."NV8 Remaining Pieces");
+        ItemJnlLine.Validate("NV8 Unit Width Inches", ItemLedgEntry."NV8 Unit Width Inches");
+        ItemJnlLine.Validate("NV8 Unit Length meters", ItemLedgEntry."NV8 Unit Length meters");
         ItemJnlLine.Validate(Quantity, ItemLedgEntry."Remaining Quantity");
     end;
 
@@ -1421,12 +1419,12 @@ Table 50009 "NV8 Roll Allocator Line"
 
     procedure LockRoll(EntryNo: Integer; SetUser: Code[200]; SetDate: Date)
     begin
-        RollAllocatorLine.Init;
-        RollAllocatorLine."Item Ledger Entry No." := EntryNo;
+        RollAllocatorLine.Init();
+        RollAllocatorLine."NV8 Item Ledger Entry No." := EntryNo;
         RollAllocatorLine."Line No." := 0;
         RollAllocatorLine.SetUpNewLine(EntryNo, SetUser, SetDate);
         RollAllocatorLine."Allocation Type" := RollAllocatorLine."allocation type"::"Transfer From Stock";
-        if RollAllocatorLine.Insert then
+        if RollAllocatorLine.Insert() then
           ;
     end;
 
@@ -1439,7 +1437,7 @@ Table 50009 "NV8 Roll Allocator Line"
         Window.OPEN('Posting line #1##########');
         WITH RollAllocatorLine DO BEGIN
           RESET;
-          SETRANGE("Item Ledger Entry No.",Rec."Entry No.");
+          SETRANGE("NV8 Item Ledger Entry No.",Rec."Entry No.");
           SETFILTER("Line No.",'>0');
           FIND('-');
           REPEAT
@@ -1466,8 +1464,8 @@ Table 50009 "NV8 Roll Allocator Line"
             itemjnlline."roll id" := "roll id";
         
             ItemJnlLine."Applies-to Entry" := "Entry No.";
-            ItemJnlLine.VALIDATE("Unit Width Inches","Unit Width Inches");
-            ItemJnlLine.VALIDATE("Unit Length meters","Unit Length meters");
+            ItemJnlLine.VALIDATE("NV8 Unit Width Inches","NV8 Unit Width Inches");
+            ItemJnlLine.VALIDATE("NV8 Unit Length meters","NV8 Unit Length meters");
             ItemJnlLine.VALIDATE(Pieces,Pieces);
             ModifyEntry.RUN(ItemJnlLine);
           UNTIL NEXT = 0;
@@ -1480,37 +1478,37 @@ Table 50009 "NV8 Roll Allocator Line"
     end;
 
 
-    procedure CheckLedgerBalance(CheckRollAllocationLine: Record "KBM KABOOM BOOMBase CP Type")
+    procedure CheckLedgerBalance(CheckRollAllocationLine: Record "NV8 Roll Allocator Line")
     begin
     end;
 
 
-    procedure CheckLine(ItemLedgerEntry: Record "Item Ledger Entry"; CheckRollAllocationLine: Record "KBM KABOOM BOOMBase CP Type")
+    procedure CheckLine(ItemLedgerEntry: Record "Item Ledger Entry"; CheckRollAllocationLine: Record "NV8 Roll Allocator Line")
     begin
         // Check if item ledger entry is open
         // Only if not positive.....
         //ItemLedgerEntry.TESTFIELD(Open,TRUE);
         //ItemLedgerEntry.TESTFIELD(Positive,TRUE);
         // Test if this is a valid roll - these tests are not critical
-        ConfiguratorShape.Get(ItemLedgerEntry.Shape);
-        ConfiguratorMaterial.Get(ItemLedgerEntry.Material);
-        ConfiguratorMaterialGrit.Get(ItemLedgerEntry.Material, ItemLedgerEntry.Grit);
+        ConfiguratorShape.Get(ItemLedgerEntry."NV8 Shape");
+        ConfiguratorMaterial.Get(ItemLedgerEntry."NV8 Material");
+        ConfiguratorMaterialGrit.Get(ItemLedgerEntry."NV8 Material", ItemLedgerEntry."NV8 Grit");
 
         // Check the type of line to create
         if "Allocation Type" in
           ["allocation type"::"Transfer From Stock", "allocation type"::"Return To Stock", "allocation type"::"Jumbo Pull Request"] then begin
-            if Abs(ItemLedgerEntry."Unit Width Inches" - "Unit Width Inches") > 0.0001 then
-                ItemLedgerEntry.TestField("Unit Width Inches", "Unit Width Inches");
-            if Abs(ItemLedgerEntry."Unit Length meters" - "Unit Length meters") > 0.0001 then
-                ItemLedgerEntry.TestField("Unit Length meters", "Unit Length meters");
+            if Abs(ItemLedgerEntry."NV8 Unit Width Inches" - "NV8 Unit Width Inches") > 0.0001 then
+                ItemLedgerEntry.TestField("NV8 Unit Width Inches", "NV8 Unit Width Inches");
+            if Abs(ItemLedgerEntry."NV8 Unit Length meters" - "NV8 Unit Length meters") > 0.0001 then
+                ItemLedgerEntry.TestField("NV8 Unit Length meters", "NV8 Unit Length meters");
             if Pieces <> ROUND(Pieces, 1) then
                 Error('You can only Transfer whole pieces. %1 is not allowed', Pieces);
-            if ItemLedgerEntry."Remaining Pieces" > 0 then
-                if Pieces > ItemLedgerEntry."Remaining Pieces" then
-                    Error('You can not transfer more than %1 pieces', ItemLedgerEntry."Remaining Pieces");
+            if ItemLedgerEntry."NV8 Remaining Pieces" > 0 then
+                if Pieces > ItemLedgerEntry."NV8 Remaining Pieces" then
+                    Error('You can not transfer more than %1 pieces', ItemLedgerEntry."NV8 Remaining Pieces");
         end;
 
-        CheckRollAllocationLine.TestField("Allocated Quantity");
+        CheckRollAllocationLine.TestField("NV8 Allocated Quantity");
 
         case "Allocation Type" of
             "allocation type"::"Transfer From Stock":
@@ -1553,10 +1551,10 @@ Table 50009 "NV8 Roll Allocator Line"
     end;
 
 
-    procedure CreateJournalLine(RollAllocatorLine: Record "KBM KABOOM BOOMBase CP Type")
+    procedure CreateJournalLine(RollAllocatorLine_: Record "NV8 Roll Allocator Line")
     begin
         /*WITH RollAllocatorLine DO BEGIN
-          IF NOT ItemLedgEntry.GET("Item Ledger Entry No.") THEN
+          IF NOT ItemLedgEntry.GET("NV8 Item Ledger Entry No.") THEN
             ItemLedgEntry.INIT;
           ItemJnlLine.INIT;
           ItemJnlLine.VALIDATE("Item No.","Item No.");
@@ -1580,7 +1578,7 @@ Table 50009 "NV8 Roll Allocator Line"
                 ItemJnlLine."New Location Code" := "Location Code";
                 ItemJnlLine."Bin Location" := '';
                 ItemJnlLine."New Bin Location" := "Bin Location";
-                ItemJnlLine."Applies-to Entry" := "Item Ledger Entry No.";
+                ItemJnlLine."Applies-to Entry" := "NV8 Item Ledger Entry No.";
               END;
             "Entry Type"::Consumption:
               BEGIN
@@ -1588,7 +1586,7 @@ Table 50009 "NV8 Roll Allocator Line"
                 ItemJnlLine."New Location Code" := '';
                 ItemJnlLine."Bin Location" := '';
                 ItemJnlLine."New Bin Location" := '';
-                ItemJnlLine."Applies-to Entry" := "Item Ledger Entry No.";
+                ItemJnlLine."Applies-to Entry" := "NV8 Item Ledger Entry No.";
                 ItemJnlLine.VALIDATE("Order No.","Prod. Order No.");
               END;
             ELSE
@@ -1597,18 +1595,18 @@ Table 50009 "NV8 Roll Allocator Line"
                 ItemJnlLine."New Location Code" := '';
                 ItemJnlLine."Bin Location" := ''; // "Bin Location";
                 ItemJnlLine."New Bin Location" := '';
-                ItemJnlLine."Applies-to Entry" := "Item Ledger Entry No.";
+                ItemJnlLine."Applies-to Entry" := "NV8 Item Ledger Entry No.";
               END;
           END;
           ItemJnlLine."External Document No." := STRSUBSTNO('ALLOC-%1',COPYSTR(USERID,1,14));
           // Check if this is the text we want...
           // ItemJnlLine."Description 2" := Description;
           ItemJnlLine."Allocator Comment" := "Allocator Comment";
-          // ItemJnlLine."Unit Width Inches" := "Unit Width Inches";
-          // ItemJnlLine."Unit Length meters" := "Unit Length meters";
-          ItemJnlLine.VALIDATE("Unit Length meters","Unit Length meters"); // fix wid len error
+          // ItemJnlLine."NV8 Unit Width Inches" := "NV8 Unit Width Inches";
+          // ItemJnlLine."NV8 Unit Length meters" := "NV8 Unit Length meters";
+          ItemJnlLine.VALIDATE("NV8 Unit Length meters","NV8 Unit Length meters"); // fix wid len error
           ItemJnlLine.Pieces := Pieces;
-          ItemJnlLine.VALIDATE("Unit Width Inches","Unit Width Inches");
+          ItemJnlLine.VALIDATE("NV8 Unit Width Inches","NV8 Unit Width Inches");
           ItemJnlLine.Quantity := Quantity;
           IF "Allocation Type" IN ["Allocation Type"::"Negative Adjustment","Allocation Type"::Waste,"Allocation Type"::Overage] THEN
             ItemJnlLine.VALIDATE(Quantity)
@@ -1652,7 +1650,7 @@ Table 50009 "NV8 Roll Allocator Line"
         ItemJnlLine: Record "Item Journal Line";
         JnlSelected: Boolean;
     begin
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         ItemJnlTemplate.Reset();
         ItemJnlTemplate.Get(ConfiguratorSetup."Allocation Template");
         ItemJnlLine.Reset();
@@ -1665,11 +1663,11 @@ Table 50009 "NV8 Roll Allocator Line"
     end;
 
 
-    procedure PostJournalLine(RollAllocatorLine: Record "KBM KABOOM BOOMBase CP Type")
+    procedure PostJournalLine(RollAllocatorLine_: Record "NV8 Roll Allocator Line")
     begin
         CreateJournalLine(RollAllocatorLine);
-        if RollAllocatorLine."Allocation Type" = "allocation type"::"Jumbo Pull Request" then begin
-            ConfiguratorSetup.Get;
+        if RollAllocatorLine_."Allocation Type" = "allocation type"::"Jumbo Pull Request" then begin
+            ConfiguratorSetup.Get();
             ConfiguratorSetup.TestField("Allocation Template");
             ConfiguratorSetup.TestField("Jumbo Pull Request");
             JumboPullList.LockTable();
@@ -1735,8 +1733,8 @@ Table 50009 "NV8 Roll Allocator Line"
         ItemJnlLine."Journal Template Name" := NewJnlTemp;
         ItemJnlLine."Journal Batch Name" := NewJnlBatch;
         ItemJnlLine."Line No." := NextInsLineNo;
-        ItemJnlLine.CalcFields("From Bin Location", "From FIFO Code");
-        ItemJnlLine."Bin Sorting" := ItemJnlLine."From Bin Location";
+        ItemJnlLine.CalcFields("NV8 From Bin Location", "NV8 From FIFO Code");
+        ItemJnlLine."NV8 Bin Sorting" := ItemJnlLine."NV8 From Bin Location";
 
         ItemJnlLine.Insert(true);
         if DeleteOld then
@@ -1744,10 +1742,10 @@ Table 50009 "NV8 Roll Allocator Line"
     end;
 
 
-    procedure CreateWasteLine(CheckRollAllocationLine: Record "KBM KABOOM BOOMBase CP Type")
+    procedure CreateWasteLine(CheckRollAllocationLine: Record "NV8 Roll Allocator Line")
     begin
-        ItemLedgEntry.Get(CheckRollAllocationLine."Item Ledger Entry No.");
-        ItemLedgEntry.CalcFields("Allocated Quantity");
+        ItemLedgEntry.Get(CheckRollAllocationLine."NV8 Item Ledger Entry No.");
+        ItemLedgEntry.CalcFields("NV8 Allocated Quantity");
     end;
 
 
@@ -1760,7 +1758,7 @@ Table 50009 "NV8 Roll Allocator Line"
         SetCurrentkey("Allocated By");
         //TESTING Remove temporarily
         //SETRANGE("Allocated By",LoggedUser);
-        SetRange(RollAllocatorLine."Item Ledger Entry No.", EntryNo);
+        SetRange("NV8 Item Ledger Entry No.", EntryNo);
         if not Find('-') then
             Error('There are no lines in the selected range that are Marked to Post.');
         if not Confirm('Do you want to process the Allocation Lines?', false) then
@@ -1769,7 +1767,7 @@ Table 50009 "NV8 Roll Allocator Line"
           'Checking Line    #1######\' +
           'Processing Line  #2######');
 
-        PostedRollAllocatorLine.Reset;
+        PostedRollAllocatorLine.Reset();
         SetFilter("Line No.", '<>%1', 0);
         /* SETFILTER("Entry Type",'<>%1',"Entry Type"::Transfer);   */
         //Dont reclass first because lot no will be different and lot info will not exist
@@ -1779,11 +1777,11 @@ Table 50009 "NV8 Roll Allocator Line"
             PostJournalLineROLL(RollAllocatorLine);
             SelectLatestVersion();
             PostedRollAllocatorLine.TransferFields(RollAllocatorLine);
-            PostedRollAllocatorLine.Insert;
+            PostedRollAllocatorLine.Insert();
             // EC1.MFG04.01 Update Status on the Production Order
             l_ProdOrder.SetRange(l_ProdOrder."No.", RollAllocatorLine."Prod. Order No.");
             if l_ProdOrder.FindFirst() then begin
-                l_ProdOrder."Production Status" := l_ProdOrder."production status"::"In Progress";
+                l_ProdOrder."NV8 production status" := l_ProdOrder."NV8 production status"::"In Progress";
                 l_ProdOrder.Modify();
 
             end;
@@ -1808,7 +1806,7 @@ Table 50009 "NV8 Roll Allocator Line"
             l_ProdOrder.SETRANGE(l_ProdOrder."No.",RollAllocatorLine."Prod. Order No.");
             IF l_ProdOrder.FINDFIRST THEN
             BEGIN
-             l_ProdOrder."Production Status" := l_ProdOrder."Production Status"::"In Progress";
+             l_ProdOrder."NV8 production status" := l_ProdOrder."NV8 production status"::"In Progress";
              l_ProdOrder.MODIFY;
 
             END;
@@ -1824,19 +1822,19 @@ Table 50009 "NV8 Roll Allocator Line"
     end;
 
 
-    procedure PostSingleAllocation(RollAllocline: Record "KBM KABOOM BOOMBase CP Type"; LoggedUser: Code[200]; PostAll: Boolean; EntryNo: Integer)
+    procedure PostSingleAllocation(RollAllocline: Record "NV8 Roll Allocator Line"; LoggedUser: Code[200]; PostAll: Boolean; EntryNo: Integer)
     var
         l_ProdOrder: Record "Production Order";
     begin
         SelectLatestVersion();
-        PostedRollAllocatorLine.Reset;
+        PostedRollAllocatorLine.Reset();
         PostJournalLineROLL(RollAllocline);
         PostedRollAllocatorLine.TransferFields(RollAllocline);
-        PostedRollAllocatorLine.Insert;
+        PostedRollAllocatorLine.Insert();
         // EC1.MFG04.01 Update Status on the Production Order
         l_ProdOrder.SetRange(l_ProdOrder."No.", RollAllocline."Prod. Order No.");
         if l_ProdOrder.FindFirst() then begin
-            l_ProdOrder."Production Status" := l_ProdOrder."production status"::"In Progress";
+            l_ProdOrder."NV8 production status" := l_ProdOrder."NV8 production status"::"In Progress";
             l_ProdOrder.Modify();
 
         end;
@@ -1853,8 +1851,8 @@ Table 50009 "NV8 Roll Allocator Line"
         if "Material Type" = "material type"::" " then
             exit;
         InventorySetup.Get();
-        InventorySetup.TestField("Roll ID Nos.");
-        NoSeriesMgt.InitSeries(InventorySetup."Roll ID Nos.", '', 0D, "Roll ID", NoSeries);
+        InventorySetup.TestField("NV8 Roll ID Nos.");
+        NoSeriesMgt.InitSeries(InventorySetup."NV8 Roll ID Nos.", '', 0D, "Roll ID", NoSeries);
     end;
 
 
@@ -1883,22 +1881,22 @@ Table 50009 "NV8 Roll Allocator Line"
 
     procedure CheckRollIDinUSE(l_RollID: Code[20]): Boolean
     var
-        l_RaLine: Record "KBM KABOOM BOOMBase CP Type";
+        l_RaLine: Record "NV8 Roll Allocator Line";
     begin
         l_RaLine.SetCurrentkey(l_RaLine."Roll ID");
         l_RaLine.SetRange(l_RaLine."Roll ID", l_RollID);
-        exit(l_RaLine.FindFirst);
+        exit(l_RaLine.FindFirst());
     end;
 
 
-    procedure CreateLineROLL(RollSelectorLine: Record "Roll Selector Line"; AllocationType: Option " ","Transfer From Stock","Return To Stock","Jumbo Pull Request","Send To Production","Production Returns-Not Used","Hold on Floor",Overage,Waste,"Positive Adjustment","Negative Adjustment","Pick-Not Used","Putaway-Not Used"; LocationCode: Code[10]; BinLocation: Code[10]; AllocateQuantity: Decimal; AllocatePieces: Decimal; AllocateWidth: Decimal; AllocateLength: Decimal; MFGOrderNo: Code[20]; AllocType: Option " ","Sales Order","Transfer Order"; AllocCode: Code[20]; AllocOrderNo: Code[20]; AllocText: Text[80]; SetUser: Code[200]; SetPin: Code[10]; SetOpId: Code[20])
+    procedure CreateLineROLL(RollSelectorLine: Record "NV8 Roll Selector Line"; AllocationType: Option " ","Transfer From Stock","Return To Stock","Jumbo Pull Request","Send To Production","Production Returns-Not Used","Hold on Floor",Overage,Waste,"Positive Adjustment","Negative Adjustment","Pick-Not Used","Putaway-Not Used"; LocationCode: Code[10]; BinLocation: Code[10]; AllocateQuantity: Decimal; AllocatePieces: Decimal; AllocateWidth: Decimal; AllocateLength: Decimal; MFGOrderNo: Code[20]; AllocType: Option " ","Sales Order","Transfer Order"; AllocCode: Code[20]; AllocOrderNo: Code[20]; AllocText: Text[80]; SetUser: Code[200]; SetPin: Code[10]; SetOpId: Code[20])
     var
+        RollSelectorLine2: Record "NV8 Roll Selector Line";
         NextSortingNo: Integer;
-        RollSelectorLine2: Record "Roll Selector Line";
     begin
         Reset();
-        SetCurrentkey("Item Ledger Entry No.");
-        SetRange("Item Ledger Entry No.", RollSelectorLine."Entry No.");
+        SetCurrentkey("NV8 Item Ledger Entry No.");
+        SetRange("NV8 Item Ledger Entry No.", RollSelectorLine."Entry No.");
         NextSortingNo := Count;
         Reset();
 
@@ -1909,13 +1907,13 @@ Table 50009 "NV8 Roll Allocator Line"
         /*
         IF RollSelectorLine."Entry No." = 0 THEN BEGIN
           RollAllocatorLine.RESET;
-          IF RollAllocatorLine.FIND('-') AND (RollAllocatorLine."Item Ledger Entry No." < 0) THEN
+          IF RollAllocatorLine.FIND('-') AND (RollAllocatorLine."NV8 Item Ledger Entry No." < 0) THEN
         
            //Original passed by VAR which would cause page to close randomly
-            RollSelectorLine."Entry No." := RollAllocatorLine."Item Ledger Entry No." - 1
+            RollSelectorLine."Entry No." := RollAllocatorLine."NV8 Item Ledger Entry No." - 1
         
           ELSE
-            RollAllocatorLine."Item Ledger Entry No." := -1;
+            RollAllocatorLine."NV8 Item Ledger Entry No." := -1;
         END;
          */
 
@@ -1923,7 +1921,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
 
-        SetRange("Item Ledger Entry No.", RollSelectorLine."Entry No.");
+        SetRange("NV8 Item Ledger Entry No.", RollSelectorLine."Entry No.");
         if not Find('+') then begin
             LockRoll(RollSelectorLine."Entry No.", SetUser, WorkDate());
             NextLineNo := 10000;
@@ -1932,7 +1930,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
         // Set up the new line
         Init();
-        "Item Ledger Entry No." := RollSelectorLine."Entry No.";
+        "NV8 Item Ledger Entry No." := RollSelectorLine."Entry No.";
         // for reservation oif allocation entry.
         "Allocation ID" := RollSelectorLine."Entry No.";
         "Line No." := NextLineNo;
@@ -1945,9 +1943,9 @@ Table 50009 "NV8 Roll Allocator Line"
         "Bin Location" := BinLocation;
         Quantity := AllocateQuantity;
 
-        Validate("Unit Length meters", AllocateLength); // fix the issue with no length and width
+        Validate("NV8 Unit Length meters", AllocateLength); // fix the issue with no length and width
         Pieces := AllocatePieces;
-        Validate("Unit Width Inches", AllocateWidth);  // fix the issue with no length and width
+        Validate("NV8 Unit Width Inches", AllocateWidth);  // fix the issue with no length and width
         "FIFO Date" := RollSelectorLine."FIFO Date";
 
         "Allocated By" := SetUser;
@@ -1965,26 +1963,25 @@ Table 50009 "NV8 Roll Allocator Line"
         ProdOrderLine.SetCurrentkey(Status, "Prod. Order No.");
         ProdOrderLine.SetRange(Status, ProdOrderLine.Status::Released);
         ProdOrderLine.SetRange("Prod. Order No.", MFGOrderNo);
-        if ProdOrderLine.FindFirst() then begin
-            if ProdOrderLine.Material <> RollSelectorLine.Material then begin
-                "Subst. Material" := ProdOrderLine.Material;
+        if ProdOrderLine.FindFirst() then
+            if ProdOrderLine."NV8 Material" <> RollSelectorLine.Material then begin
+                "Subst. Material" := ProdOrderLine."NV8 Material";
                 ProdOrderComp.Reset();
                 ProdOrderComp.SetCurrentkey(Status, "Prod. Order No.", "Prod. Order Line No.");
                 ProdOrderComp.SetRange(Status, ProdOrderLine.Status::Released);
                 ProdOrderComp.SetRange("Prod. Order No.", MFGOrderNo);
-                ProdOrderComp.SetFilter(Grit, '<>%1', '');
+                ProdOrderComp.SetFilter("NV8 Grit", '<>%1', '');
                 if ProdOrderComp.FindFirst() then
                     if ProdOrderComp."Item No." <> RollSelectorLine."Item No." then begin
-                        ProdOrderComp."Substitute Material" := true;
-                        ProdOrderComp."Ori. Shape" := ProdOrderComp.Shape;
-                        ProdOrderComp."Ori. Material" := ProdOrderComp.Material;
-                        ProdOrderComp."Ori. Grit" := ProdOrderComp.Grit;
-                        ProdOrderComp."Ori. Item No." := ProdOrderComp."Item No.";
+                        ProdOrderComp."NV8 Substitute Material" := true;
+                        ProdOrderComp."NV8 Ori. Shape" := ProdOrderComp."NV8 Shape";
+                        ProdOrderComp."NV8 Ori. Material" := ProdOrderComp."NV8 Material";
+                        ProdOrderComp."NV8 Ori. Grit" := ProdOrderComp."NV8 Grit";
+                        ProdOrderComp."NV8 Ori. Item No." := ProdOrderComp."Item No.";
                         ProdOrderComp.Validate("Item No.", RollSelectorLine."Item No.");
                         ProdOrderComp.Modify();
                     end;
             end;
-        end;
 
         case "Allocation Type" of
             "allocation type"::"Transfer From Stock":
@@ -1996,7 +1993,7 @@ Table 50009 "NV8 Roll Allocator Line"
                     Validate(Pieces);
                     if ZeroLineFound and (ZeroLine."Allocation Type" <> ZeroLine."allocation type"::Transfer) then begin
                         ZeroLine."Allocation Type" := ZeroLine."allocation type"::Transfer;
-                        ZeroLine.Modify;
+                        ZeroLine.Modify();
                     end;
                 end;
             "allocation type"::"Return To Stock":
@@ -2008,7 +2005,7 @@ Table 50009 "NV8 Roll Allocator Line"
                     Validate(Pieces);
                     if ZeroLineFound and (ZeroLine."Allocation Type" <> ZeroLine."allocation type"::Transfer) then begin
                         ZeroLine."Allocation Type" := ZeroLine."allocation type"::Transfer;
-                        ZeroLine.Modify;
+                        ZeroLine.Modify();
                     end;
                 end;
             "allocation type"::"Jumbo Pull Request":
@@ -2023,7 +2020,7 @@ Table 50009 "NV8 Roll Allocator Line"
                     Validate(Pieces);
                     if ZeroLineFound and (ZeroLine."Allocation Type" <> ZeroLine."allocation type"::Transfer) then begin
                         ZeroLine."Allocation Type" := ZeroLine."allocation type"::Transfer;
-                        ZeroLine.Modify;
+                        ZeroLine.Modify();
                     end;
                 end;
             "allocation type"::"Use In Manufacturing":
@@ -2035,7 +2032,7 @@ Table 50009 "NV8 Roll Allocator Line"
                     Validate(Pieces);
                     if ZeroLineFound and (ZeroLine."Allocation Type" <> ZeroLine."allocation type"::Slitting) then begin
                         ZeroLine."Allocation Type" := ZeroLine."allocation type"::Slitting;
-                        ZeroLine.Modify;
+                        ZeroLine.Modify();
                     end;
                 end;
             "allocation type"::"Hold Remnant on Floor":
@@ -2081,7 +2078,7 @@ Table 50009 "NV8 Roll Allocator Line"
                     Validate(Quantity);
                     if ZeroLineFound and (ZeroLine."Allocation Type" <> ZeroLine."allocation type"::Adjustments) then begin
                         ZeroLine."Allocation Type" := ZeroLine."allocation type"::Adjustments;
-                        ZeroLine.Modify;
+                        ZeroLine.Modify();
                     end;
                 end;
             "allocation type"::"Positive Adjustment":
@@ -2093,14 +2090,14 @@ Table 50009 "NV8 Roll Allocator Line"
                     Validate(Pieces);
                     if ZeroLineFound and (ZeroLine."Allocation Type" <> ZeroLine."allocation type"::Adjustments) then begin
                         ZeroLine."Allocation Type" := ZeroLine."allocation type"::Adjustments;
-                        ZeroLine.Modify;
+                        ZeroLine.Modify();
                     end;
                 end;
         end;
 
         if
-          (Abs("Unit Width Inches" - RollSelectorLine."Unit Width Inches") > 0.0001) or
-          (Abs("Unit Length meters" - RollSelectorLine."Unit Length meters") > 0.0001) then
+          (Abs("NV8 Unit Width Inches" - RollSelectorLine."Unit Width Inches") > 0.0001) or
+          (Abs("NV8 Unit Length meters" - RollSelectorLine."Unit Length meters") > 0.0001) then
             "Transfer Whole Pieces" := false;
 
         "Re-Cut" := RollSelectorLine."Re-Cut";
@@ -2175,7 +2172,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
     end;
 
-    local procedure PostJournalLineROLL(RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure PostJournalLineROLL(RollAlloc: Record "NV8 Roll Allocator Line")
     begin
 
         case "Allocation Type" of
@@ -2224,7 +2221,7 @@ Table 50009 "NV8 Roll Allocator Line"
         end;
     end;
 
-    local procedure CreateConsumption(RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure CreateConsumption(RollAlloc: Record "NV8 Roll Allocator Line")
     var
         l_WhseItemJnl: Record "Warehouse Journal Line";
         l_WhseItemTrack: Record "Whse. Item Tracking Line";
@@ -2237,13 +2234,13 @@ Table 50009 "NV8 Roll Allocator Line"
         Eno: Integer;
         l_lineno: Integer;
         ItemJnlPostLineCU: Codeunit "Item Jnl.-Post Line";
-        RollLabelAlloc: Report UnknownReport50026;
-        ProdOrderComp: Record "Prod. Order Component";
+        // RollLabelAlloc: Report UnknownReport50026; // PAP report is missing
+        ProdOrderComp_: Record "Prod. Order Component";
         ProdOrderL: Record "Prod. Order Line";
     begin
         //CLEAR THE BLANK LINE
-        l_ItemJnl.SetRange(l_ItemJnl."Journal Template Name", l_WhseSetup."Consumption Template Name");
-        l_ItemJnl.SetRange(l_ItemJnl."Journal Batch Name", l_WhseSetup."Consumption Worksheet Name");
+        l_ItemJnl.SetRange(l_ItemJnl."Journal Template Name", l_WhseSetup."NV8 Consumption Template Name");
+        l_ItemJnl.SetRange(l_ItemJnl."Journal Batch Name", l_WhseSetup."NV8 Consumption Worksheet Name");
         l_ItemJnl.SetFilter(l_ItemJnl."Item No.", '=''''');
         l_ItemJnl.DeleteAll();
 
@@ -2252,8 +2249,8 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         l_WhseSetup.FindFirst();
-        l_WhseSetup.TestField(l_WhseSetup."Consumption Template Name");
-        l_WhseSetup.TestField(l_WhseSetup."Consumption Worksheet Name");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Consumption Template Name");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Consumption Worksheet Name");
 
         l_InvSetup.FindFirst();
         l_Item.Get(RollAlloc."Item No.");
@@ -2265,14 +2262,14 @@ Table 50009 "NV8 Roll Allocator Line"
         l_LotNoInfo.FindFirst();
 
 
-        if l_LotNoInfo.PIN = '' then begin
-            l_LotNoInfo.PIN := RollAlloc.PIN;
+        if l_LotNoInfo."NV8 PIN" = '' then begin
+            l_LotNoInfo."NV8 PIN" := RollAlloc.PIN;
             l_LotNoInfo.Modify();
         end;
 
         Clear(l_ItemJnl);
-        l_ItemJnl.SetRange(l_ItemJnl."Journal Template Name", l_WhseSetup."Consumption Template Name");
-        l_ItemJnl.SetRange(l_ItemJnl."Journal Batch Name", l_WhseSetup."Consumption Worksheet Name");
+        l_ItemJnl.SetRange(l_ItemJnl."Journal Template Name", l_WhseSetup."NV8 Consumption Template Name");
+        l_ItemJnl.SetRange(l_ItemJnl."Journal Batch Name", l_WhseSetup."NV8 Consumption Worksheet Name");
         if l_ItemJnl.FindLast() then
             l_lineno := l_ItemJnl."Line No." + 10000
         else
@@ -2280,11 +2277,11 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         Clear(l_ItemJnl);
-        l_ItemJnl.Validate(l_ItemJnl."Journal Template Name", l_WhseSetup."Consumption Template Name");
-        l_ItemJnl.Validate(l_ItemJnl."Journal Batch Name", l_WhseSetup."Consumption Worksheet Name");
+        l_ItemJnl.Validate(l_ItemJnl."Journal Template Name", l_WhseSetup."NV8 Consumption Template Name");
+        l_ItemJnl.Validate(l_ItemJnl."Journal Batch Name", l_WhseSetup."NV8 Consumption Worksheet Name");
         l_ItemJnl."Entry Type" := l_ItemJnl."entry type"::Consumption;
 
-        l_ItemJnl.SkipCheck;
+        l_ItemJnl."NV8 SkipCheck"();
 
         l_ItemJnl."Order Type" := l_ItemJnl."order type"::Production;
         l_ItemJnl."Order No." := RollAlloc."Prod. Order No.";
@@ -2327,10 +2324,10 @@ Table 50009 "NV8 Roll Allocator Line"
         //l_ItemJnl."Source No." := RollAlloc."Item No.";  // UE-489 01/18/18
 
         ///ue-601
-        ProdOrderComp.SetRange("Prod. Order No.", RollAlloc."Prod. Order No.");
-        ProdOrderComp.SetRange("Item No.", "Item No.");
-        if ProdOrderComp.FindFirst() then
-            l_ItemJnl."Prod. Order Comp. Line No." := ProdOrderComp."Line No."
+        ProdOrderComp_.SetRange("Prod. Order No.", RollAlloc."Prod. Order No.");
+        ProdOrderComp_.SetRange("Item No.", "Item No.");
+        if ProdOrderComp_.FindFirst() then
+            l_ItemJnl."Prod. Order Comp. Line No." := ProdOrderComp_."Line No."
              //>> 01/31/18
              ;
         //ELSE
@@ -2350,18 +2347,18 @@ Table 50009 "NV8 Roll Allocator Line"
 
         //<< UE-489  1/18/18
 
-        l_ItemJnl.Pieces := RollAlloc.Pieces;
-        l_ItemJnl."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_ItemJnl."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_ItemJnl."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_ItemJnl."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_ItemJnl."Total Length meters" := RollAlloc."Total Length meters";
-        l_ItemJnl."Total Area m2" := RollAlloc."Total Area m2";
-        l_ItemJnl."Configurator No." := RollAlloc."Configurator No.";
-        l_ItemJnl.Shape := RollAlloc.Shape;
-        l_ItemJnl.Material := RollAlloc.Material;
-        l_ItemJnl.Grit := RollAlloc.Grit;
-        l_ItemJnl."Lot Group Code" := l_LotNoInfo."Lot Group Code";
+        l_ItemJnl."NV8 Pieces" := RollAlloc.Pieces;
+        l_ItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_ItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_ItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_ItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_ItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_ItemJnl."NV8 Total Area m2" := RollAlloc."Total Area m2";
+        l_ItemJnl."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_ItemJnl."NV8 Shape" := RollAlloc.Shape;
+        l_ItemJnl."NV8 Material" := RollAlloc.Material;
+        l_ItemJnl."NV8 Grit" := RollAlloc.Grit;
+        l_ItemJnl."NV8 Lot Group Code" := l_LotNoInfo."NV8 Lot Group Code";
 
 
         l_ReservationEntry.LockTable();
@@ -2459,20 +2456,20 @@ Table 50009 "NV8 Roll Allocator Line"
         //l_ItemJnl.INSERT;
 
         Clear(ItemJnlPostLineCU);
-        ItemJnlPostLineCU.BypassPickCheck;
+        // ItemJnlPostLineCU.BypassPickCheck;//TODO PAP Uncomment
         ItemJnlPostLineCU.Run(l_ItemJnl);
 
 
 
         if not RollAlloc."Do Not Print" then begin
             l_LotNoInfo.SetRange("Lot No.", l_LotNoInfo."Lot No.");
+            //TODO PAP Uncomment
+            // Clear(RollLabelAlloc);
+            // RollLabelAlloc.SetNoOfLabels(1);
+            // RollLabelAlloc.SetTableview(l_LotNoInfo);
+            // RollLabelAlloc.UseRequestPage(false);
 
-            Clear(RollLabelAlloc);
-            RollLabelAlloc.SetNoOfLabels(1);
-            RollLabelAlloc.SetTableview(l_LotNoInfo);
-            RollLabelAlloc.UseRequestPage(false);
-
-            RollLabelAlloc.Run;
+            // RollLabelAlloc.Run;
 
         end;
 
@@ -2482,7 +2479,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
     end;
 
-    local procedure CreateReclass(var RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure CreateReclass(var RollAlloc: Record "NV8 Roll Allocator Line")
     var
         l_WhseItemJnl: Record "Warehouse Journal Line";
         l_WhseItemTrack: Record "Whse. Item Tracking Line";
@@ -2492,7 +2489,7 @@ Table 50009 "NV8 Roll Allocator Line"
         l_LotNoInfo: Record "Lot No. Information";
         Eno: Integer;
         l_lineno: Integer;
-        RollLabelAlloc: Report UnknownReport50026;
+        // RollLabelAlloc: Report UnknownReport50026; //TODO PAP uncomment
         l_WhseRegister: Codeunit "Whse. Jnl.-Register Line";
         l_ItemJnlLine: Record "Item Journal Line";
         ItemJnlPostLineCU: Codeunit "Item Jnl.-Post Line";
@@ -2509,16 +2506,16 @@ Table 50009 "NV8 Roll Allocator Line"
         //Make the remnant into fresh Lot no.
 
         l_WhseSetup.FindFirst();
-        l_WhseSetup.TestField(l_WhseSetup."Auto Reclass Template");
-        l_WhseSetup.TestField(l_WhseSetup."Auto Reclass Batch");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Auto Reclass Template");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Auto Reclass Batch");
 
         l_InvSetup.FindFirst();
         l_Item.Get(RollAlloc."Item No.");
 
 
         Clear(l_WhseItemJnl);
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."Auto Reclass Template");
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."Auto Reclass Batch");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."NV8 Auto Reclass Template");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."NV8 Auto Reclass Batch");
         if l_WhseItemJnl.FindLast() then
             l_lineno := l_WhseItemJnl."Line No." + 10000
         else
@@ -2528,57 +2525,57 @@ Table 50009 "NV8 Roll Allocator Line"
 
         //Make Reclass Jnl
         Clear(l_WhseItemJnl);
-        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Template Name", l_WhseSetup."Auto Reclass Template");
-        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."Auto Reclass Batch");
+        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Template Name", l_WhseSetup."NV8 Auto Reclass Template");
+        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."NV8 Auto Reclass Batch");
         //Testing
         //l_WhseItemJnl."Line No." := l_lineno;
         l_WhseItemJnl."Registering Date" := WorkDate();
         l_WhseItemJnl."Location Code" := RollAlloc."Location Code";
         l_WhseItemJnl.Validate(l_WhseItemJnl."Item No.", RollAlloc."Item No.");
         l_WhseItemJnl."Whse. Document No." := RollAlloc."Document No.";
-        l_WhseItemJnl."From Zone Code" := l_WhseSetup."Floor Zone";
+        l_WhseItemJnl."From Zone Code" := l_WhseSetup."NV8 Floor Zone";
         l_WhseItemJnl."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", RollAlloc."Roll ID", '');
-        l_WhseItemJnl."To Zone Code" := l_WhseSetup."Floor Zone";
+        l_WhseItemJnl."To Zone Code" := l_WhseSetup."NV8 Floor Zone";
         //>> UE-499
         l_Location.Get(RollAlloc."Location Code");
         //l_WhseItemJnl."To Bin Code" := l_WhseItemJnl."From Bin Code";
-        if l_Location."Remnant Bin Code" <> '' then
-            l_WhseItemJnl."To Bin Code" := l_Location."Remnant Bin Code";
+        if l_Location."NV8 Remnant Bin Code" <> '' then
+            l_WhseItemJnl."To Bin Code" := l_Location."NV8 Remnant Bin Code";
         //<< UE-499
 
         l_WhseItemJnl.Description := 'Remnant Reclass for: ' + RollAlloc."Prod. Order No.";
-        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."Allocated Quantity");
+        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."NV8 Allocated Quantity");
 
         l_WhseItemJnl."Whse. Document Type" := l_WhseItemJnl."whse. document type"::"Whse. Journal";
 
 
-        l_WhseItemJnl.Pieces := RollAlloc.Pieces;
-        l_WhseItemJnl."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_WhseItemJnl."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_WhseItemJnl."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_WhseItemJnl."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_WhseItemJnl."Total Length meters" := RollAlloc."Total Length meters";
-        l_WhseItemJnl."Total Area m2" := RollAlloc."Total Area m2";
-        l_WhseItemJnl."Configurator No." := RollAlloc."Configurator No.";
-        l_WhseItemJnl.Shape := RollAlloc.Shape;
-        l_WhseItemJnl.Material := RollAlloc.Material;
-        l_WhseItemJnl.Grit := RollAlloc.Grit;
-        l_WhseItemJnl."Lot Group Code" := l_LotNoInfo."Lot Group Code";
+        l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_WhseItemJnl."NV8 Total Area m2" := RollAlloc."Total Area m2";
+        l_WhseItemJnl."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_WhseItemJnl."NV8 Shape" := RollAlloc."Shape";
+        l_WhseItemJnl."NV8 Material" := RollAlloc."Material";
+        l_WhseItemJnl."NV8 Grit" := RollAlloc.Grit;
+        l_WhseItemJnl."NV8 Lot Group Code" := l_LotNoInfo."NV8 Lot Group Code";
         l_WhseItemJnl."Entry Type" := l_WhseItemJnl."entry type"::Movement;
         l_WhseItemJnl."User ID" := UserId;
         l_WhseItemJnl."Lot No." := RollAlloc."Roll ID";
 
 
-        l_WhseItemJnl.Pieces := RollAlloc.Pieces;
-        l_WhseItemJnl."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_WhseItemJnl."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_WhseItemJnl."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_WhseItemJnl."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_WhseItemJnl."Total Length meters" := RollAlloc."Total Length meters";
-        l_WhseItemJnl."Configurator No." := RollAlloc."Configurator No.";
-        l_WhseItemJnl.Shape := RollAlloc.Shape;
-        l_WhseItemJnl.Material := RollAlloc.Material;
-        l_WhseItemJnl.Grit := RollAlloc.Grit;
+        l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_WhseItemJnl."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_WhseItemJnl."NV8 Shape" := RollAlloc.Shape;
+        l_WhseItemJnl."NV8 Material" := RollAlloc.Material;
+        l_WhseItemJnl."NV8 Grit" := RollAlloc.Grit;
 
 
 
@@ -2617,16 +2614,16 @@ Table 50009 "NV8 Roll Allocator Line"
         l_LotNoInfo.SetRange(l_LotNoInfo."Variant Code", RollAlloc."Variant Code");
         l_LotNoInfo.SetRange(l_LotNoInfo."Lot No.", RollAlloc."Roll ID");
         l_LotNoInfo.FindFirst();
-        l_LotNoInfo.PIN := RollAlloc.PIN;
+        l_LotNoInfo."NV8 PIN" := RollAlloc.PIN;
         l_LotNoInfo.Modify();
 
         //UE-606
-        if l_LotNoInfo."Original Lot No." <> '' then
-            OldLotNo := l_LotNoInfo."Original Lot No."
+        if l_LotNoInfo."NV8 Original Lot No." <> '' then
+            OldLotNo := l_LotNoInfo."NV8 Original Lot No."
         else
             OldLotNo := l_LotNoInfo."Lot No.";
         //
-        l_LotNoInfo."Lot No." := NoSeriesMgt.GetNextNo(l_InvSetup."Auto Lot No. Series", WorkDate(), true);
+        l_LotNoInfo."Lot No." := NoSeriesMgt.GetNextNo(l_InvSetup."NV8 Auto Lot No. Series", WorkDate(), true);
         NewLotNo := l_LotNoInfo."Lot No.";
         //l_LotNoInfo."Lot Group Code" := NoSeriesMgt.GetNextNo(l_InvSetup."Lot Group No. Series",WORKDATE,TRUE);
         l_WhseItemTrack."New Lot No." := l_LotNoInfo."Lot No.";
@@ -2638,47 +2635,47 @@ Table 50009 "NV8 Roll Allocator Line"
         RollAlloc."Roll ID" := l_WhseItemTrack."New Lot No.";
         RollAlloc.MODIFY;
          */
-        l_InvSetup."Allocation Entry No." += 1;
+        l_InvSetup."NV8 Allocation Entry No." += 1;
         l_InvSetup.Modify();
 
 
 
 
         //Insert lot info with new lot number;
-        l_LotNoInfo."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_LotNoInfo."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_LotNoInfo."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_LotNoInfo."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_LotNoInfo."Total Length meters" := RollAlloc."Total Length meters";
-        l_LotNoInfo."Total Area m2" := RollAlloc."Total Area m2";
-        l_LotNoInfo."Unit Width Code" := RollAlloc."Unit Width Code";
-        l_LotNoInfo."Unit Width Text" := RollAlloc."Unit Width Text";
+        l_LotNoInfo."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_LotNoInfo."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_LotNoInfo."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_LotNoInfo."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_LotNoInfo."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_LotNoInfo."NV8 Total Area m2" := RollAlloc."Total Area m2";
+        l_LotNoInfo."NV8 Unit Width Code" := RollAlloc."Unit Width Code";
+        l_LotNoInfo."NV8 Unit Width Text" := RollAlloc."Unit Width Text";
         //UE222
         //l_LotNoInfo."Label Printed" := FALSE;
-        l_LotNoInfo."Label Printed" := true;
+        l_LotNoInfo."NV8 Label Printed" := true;
         //
-        l_LotNoInfo.Locked := l_LotNoInfo.Locked::None;
-        l_LotNoInfo."Locked By" := '';
-        l_LotNoInfo."Pick No." := '';
-        l_LotNoInfo."Allocator Comment" := '';
-        l_LotNoInfo.Pieces := RollAlloc.Pieces;
-        l_LotNoInfo."FIFO Code" := RollAlloc."FIFO Code";
-        l_LotNoInfo."FIFO Date" := RollAlloc."FIFO Date";
-        l_LotNoInfo.PIN := RollAlloc.PIN;
-        l_LotNoInfo."Lot Group Code" := NoSeriesMgt.GetNextNo(l_InvSetup."Lot Group No. Series", WorkDate(), true);
+        l_LotNoInfo."NV8 Locked" := l_LotNoInfo."NV8 Locked"::None;
+        l_LotNoInfo."NV8 Locked By" := '';
+        l_LotNoInfo."NV8 Pick No." := '';
+        l_LotNoInfo."NV8 Allocator Comment" := '';
+        l_LotNoInfo."NV8 Pieces" := RollAlloc.Pieces;
+        l_LotNoInfo."NV8 FIFO Code" := RollAlloc."FIFO Code";
+        l_LotNoInfo."NV8 FIFO Date" := RollAlloc."FIFO Date";
+        l_LotNoInfo."NV8 PIN" := RollAlloc.PIN;
+        l_LotNoInfo."NV8 Lot Group Code" := NoSeriesMgt.GetNextNo(l_InvSetup."NV8 Lot Group No. Series", WorkDate(), true);
         //UE-606
-        if l_LotNoInfo."Original Lot No." = '' then
-            l_LotNoInfo."Original Lot No." := OldLotNo;
+        if l_LotNoInfo."NV8 Original Lot No." = '' then
+            l_LotNoInfo."NV8 Original Lot No." := OldLotNo;
 
 
 
-        l_LotNoInfo."Jumbo Pull" := false;
+        l_LotNoInfo."NV8 Jumbo Pull" := false;
 
         //LOT1.02
-        l_LotNoInfo.CalcJumbo(l_LotNoInfo);
+        // l_LotNoInfo.CalcJumbo(l_LotNoInfo);//TODO PAP Uncomment
         //END
 
-        l_LotNoInfo."Allocation Entry No." := l_InvSetup."Allocation Entry No.";
+        l_LotNoInfo."NV8 Allocation Entry No." := l_InvSetup."NV8 Allocation Entry No.";
         l_LotNoInfo.Insert();
 
 
@@ -2690,8 +2687,8 @@ Table 50009 "NV8 Roll Allocator Line"
         //Post it
 
         //CLEAR THE BLANK LINE
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."Auto Reclass Template");
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."Auto Reclass Batch");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."NV8 Auto Reclass Template");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."NV8 Auto Reclass Batch");
         l_WhseItemJnl.SetFilter(l_WhseItemJnl."Item No.", '=''''');
         l_WhseItemJnl.DeleteAll();
 
@@ -2720,20 +2717,20 @@ Table 50009 "NV8 Roll Allocator Line"
         l_ItemJnlLine."Reason Code" := l_WhseItemJnl."Reason Code";
         //l_ItemJnlLine."Line No." := l_WhseItemJnl."Line No.";
 
-
-        CreateReservEntry.CreateReservEntryFor(
-          Database::"Item Journal Line",
-          l_ItemJnlLine."Entry Type",
-          '',
-          '',
-          0,
-          l_WhseItemJnl."Line No.",
-          l_WhseItemTrack."Qty. per Unit of Measure",
-          Abs(l_WhseItemTrack."Qty. to Handle"),
-          Abs(l_WhseItemTrack."Qty. to Handle (Base)"),
-          l_WhseItemTrack."Serial No.",
-          l_WhseItemTrack."Lot No.");
-        CreateReservEntry.SetNewSerialLotNo(l_WhseItemTrack."New Serial No.", l_WhseItemTrack."New Lot No.");
+        // TODO PAP
+        // CreateReservEntry.CreateReservEntryFor(
+        //   Database::"Item Journal Line",
+        //   l_ItemJnlLine."Entry Type",
+        //   '',
+        //   '',
+        //   0,
+        //   l_WhseItemJnl."Line No.",
+        //   l_WhseItemTrack."Qty. per Unit of Measure",
+        //   Abs(l_WhseItemTrack."Qty. to Handle"),
+        //   Abs(l_WhseItemTrack."Qty. to Handle (Base)"),
+        //   l_WhseItemTrack."Serial No.",
+        //   l_WhseItemTrack."Lot No.");
+        // CreateReservEntry.SetNewSerialLotNo(l_WhseItemTrack."New Serial No.", l_WhseItemTrack."New Lot No.");//TODO PAP Uncomment
         CreateReservEntry.SetDates(l_WhseItemTrack."Warranty Date", l_WhseItemTrack."Expiration Date");
         CreateReservEntry.SetNewExpirationDate(l_WhseItemTrack."New Expiration Date");
         CreateReservEntry.CreateEntry(
@@ -2758,25 +2755,19 @@ Table 50009 "NV8 Roll Allocator Line"
         // Print label with new lot/rollID
 
         l_LotNoInfo.SetRange("Lot No.", l_LotNoInfo."Lot No.");
+        // TODO PAP UNcomment
+        // Clear(RollLabelAlloc);
+        // RollLabelAlloc.SetNoOfLabels(1);
+        // RollLabelAlloc.SetTableview(l_LotNoInfo);
+        // RollLabelAlloc.UseRequestPage(false);
 
-        Clear(RollLabelAlloc);
-        RollLabelAlloc.SetNoOfLabels(1);
-        RollLabelAlloc.SetTableview(l_LotNoInfo);
-        RollLabelAlloc.UseRequestPage(false);
-
-        RollLabelAlloc.Run;
-
-
-
-
-
-
+        // RollLabelAlloc.Run;
 
         //TESTING
 
     end;
 
-    local procedure CreateNegAdjust(RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure CreateNegAdjust(RollAlloc: Record "NV8 Roll Allocator Line")
     var
         l_WhseItemJnl: Record "Warehouse Journal Line";
         l_WhseItemTrack: Record "Whse. Item Tracking Line";
@@ -2792,16 +2783,16 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseJrnlBatch: Record "Warehouse Journal Batch";
     begin
         //CLEAR THE BLANK LINE
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."Waste Adj. Template Name");
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."Waste Adj. Template Name");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."NV8 Waste Adj. Template Name");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."NV8 Waste Adj. Template Name");
         l_WhseItemJnl.SetFilter(l_WhseItemJnl."Item No.", '=''''');
         l_WhseItemJnl.DeleteAll();
 
 
 
         l_WhseSetup.FindFirst();
-        l_WhseSetup.TestField(l_WhseSetup."Waste Adj. Template Name");
-        l_WhseSetup.TestField(l_WhseSetup."Waste Adj. Batch Name");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Waste Adj. Template Name");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Waste Adj. Batch Name");
 
         l_InvSetup.FindFirst();
         l_Item.Get(RollAlloc."Item No.");
@@ -2813,14 +2804,14 @@ Table 50009 "NV8 Roll Allocator Line"
         l_LotNoInfo.SetRange(l_LotNoInfo."Lot No.", RollAlloc."Roll ID");
         l_LotNoInfo.FindFirst();
 
-        if l_LotNoInfo.PIN = '' then begin
-            l_LotNoInfo.PIN := RollAlloc.PIN;
+        if l_LotNoInfo."NV8 PIN" = '' then begin
+            l_LotNoInfo."NV8 PIN" := RollAlloc.PIN;
             l_LotNoInfo.Modify();
         end;
 
         Clear(l_WhseItemJnl);
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."Waste Adj. Template Name");
-        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."Waste Adj. Template Name");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Template Name", l_WhseSetup."NV8 Waste Adj. Template Name");
+        l_WhseItemJnl.SetRange(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."NV8 Waste Adj. Template Name");
         if l_WhseItemJnl.FindLast() then
             l_lineno := l_WhseItemJnl."Line No." + 10000
         else
@@ -2830,8 +2821,8 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         Clear(l_WhseItemJnl);
-        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Template Name", l_WhseSetup."Waste Adj. Template Name");
-        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."Waste Adj. Batch Name");
+        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Template Name", l_WhseSetup."NV8 Waste Adj. Template Name");
+        l_WhseItemJnl.Validate(l_WhseItemJnl."Journal Batch Name", l_WhseSetup."NV8 Waste Adj. Batch Name");
         //TESTING
         //l_WhseItemJnl."Line No." := l_lineno ;
         l_WhseItemJnl."Whse. Document Type" := l_WhseItemJnl."whse. document type"::"Whse. Journal";
@@ -2839,29 +2830,29 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseItemJnl."Location Code" := RollAlloc."Location Code";
         l_WhseItemJnl.Validate(l_WhseItemJnl."Item No.", RollAlloc."Item No.");
         l_WhseItemJnl."Registering Date" := WorkDate();
-        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."Allocated Quantity");
+        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."NV8 Allocated Quantity");
         //l_WhseItemJnl."Whse. Document Line No." := 10000;
         l_WhseItemJnl."Entry Type" := l_WhseItemJnl."entry type"::"Negative Adjmt.";
         l_WhseItemJnl.Description := 'Waste Adjustment for: ' + RollAlloc."Prod. Order No.";
         l_WhseItemJnl."User ID" := UserId;
 
-        l_WhseItemJnl."From Zone Code" := l_WhseSetup."Floor Zone";
+        l_WhseItemJnl."From Zone Code" := l_WhseSetup."NV8 Floor Zone";
         l_WhseItemJnl."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", RollAlloc."Roll ID", '');
         l_WhseItemJnl."Zone Code" := l_WhseItemJnl."From Zone Code";
         l_WhseItemJnl."Bin Code" := l_WhseItemJnl."From Bin Code";
 
         l_WhseItemJnl."Lot No." := RollAlloc."Roll ID";
 
-        l_WhseItemJnl.Pieces := RollAlloc.Pieces;
-        l_WhseItemJnl."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_WhseItemJnl."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_WhseItemJnl."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_WhseItemJnl."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_WhseItemJnl."Total Length meters" := RollAlloc."Total Length meters";
-        l_WhseItemJnl."Configurator No." := RollAlloc."Configurator No.";
-        l_WhseItemJnl.Shape := RollAlloc.Shape;
-        l_WhseItemJnl.Material := RollAlloc.Material;
-        l_WhseItemJnl.Grit := RollAlloc.Grit;
+        l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_WhseItemJnl."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_WhseItemJnl."NV8 Shape" := RollAlloc.Shape;
+        l_WhseItemJnl."NV8 Material" := RollAlloc.Material;
+        l_WhseItemJnl."NV8 Grit" := RollAlloc.Grit;
 
 
         l_Bin.SetRange(l_Bin."Location Code", l_Location.Code);
@@ -2872,18 +2863,18 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseItemJnl."To Bin Code" := l_Location."Adjustment Bin Code";
 
 
-        l_WhseItemJnl.Pieces := RollAlloc.Pieces;
-        l_WhseItemJnl."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_WhseItemJnl."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_WhseItemJnl."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_WhseItemJnl."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_WhseItemJnl."Total Length meters" := RollAlloc."Total Length meters";
-        l_WhseItemJnl."Total Area m2" := RollAlloc."Total Area m2";
-        l_WhseItemJnl."Configurator No." := RollAlloc."Configurator No.";
-        l_WhseItemJnl.Shape := RollAlloc.Shape;
-        l_WhseItemJnl.Material := RollAlloc.Material;
-        l_WhseItemJnl.Grit := RollAlloc.Grit;
-        l_WhseItemJnl."Lot Group Code" := l_LotNoInfo."Lot Group Code";
+        l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_WhseItemJnl."NV8 Total Area m2" := RollAlloc."Total Area m2";
+        l_WhseItemJnl."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_WhseItemJnl."NV8 Shape" := RollAlloc.Shape;
+        l_WhseItemJnl."NV8 Material" := RollAlloc.Material;
+        l_WhseItemJnl."NV8 Grit" := RollAlloc.Grit;
+        l_WhseItemJnl."NV8 Lot Group Code" := l_LotNoInfo."NV8 Lot Group Code";
         //>> UE-270
         l_WhseJrnlBatch.Get(l_WhseItemJnl."Journal Template Name", l_WhseItemJnl."Journal Batch Name", l_WhseItemJnl."Location Code");
         l_WhseItemJnl."Reason Code" := l_WhseJrnlBatch."Reason Code";
@@ -2938,7 +2929,7 @@ Table 50009 "NV8 Roll Allocator Line"
             until (l_BinContents.Next() = 0);
     end;
 
-    local procedure PutAwayWorkSheet(RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure PutAwayWorkSheet(RollAlloc: Record "NV8 Roll Allocator Line")
     var
         l_WhseWksht: Record "Whse. Worksheet Line";
         l_WhseWksht2: Record "Whse. Worksheet Line";
@@ -2953,8 +2944,8 @@ Table 50009 "NV8 Roll Allocator Line"
     begin
 
         l_WhseSetup.FindFirst();
-        l_WhseSetup.TestField(l_WhseSetup."Put-Away Template");
-        l_WhseSetup.TestField(l_WhseSetup."Put-Away Worksheet Name");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Put-Away Template");
+        l_WhseSetup.TestField(l_WhseSetup."NV8 Put-Away Worksheet Name");
 
         l_InvSetup.FindFirst();
         l_Item.Get(RollAlloc."Item No.");
@@ -2976,8 +2967,8 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         Clear(l_WhseWksht);
-        l_WhseWksht."Worksheet Template Name" := l_WhseSetup."Put-Away Template";
-        l_WhseWksht.Name := l_WhseSetup."Put-Away Worksheet Name";
+        l_WhseWksht."Worksheet Template Name" := l_WhseSetup."NV8 Put-Away Template";
+        l_WhseWksht.Name := l_WhseSetup."NV8 Put-Away Worksheet Name";
         l_WhseWksht."Whse. Document Line No." := 10000;
 
         l_WhseWksht2.SetRange("Worksheet Template Name", l_WhseWksht."Worksheet Template Name");
@@ -2993,7 +2984,7 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseWksht."Whse. Document Type" := l_WhseWksht."whse. document type"::Production;
         l_WhseWksht.Validate("Item No.", RollAlloc."Item No.");
         l_WhseWksht.Validate(l_WhseWksht."Whse. Document No.", RollAlloc."Prod. Order No.");
-        l_WhseWksht.Validate(l_WhseWksht.Quantity, RollAlloc."Allocated Quantity");
+        l_WhseWksht.Validate(l_WhseWksht.Quantity, RollAlloc."NV8 Allocated Quantity");
 
         l_WhseWksht."Whse. Document Line No." := 10000;
 
@@ -3012,25 +3003,25 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         l_WhseWksht.Description := RollAlloc.Description;
-        l_WhseWksht."From Zone Code" := l_WhseSetup."Floor Zone";
-        l_WhseWksht."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", RollAlloc."Roll ID", l_WhseSetup."Floor Zone");
-        l_WhseWksht."To Zone Code" := l_WhseSetup."Warehouse Zone";
+        l_WhseWksht."From Zone Code" := l_WhseSetup."NV8 Floor Zone";
+        l_WhseWksht."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", RollAlloc."Roll ID", l_WhseSetup."NV8 Floor Zone");
+        l_WhseWksht."To Zone Code" := l_WhseSetup."NV8 Warehouse Zone";
         l_WhseWksht."To Bin Code" := l_Location."From-Assembly Bin Code"; //Hope thats the right one
-        l_WhseWksht.Pieces := RollAlloc.Pieces;
-        l_WhseWksht."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_WhseWksht."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_WhseWksht."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_WhseWksht."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_WhseWksht."Total Length meters" := RollAlloc."Total Length meters";
-        l_WhseWksht."Total Area m2" := RollAlloc."Total Area m2";
-        l_WhseWksht."Configurator No." := RollAlloc."Configurator No.";
-        l_WhseWksht.Shape := RollAlloc.Shape;
-        l_WhseWksht.Material := RollAlloc.Material;
-        l_WhseWksht.Grit := RollAlloc.Grit;
+        l_WhseWksht."NV8 Pieces" := RollAlloc.Pieces;
+        l_WhseWksht."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_WhseWksht."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseWksht."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_WhseWksht."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_WhseWksht."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_WhseWksht."NV8 Total Area m2" := RollAlloc."Total Area m2";
+        l_WhseWksht."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_WhseWksht."NV8 Shape" := RollAlloc.Shape;
+        l_WhseWksht."NV8 Material" := RollAlloc.Material;
+        l_WhseWksht."NV8 Grit" := RollAlloc.Grit;
         //l_WhseWksht."Lot Group Code" := l_LotNoInfo."Lot Group Code";
-        l_WhseWksht."Qty. (Base)" := RollAlloc."Allocated Quantity";
-        l_WhseWksht."Qty. to Handle" := RollAlloc."Allocated Quantity";
-        l_WhseWksht."Qty. to Handle (Base)" := RollAlloc."Allocated Quantity";
+        l_WhseWksht."Qty. (Base)" := RollAlloc."NV8 Allocated Quantity";
+        l_WhseWksht."Qty. to Handle" := RollAlloc."NV8 Allocated Quantity";
+        l_WhseWksht."Qty. to Handle (Base)" := RollAlloc."NV8 Allocated Quantity";
         ;
 
 
@@ -3073,7 +3064,7 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseItemTrack.Insert();
     end;
 
-    local procedure CreateInternalPutAway(RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure CreateInternalPutAway(RollAlloc: Record "NV8 Roll Allocator Line")
     var
         l_Item: Record Item;
         l_LotNoInfo: Record "Lot No. Information";
@@ -3081,9 +3072,9 @@ Table 50009 "NV8 Roll Allocator Line"
         l_IntPickHead: Record "Whse. Internal Put-away Header";
         l_IntPickLine: Record "Whse. Internal Put-away Line";
         l_WhseItemTrack: Record "Whse. Item Tracking Line";
-        Eno: Integer;
         l_WhseSetup: Record "Warehouse Setup";
-        l_CreatePick: Report UnknownReport50043;
+        // l_CreatePick: Report UnknownReport50043;//TODO PAP Uncomment
+        Eno: Integer;
     begin
 
         l_WhseSetup.FindFirst();
@@ -3114,36 +3105,36 @@ Table 50009 "NV8 Roll Allocator Line"
         l_IntPickLine."Location Code" := l_IntPickHead."Location Code";
         l_IntPickLine."Item No." := RollAlloc."Item No.";
         //l_IntPickLine.VALIDATE(l_IntPickLine."Item No.",RollAlloc."Item No.");
-        //l_IntPickLine.VALIDATE(l_IntPickLine.Quantity,RollAlloc."Allocated Quantity");
-        l_IntPickLine.Quantity := RollAlloc."Allocated Quantity";
-        l_IntPickLine."From Zone Code" := l_WhseSetup."Floor Zone";
-        l_IntPickLine."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", l_LotNoInfo."Lot No.", l_WhseSetup."Floor Zone");
+        //l_IntPickLine.VALIDATE(l_IntPickLine.Quantity,RollAlloc."NV8 Allocated Quantity");
+        l_IntPickLine.Quantity := RollAlloc."NV8 Allocated Quantity";
+        l_IntPickLine."From Zone Code" := l_WhseSetup."NV8 Floor Zone";
+        l_IntPickLine."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", l_LotNoInfo."Lot No.", l_WhseSetup."NV8 Floor Zone");
         l_IntPickLine.Description := 'Internal Put away for Lot: ' + l_LotNoInfo."Lot No.";
 
 
         /*Maybe, maybe not */
-        l_IntPickLine."Qty. (Base)" := RollAlloc."Allocated Quantity";
-        l_IntPickLine."Qty. Outstanding" := RollAlloc."Allocated Quantity";
-        l_IntPickLine."Qty. Outstanding (Base)" := RollAlloc."Allocated Quantity";
+        l_IntPickLine."Qty. (Base)" := RollAlloc."NV8 Allocated Quantity";
+        l_IntPickLine."Qty. Outstanding" := RollAlloc."NV8 Allocated Quantity";
+        l_IntPickLine."Qty. Outstanding (Base)" := RollAlloc."NV8 Allocated Quantity";
 
 
 
-        l_IntPickLine."Material Type" := RollAlloc."Material Type";
-        l_IntPickLine.Pieces := RollAlloc.Pieces;
-        l_IntPickLine."Unit Width Inches" := RollAlloc."Unit Width Inches";
-        l_IntPickLine."Unit Length meters" := RollAlloc."Unit Length meters";
-        l_IntPickLine."Unit Length Inches" := RollAlloc."Unit Length Inches";
-        l_IntPickLine."Unit Area m2" := RollAlloc."Unit Area m2";
-        l_IntPickLine."Total Length meters" := RollAlloc."Total Length meters";
-        l_IntPickLine."Total Area m2" := RollAlloc."Total Area m2";
-        l_IntPickLine."Configurator No." := RollAlloc."Configurator No.";
-        l_IntPickLine.Shape := RollAlloc.Shape;
-        l_IntPickLine.Material := RollAlloc.Material;
-        l_IntPickLine."Subst. Material" := RollAlloc."Subst. Material";
-        l_IntPickLine.Specification := RollAlloc.Specification;
-        l_IntPickLine.Grit := RollAlloc.Grit;
-        l_IntPickLine.Joint := RollAlloc.Joint;
-        l_IntPickLine."Slitting Put/Pick" := true;
+        l_IntPickLine."NV8 Material Type" := RollAlloc."Material Type";
+        l_IntPickLine."NV8 Pieces" := RollAlloc.Pieces;
+        l_IntPickLine."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_IntPickLine."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_IntPickLine."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
+        l_IntPickLine."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
+        l_IntPickLine."NV8 Total Length meters" := RollAlloc."Total Length meters";
+        l_IntPickLine."NV8 Total Area m2" := RollAlloc."Total Area m2";
+        l_IntPickLine."NV8 Configurator No." := RollAlloc."Configurator No.";
+        l_IntPickLine."NV8 Shape" := RollAlloc.Shape;
+        l_IntPickLine."NV8 Material" := RollAlloc.Material;
+        l_IntPickLine."NV8 Subst. Material" := RollAlloc."Subst. Material";
+        l_IntPickLine."NV8 Specification" := RollAlloc.Specification;
+        l_IntPickLine."NV8 Grit" := RollAlloc.Grit;
+        l_IntPickLine."NV8 Joint" := RollAlloc.Joint;
+        l_IntPickLine."NV8 Slitting Put/Pick" := true;
 
 
         l_IntPickLine."Unit of Measure Code" := l_Item."Base Unit of Measure";
@@ -3178,21 +3169,22 @@ Table 50009 "NV8 Roll Allocator Line"
 
         ///
         //Auto Generate Pick
-        Clear(l_CreatePick);
-        l_CreatePick.SetWhseInternalPutAway(l_IntPickHead);
-        l_CreatePick.Initialize('INTERNAL\BFUCHS', 0, false, false, false);
-        l_CreatePick.UseRequestPage(false);
-        l_CreatePick.Run;
+        // TODO PAP
+        // Clear(l_CreatePick);
+        // l_CreatePick.SetWhseInternalPutAway(l_IntPickHead);
+        // l_CreatePick.Initialize('INTERNAL\BFUCHS', 0, false, false, false);
+        // l_CreatePick.UseRequestPage(false);
+        // l_CreatePick.Run;
 
     end;
 
-    local procedure ReturnTotalConsumptionQty(l_RollSel: Record "KBM KABOOM BOOMBase CP Type") TtlQty: Decimal
+    local procedure ReturnTotalConsumptionQty(l_RollSel: Record "NV8 Roll Allocator Line") TtlQty: Decimal
     var
-        l_RollSel2: Record "KBM KABOOM BOOMBase CP Type";
+        l_RollSel2: Record "NV8 Roll Allocator Line";
     begin
 
         TtlQty := 0;
-        l_RollSel2.SetRange(l_RollSel2."Item Ledger Entry No.", l_RollSel."Item Ledger Entry No.");
+        l_RollSel2.SetRange(l_RollSel2."NV8 Item Ledger Entry No.", l_RollSel."NV8 Item Ledger Entry No.");
         l_RollSel2.SetRange(l_RollSel2."Entry Type", l_RollSel2."entry type"::Consumption);
         if l_RollSel2.FindSet then
             repeat
@@ -3203,7 +3195,7 @@ Table 50009 "NV8 Roll Allocator Line"
         exit(TtlQty);
     end;
 
-    local procedure AdjustComponentLine(RollAlloc: Record "KBM KABOOM BOOMBase CP Type")
+    local procedure AdjustComponentLine(RollAlloc: Record "NV8 Roll Allocator Line")
     var
         l_ProdComponent: Record "Prod. Order Component";
         l_TotalConQty: Decimal;

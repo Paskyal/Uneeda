@@ -9,14 +9,14 @@ Table 50027 "NV8 Sales by Day"
         }
         field(52000; "Sales Item ($)"; Decimal)
         {
-            CalcFormula = sum("Sales Invoice Line"."Line Amount" where("Sales Type" = const(Revenue),
+            CalcFormula = sum("Sales Invoice Line"."Line Amount" where("NV8 Sales Type" = const(Revenue),
                                                                         "Posting Date" = field("Date Filter")));
             Description = 'UNE-168';
             FieldClass = FlowField;
         }
         field(52001; "Credits Item ($)"; Decimal)
         {
-            CalcFormula = sum("Sales Cr.Memo Line"."Line Amount" where("Sales Type" = const(Revenue),
+            CalcFormula = sum("Sales Cr.Memo Line"."Line Amount" where("NV8 Sales Type" = const(Revenue),
                                                                         "Posting Date" = field("Date Filter")));
             Description = 'UNE-168';
             FieldClass = FlowField;

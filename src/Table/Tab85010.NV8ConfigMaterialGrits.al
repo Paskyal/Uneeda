@@ -60,7 +60,7 @@ Table 85010 "NV8 Config Material-Grits"
                 Item.Get("Material Item No.");
                 "Material Configurator No." := Item."Configurator No.";
                 Item."Raw Material Roll" := true;
-                Item.Modify;
+                Item.Modify();
             end;
         }
         field(91; "Material Configurator No."; Code[100])
@@ -75,7 +75,7 @@ Table 85010 "NV8 Config Material-Grits"
                     exit;
                 Item.Get("Material Item No.");
                 Item."Raw Material Roll" := true;
-                Item.Modify;
+                Item.Modify();
             end;
         }
         field(95; "Creating Raw Material Item"; Boolean)
@@ -166,7 +166,7 @@ Table 85010 "NV8 Config Material-Grits"
             begin
                 if Item.Get("Material Item No.") then begin
                     Item."Vendor Classification" := "Vendor Classification";
-                    Item.Modify;
+                    Item.Modify();
                 end;
             end;
         }
@@ -186,7 +186,7 @@ Table 85010 "NV8 Config Material-Grits"
 
             trigger OnValidate()
             begin
-                UpdateRawMaterialStatus;
+                UpdateRawMaterialStatus();
             end;
         }
         field(85100; "Standard Cost"; Decimal)
@@ -302,7 +302,7 @@ Table 85010 "NV8 Config Material-Grits"
         Item.SetCurrentkey(Material, Grit);
         Item.SetRange(Material, "Material Code");
         Item.SetRange(Grit, "Grit Code");
-        if Item.FindFirst then
+        if Item.FindFirst() then
             Error('You can not delete %1 %2 because it is used in Item %3', "Material Code", "Grit Code", Item."No.");
     end;
 
@@ -323,7 +323,7 @@ Table 85010 "NV8 Config Material-Grits"
             StartDate := 0D
         //str-temp
         else
-            StartDate := CalcDate("Jumbo Pull Formula", WorkDate);
+            StartDate := CalcDate("Jumbo Pull Formula", WorkDate());
         EndDate := Today;
         SetFilter("Jumbo Pull Date Filter", '%1..%2', StartDate, EndDate);
     end;
@@ -337,7 +337,7 @@ Table 85010 "NV8 Config Material-Grits"
         if NewStatus = 0 then
             exit;
         "Set Raw Material Status" := NewStatus - 1;
-        Modify;
+        Modify();
     end;
 
 
@@ -361,7 +361,7 @@ Table 85010 "NV8 Config Material-Grits"
             "Set Raw Material Status" := "set raw material status"::Out;
 
 
-        Modify;
+        Modify();
     end;
 }
 

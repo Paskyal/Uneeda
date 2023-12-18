@@ -39,8 +39,8 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
                 //>> UNE-195
                 if "Material Reviewed" then begin
                     "Material Reviewed By" := UserId;
-                    "Material Reviewed Date" := WorkDate;
-                    Modify;
+                    "Material Reviewed Date" := WorkDate();
+                    Modify();
 
                 end;
                 //<< UNE-195
@@ -683,11 +683,11 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
                 Clear(ProdOrderLine);
                 ProdOrderLine.SetRange(Status, Rec.Status);
                 ProdOrderLine.SetRange("Prod. Order No.", Rec."No.");
-                if ProdOrderLine.FindLast then
+                if ProdOrderLine.FindLast() then
                     repeat
                         ProdOrderLine."Scheduled Date" := Rec."Scheduled Date";
                         ProdOrderLine.Modify(false);
-                    until ProdOrderLine.Next = 0;
+                    until ProdOrderLine.Next() = 0;
                 //>> UNE-173
 
 

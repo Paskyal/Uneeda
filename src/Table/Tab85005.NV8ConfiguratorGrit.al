@@ -3,8 +3,9 @@ Table 85005 "NV8 Configurator Grit"
     // UE-651  DB  4/13/20 Added Default Dimension fields
     // UE-651  DB  66/13/20  Expand Item Description and Item Description 2 to 50
 
-    DrillDownPageID = UnknownPage85010;
-    LookupPageID = UnknownPage85010;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85010;
+    // LookupPageID = UnknownPage85010;
     DataClassification = CustomerContent;
 
     fields
@@ -23,11 +24,11 @@ Table 85005 "NV8 Configurator Grit"
         field(20; "Material Filter"; Code[10])
         {
             FieldClass = FlowFilter;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(21; "Valid Grit"; Boolean)
         {
-            CalcFormula = exist("Configurator Material-Grits" where("Material Code" = field("Material Filter"),
+            CalcFormula = exist("NV8 Config Material-Grits" where("Material Code" = field("Material Filter"),
                                                                      "Grit Code" = field(Code)));
             Editable = false;
             FieldClass = FlowField;
@@ -58,7 +59,7 @@ Table 85005 "NV8 Configurator Grit"
         }
         field(90; "Material Item No."; Code[20])
         {
-            CalcFormula = lookup("Configurator Material-Grits"."Material Item No." where("Material Code" = field("Material Filter"),
+            CalcFormula = lookup("NV8 Config Material-Grits"."Material Item No." where("Material Code" = field("Material Filter"),
                                                                                           "Grit Code" = field(Code)));
             Editable = false;
             FieldClass = FlowField;
@@ -95,14 +96,14 @@ Table 85005 "NV8 Configurator Grit"
     begin
 
         with ConfiguratorItem do begin
-            Reset;
+            Reset();
             SetCurrentkey(Material, Grit);
             SetRange(Grit, Rec.Code);
             if Find('=><') then
                 Error(UEI002, Rec.TableName, Rec.Code, TableName, "Configurator No.");
         end;
         with MaterialGrit do begin
-            Reset;
+            Reset();
             SetCurrentkey("Grit Code");
             SetRange("Grit Code", Rec.Code);
             if Find('=><') then
@@ -116,8 +117,8 @@ Table 85005 "NV8 Configurator Grit"
     end;
 
     var
-        ConfiguratorItem: Record "Configurator Item";
-        MaterialGrit: Record "Configurator Material-Grits";
+        ConfiguratorItem: Record "NV8 Configurator Item";
+        MaterialGrit: Record "NV8 Config Material-Grits";
         UEI001: label 'You can not rename the components of a Configurator Item';
         UEI002: label 'You can not delete %1, %2 because it is used in %3, %4';
 }

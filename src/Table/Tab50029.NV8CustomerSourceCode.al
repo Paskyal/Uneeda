@@ -1,7 +1,8 @@
 Table 50029 "NV8 Customer Source Code"
 {
-    DrillDownPageID = UnknownPage50060;
-    LookupPageID = UnknownPage50060;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage50060;
+    // LookupPageID = UnknownPage50060;
     DataClassification = CustomerContent;
 
     fields

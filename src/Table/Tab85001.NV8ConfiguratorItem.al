@@ -21,8 +21,9 @@ Table 85001 "NV8 Configurator Item"
     //                      Added Validate to Description 2
     // CAS-40665-Y3X3S1  DB  2/23/23 Expand Item Description to 100 to match Microsft update of the Item table description
 
-    DrillDownPageID = UnknownPage85002;
-    LookupPageID = UnknownPage85002;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85002;
+    // LookupPageID = UnknownPage85002;
     DataClassification = CustomerContent;
 
     fields
@@ -71,7 +72,7 @@ Table 85001 "NV8 Configurator Item"
             trigger OnValidate()
             begin
                 if "Configurator Suffix" = '' then
-                    CreateCfgSeries;
+                    CreateCfgSeries();
             end;
         }
         field(13; "Suffix No. Series"; Code[10])
@@ -81,7 +82,7 @@ Table 85001 "NV8 Configurator Item"
         }
         field(14; "Item No. Lookup"; Code[20])
         {
-            CalcFormula = lookup(Item."No." where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup(Item."No." where("NV8 Configurator No." = field("Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -91,7 +92,7 @@ Table 85001 "NV8 Configurator Item"
         }
         field(16; "Raw Material"; Code[100])
         {
-            TableRelation = if (Status = const(Prototype)) "Configurator Item"
+            TableRelation = if (Status = const(Prototype)) "NV8 Configurator Item"
             else
             if (Status = filter(Item .. "Valid Item")) Item;
         }
@@ -129,13 +130,13 @@ Table 85001 "NV8 Configurator Item"
         }
         field(35; "Rule - Description"; Text[80])
         {
-            CalcFormula = lookup("Configurator Shape"."Rule - Description" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Rule - Description" where(Code = field(Shape)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(36; "Rule - Description 2"; Text[80])
         {
-            CalcFormula = lookup("Configurator Shape"."Rule - Description 2" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Rule - Description 2" where(Code = field(Shape)));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -199,7 +200,7 @@ Table 85001 "NV8 Configurator Item"
         }
         field(90; "Raw Material Item No."; Code[20])
         {
-            CalcFormula = lookup("Configurator Material-Grits"."Material Item No." where("Material Code" = field(Material),
+            CalcFormula = lookup("NV8 Config Material-Grits"."Material Item No." where("Material Code" = field(Material),
                                                                                           "Grit Code" = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
@@ -207,31 +208,31 @@ Table 85001 "NV8 Configurator Item"
         }
         field(91; "Raw Material Configurator No."; Code[100])
         {
-            CalcFormula = lookup("Configurator Material-Grits"."Material Configurator No." where("Material Code" = field(Material),
+            CalcFormula = lookup("NV8 Config Material-Grits"."Material Configurator No." where("Material Code" = field(Material),
                                                                                                   "Grit Code" = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Item";
+            TableRelation = "NV8 Configurator Item";
         }
         field(92; "Source Item No."; Code[20])
         {
-            CalcFormula = lookup(Item."No." where(Shape = field(Shape),
-                                                   Material = field(Material),
-                                                   Specification = field(Specification),
-                                                   Grit = field(Grit)));
+            CalcFormula = lookup(Item."No." where("NV8 Shape" = field(Shape),
+                                                   "NV8 Material" = field(Material),
+                                                   "NV8 Specification" = field(Specification),
+                                                   "NV8 Grit" = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Item;
         }
         field(93; "Source Configurator No."; Code[100])
         {
-            CalcFormula = lookup("Configurator Item"."Configurator No." where(Shape = field(Shape),
+            CalcFormula = lookup("NV8 Configurator Item"."Configurator No." where(Shape = field(Shape),
                                                                                Material = field(Material),
                                                                                Specification = field(Specification),
                                                                                Grit = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Item";
+            TableRelation = "NV8 Configurator Item";
         }
         field(95; "Create New Raw Material"; Boolean)
         {
@@ -239,7 +240,7 @@ Table 85001 "NV8 Configurator Item"
             trigger OnValidate()
             begin
                 TestField("Item No.", '');
-                ConfiguratorSetup.Get;
+                ConfiguratorSetup.Get();
                 Validate(Shape, ConfiguratorSetup."Raw Material Shape");
             end;
         }
@@ -260,11 +261,11 @@ Table 85001 "NV8 Configurator Item"
         }
         field(110; Shape; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
 
             trigger OnValidate()
             begin
-                GetShape;
+                GetShape();
                 Material := ConfiguratorShape."Material Value";
                 if ConfiguratorShape."Dimension 1 Rule" = ConfiguratorShape."dimension 1 rule"::Same then
                     "Dimension 1" := ConfiguratorShape."Dimension 1 Value";
@@ -299,29 +300,29 @@ Table 85001 "NV8 Configurator Item"
         }
         field(111; "Shape Description"; Text[30])
         {
-            CalcFormula = lookup("Configurator Shape"."Item Description" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Item Description" where(Code = field(Shape)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(112; "Shape Description 2"; Text[30])
         {
-            CalcFormula = lookup("Configurator Shape"."Item Description 2" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Item Description 2" where(Code = field(Shape)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(120; Material; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(121; "Material Description"; Text[30])
         {
-            CalcFormula = lookup("Configurator Material"."Item Description" where(Code = field(Material)));
+            CalcFormula = lookup("NV8 Configurator Material"."Item Description" where(Code = field(Material)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(122; "Material Description 2"; Text[30])
         {
-            CalcFormula = lookup("Configurator Material"."Item Description 2" where(Code = field(Material)));
+            CalcFormula = lookup("NV8 Configurator Material"."Item Description 2" where(Code = field(Material)));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -337,7 +338,7 @@ Table 85001 "NV8 Configurator Item"
                 //str-temp
                 //
 
-                ConfiguratorSetup.Get;
+                ConfiguratorSetup.Get();
                 "Quantity 1" := ConfiguratorSetup.GetDecimal("Dimension 1");
                 "Dim 1 Text" := ConfiguratorSetup.GetDecimalText("Dimension 1");
             end;
@@ -368,7 +369,7 @@ Table 85001 "NV8 Configurator Item"
                 //str-temp
                 //
 
-                ConfiguratorSetup.Get;
+                ConfiguratorSetup.Get();
                 "Quantity 2" := ConfiguratorSetup.GetDecimal("Dimension 2");
                 "Dim 2 Text" := ConfiguratorSetup.GetDecimalText("Dimension 2");
             end;
@@ -400,7 +401,7 @@ Table 85001 "NV8 Configurator Item"
                 //str-temp
                 //
 
-                ConfiguratorSetup.Get;
+                ConfiguratorSetup.Get();
                 "Quantity 3" := ConfiguratorSetup.GetDecimal("Dimension 3");
                 "Dim 3 Text" := ConfiguratorSetup.GetDecimalText("Dimension 3");
             end;
@@ -432,7 +433,7 @@ Table 85001 "NV8 Configurator Item"
                 //str-temp
                 //
 
-                ConfiguratorSetup.Get;
+                ConfiguratorSetup.Get();
                 "Quantity 4" := ConfiguratorSetup.GetDecimal("Dimension 4");
                 "Dim 4 Text" := ConfiguratorSetup.GetDecimalText("Dimension 4");
             end;
@@ -454,50 +455,50 @@ Table 85001 "NV8 Configurator Item"
         }
         field(170; Specification; Code[10])
         {
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
         }
         field(171; "Specification Description"; Text[30])
         {
-            CalcFormula = lookup("Configurator Specification"."Item Description" where(Code = field(Specification)));
+            CalcFormula = lookup("NV8 Configurator Specification"."Item Description" where(Code = field(Specification)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(172; "Specification Description 2"; Text[30])
         {
-            CalcFormula = lookup("Configurator Specification"."Item Description 2" where(Code = field(Specification)));
+            CalcFormula = lookup("NV8 Configurator Specification"."Item Description 2" where(Code = field(Specification)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(180; Grit; Code[10])
         {
-            TableRelation = "Configurator Material-Grits"."Grit Code" where("Material Code" = field(Material));
+            TableRelation = "NV8 Config Material-Grits"."Grit Code" where("Material Code" = field(Material));
         }
         field(181; "Grit Decription"; Text[30])
         {
-            CalcFormula = lookup("Configurator Grit"."Item Description" where(Code = field(Grit)));
+            CalcFormula = lookup("NV8 Configurator Grit"."Item Description" where(Code = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(182; "Grit Decription 2"; Text[30])
         {
-            CalcFormula = lookup("Configurator Grit"."Item Description" where(Code = field(Grit)));
+            CalcFormula = lookup("NV8 Configurator Grit"."Item Description" where(Code = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(190; Joint; Code[10])
         {
-            TableRelation = "Configurator Shape-Joints".Joint where(Shape = field(Shape),
+            TableRelation = "NV8 Configurator Shape-Joints".Joint where(Shape = field(Shape),
                                                                      "Material Filter" = field(Material));
         }
         field(191; "Joint Description"; Text[30])
         {
-            CalcFormula = lookup("Configurator Joint"."Item Description" where(Code = field(Joint)));
+            CalcFormula = lookup("NV8 Configurator Joint"."Item Description" where(Code = field(Joint)));
             Editable = false;
             FieldClass = FlowField;
         }
         field(192; "Joint Description 2"; Text[30])
         {
-            CalcFormula = lookup("Configurator Joint"."Item Description 2" where(Code = field(Joint)));
+            CalcFormula = lookup("NV8 Configurator Joint"."Item Description 2" where(Code = field(Joint)));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -552,7 +553,7 @@ Table 85001 "NV8 Configurator Item"
         }
         field(68400; "Catalog No."; Code[20])
         {
-            CalcFormula = lookup("Item Catalog Table"."Catalog No." where("Item No." = field("Item No.")));
+            CalcFormula = lookup("NV8 Item Catalog Table"."Catalog No." where("Item No." = field("Item No.")));
             Caption = 'Catalog No.';
             Editable = false;
             FieldClass = FlowField;
@@ -599,7 +600,7 @@ Table 85001 "NV8 Configurator Item"
         }
         field(85097; "Material Type"; Option)
         {
-            CalcFormula = lookup("Configurator Material"."Material Type" where(Code = field(Material)));
+            CalcFormula = lookup("NV8 Configurator Material"."Material Type" where(Code = field(Material)));
             Editable = false;
             FieldClass = FlowField;
             OptionMembers = " ",Paper,Cloth,Combo,Film;
@@ -648,7 +649,7 @@ Table 85001 "NV8 Configurator Item"
     begin
 
         if "Configurator No." = '' then begin
-            ConfiguratorSetup.Get;
+            ConfiguratorSetup.Get();
             ConfiguratorSetup.TestField("Prototype No. Series");
             NoSeriesMgt.InitSeries(
               ConfiguratorSetup."Prototype No. Series",
@@ -674,7 +675,7 @@ Table 85001 "NV8 Configurator Item"
     begin
 
         // ERROR('Old= ' + xRec.GetConfiguratorNo + ' -- New= ' + Rec.GetConfiguratorNo );
-        "Temp Configurator No." := GetConfiguratorNo;
+        "Temp Configurator No." := GetConfiguratorNo();
         /*
         WITH SalesPriceUEI DO BEGIN
           RESET;
@@ -699,14 +700,14 @@ Table 85001 "NV8 Configurator Item"
 
     var
         Item: Record Item;
-        ConfiguratorSetup: Record "Configurator Setup";
-        ConfiguratorItem: Record "Configurator Item";
-        ConfiguratorShape: Record "Configurator Shape";
-        ConfiguratorMaterial: Record "Configurator Material";
-        ConfiguratorSpecification: Record "Configurator Specification";
-        ConfiguratorGrit: Record "Configurator Grit";
-        ConfiguratorJoint: Record "Configurator Joint";
-        ConfiguratorMaterialGrit: Record "Configurator Material-Grits";
+        ConfiguratorSetup: Record "NV8 Configurator Setup";
+        ConfiguratorItem: Record "NV8 Configurator Item";
+        ConfiguratorShape: Record "NV8 Configurator Shape";
+        ConfiguratorMaterial: Record "NV8 Configurator Material";
+        ConfiguratorSpecification: Record "NV8 Configurator Specification";
+        ConfiguratorGrit: Record "NV8 Configurator Grit";
+        ConfiguratorJoint: Record "NV8 Configurator Joint";
+        ConfiguratorMaterialGrit: Record "NV8 Config Material-Grits";
         Routing: Record "Routing Header";
         RoutingLines: Record "Routing Line";
         RoutingComp: Record "Routing Line";
@@ -736,7 +737,7 @@ Table 85001 "NV8 Configurator Item"
 
     procedure AssistEdit(): Boolean
     begin
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         ConfiguratorSetup.TestField("Prototype No. Series");
         if NoSeriesMgt.SelectSeries(
           ConfiguratorSetup."Prototype No. Series",
@@ -750,7 +751,7 @@ Table 85001 "NV8 Configurator Item"
 
     procedure CfgAssistEdit(): Boolean
     begin
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         ConfiguratorSetup.TestField("Configurator Item Nos.");
         if NoSeriesMgt.SelectSeries(
           ConfiguratorSetup."Configurator Item Nos.",
@@ -765,7 +766,7 @@ Table 85001 "NV8 Configurator Item"
     procedure CreateCfgSeries()
     begin
         if "Configurator Suffix" = '' then begin
-            ConfiguratorSetup.Get;
+            ConfiguratorSetup.Get();
             ConfiguratorSetup.TestField("Configurator Item Nos.");
             NoSeriesMgt.InitSeries(
               ConfiguratorSetup."Configurator Item Nos.",
@@ -784,24 +785,24 @@ Table 85001 "NV8 Configurator Item"
     procedure CheckConfiguration()
     begin
         TestField(Shape);
-        GetShape;
+        GetShape();
 
-        if IsItemBlocked then
-            ItemBlockedError;
+        if IsItemBlocked() then
+            ItemBlockedError();
 
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         case ConfiguratorShape."Material Rule" of
             ConfiguratorShape."material rule"::Optional:
                 begin
                     if Material <> '' then
                         ConfiguratorMaterial.Get(Material)
                     else
-                        ConfiguratorMaterial.Init;
+                        ConfiguratorMaterial.Init();
                 end;
             ConfiguratorShape."material rule"::Blank:
                 begin
                     TestField(Material, '');
-                    ConfiguratorMaterial.Init;
+                    ConfiguratorMaterial.Init();
                 end;
             ConfiguratorShape."material rule"::Mandatory:
                 begin
@@ -964,12 +965,12 @@ Table 85001 "NV8 Configurator Item"
                     if Specification <> '' then
                         ConfiguratorSpecification.Get(Specification)
                     else
-                        ConfiguratorSpecification.Init;
+                        ConfiguratorSpecification.Init();
                 end;
             ConfiguratorShape."specification rule"::Blank:
                 begin
                     TestField(Specification, '');
-                    ConfiguratorSpecification.Init;
+                    ConfiguratorSpecification.Init();
                 end;
             ConfiguratorShape."specification rule"::Mandatory:
                 begin
@@ -999,12 +1000,12 @@ Table 85001 "NV8 Configurator Item"
                     if Grit <> '' then
                         ConfiguratorGrit.Get(Grit)
                     else
-                        ConfiguratorGrit.Init;
+                        ConfiguratorGrit.Init();
                 end;
             ConfiguratorShape."grit rule"::Blank:
                 begin
                     TestField(Grit, '');
-                    ConfiguratorGrit.Init;
+                    ConfiguratorGrit.Init();
                 end;
             ConfiguratorShape."grit rule"::Mandatory:
                 begin
@@ -1066,7 +1067,7 @@ Table 85001 "NV8 Configurator Item"
         end;
 
 
-        "Temp Configurator No." := GetConfiguratorNo;
+        "Temp Configurator No." := GetConfiguratorNo();
 
         if (Status <> Status::"Valid Item") and ("Configurator No." <> "Temp Configurator No.") then begin
             if ConfiguratorItem.Get("Temp Configurator No.") then
@@ -1109,295 +1110,296 @@ Table 85001 "NV8 Configurator Item"
         //<< CAS-40665-Y3X3S1
         // Create BOM
         CalcFields("Item Created");
-        if "Item Created" then begin
+        if "Item Created" then
             with Item do begin
                 Get(Rec."Item No.");
                 if "Configurator No." <> Rec."Configurator No." then begin
                     "Configurator No." := Rec."Configurator No.";
-                    Modify;
-                    Reset;
-                    SetCurrentkey("Configurator No.");
-                    SetRange("Configurator No.", Rec."Configurator No.");
+                    Modify();
+                    Reset();
+                    SetCurrentkey("NV8 Configurator No.");
+                    SetRange("NV8 Configurator No.", Rec."Configurator No.");
                     SetFilter("No.", '<>%1', Rec."Item No.");
                     ModifyAll(Blocked, true);
                 end;
             end;
-        end;
 
 
-        Modify;
+        Modify();
     end;
 
 
-    procedure CreateItem(var NewRecVal: Record "Configurator Item")
-    var
-        tempconfno: Code[100];
-        ConfPAGE: Page UnknownPage85001;
-        l_ItemTrackCode: Record "Item Tracking Code";
+    procedure CreateItem(var NewRecVal: Record "NV8 Configurator Item")
+    // TODO PAP
+    // var
+    //     tempconfno: Code[100];
+    //     ConfPAGE: Page UnknownPage85001;
+    //     l_ItemTrackCode: Record "Item Tracking Code";
     begin
-        if "Do Not Create Item" then
-            exit;
-        ConfiguratorSetup.Get;
-        CheckConfiguration;
-        ConfiguratorItem.Init;
-        ConfiguratorItem.Copy(Rec);
-        ConfiguratorItem.TestField("Temp Configurator No.");
-        ConfiguratorItem."Configurator No." := ConfiguratorItem."Temp Configurator No.";
-        //
-        tempconfno := ConfiguratorItem."Configurator No.";
-        ConfiguratorItem.Insert;
+        // TODO PAP
+        // if "Do Not Create Item" then
+        //     exit;
+        // ConfiguratorSetup.Get;
+        // CheckConfiguration();
+        // ConfiguratorItem.Init;
+        // ConfiguratorItem.Copy(Rec);
+        // ConfiguratorItem.TestField("Temp Configurator No.");
+        // ConfiguratorItem."Configurator No." := ConfiguratorItem."Temp Configurator No.";
+        // //
+        // tempconfno := ConfiguratorItem."Configurator No.";
+        // ConfiguratorItem.Insert;
 
-        if "Configurator Suffix" = '' then
-            CreateCfgSeries;
-        ConfiguratorItem."Configurator Suffix" := "Configurator Suffix";
+        // if "Configurator Suffix" = '' then
+        //     CreateCfgSeries();
+        // ConfiguratorItem."Configurator Suffix" := "Configurator Suffix";
 
-        Item.Init;
-        Item."No." := ConfiguratorSetup."Item Prefix" + "Configurator Suffix";
-        //Item."Sales Qty. Disc. Code" := Item."No.";
-        Item."Base Unit of Measure" := "Base Unit of Measure";
-        ItemUOM."Item No." := Item."No.";
-        ItemUOM.Code := "Base Unit of Measure";
-        ItemUOM."Qty. per Unit of Measure" := 1;
-        //ECL LOT
-        // 100615
-        if ConfiguratorItem.Shape <> '' then
-            GetShape;
-        if ConfiguratorShape."Auto Lot Tracking" then begin
-            l_ItemTrackCode.SetRange(l_ItemTrackCode."Auto Track", true);
-            if l_ItemTrackCode.FindFirst then
-                Item."Item Tracking Code" := l_ItemTrackCode.Code;
-        end;
-        //
-
-
-        if ItemUOM.Insert then
-          ;
-
-        Item.Insert(true);
-
-        //>> UE-651 Create Item Default Dimension
-        if Shape <> '' then begin
-            ConfiguratorShape.Get(Shape);
-            DefaultDim.Validate("Table ID", 27);
-            DefaultDim.Validate("No.", Item."No.");
-            DefaultDim.Validate("Dimension Code", ConfiguratorShape."Def. Shape Dimension Code");
-            DefaultDim.Validate("Dimension Value Code", ConfiguratorShape."Def. Shape Dim. Value Code");
-            DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
-            DefaultDim.Insert(true);
-        end;
-        if Material <> '' then begin
-            ConfiguratorMaterial.Get(Material);
-            DefaultDim.Validate("Table ID", 27);
-            DefaultDim.Validate("No.", Item."No.");
-            DefaultDim.Validate("Dimension Code", ConfiguratorMaterial."Def. Mat. Dimension Code");
-            DefaultDim.Validate("Dimension Value Code", ConfiguratorMaterial."Def. Mat. Dim. Value Code");
-            DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
-            DefaultDim.Insert(true);
-        end;
-        if Grit <> '' then begin
-            ConfiguratorGrit.Get(Grit);
-            DefaultDim.Validate("Table ID", 27);
-            DefaultDim.Validate("No.", Item."No.");
-            DefaultDim.Validate("Dimension Code", ConfiguratorGrit."Def. Grit Dimension Code");
-            DefaultDim.Validate("Dimension Value Code", ConfiguratorGrit."Def. Grit Dim. Value Code");
-            DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
-            DefaultDim.Insert(true);
-        end;
-        if Specification <> '' then begin
-            ConfiguratorSpecification.Get(Specification);
-            DefaultDim.Validate("Table ID", 27);
-            DefaultDim.Validate("No.", Item."No.");
-            DefaultDim.Validate("Dimension Code", ConfiguratorSpecification."Def. Spec. Dimension Code");
-            DefaultDim.Validate("Dimension Value Code", ConfiguratorSpecification."Def. Spec. Dim. Value Code");
-            DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
-            DefaultDim.Insert(true);
-        end;
-        if Joint <> '' then begin
-            ConfiguratorJoint.Get(Joint);
-            DefaultDim.Validate("Table ID", 27);
-            DefaultDim.Validate("No.", Item."No.");
-            DefaultDim.Validate("Dimension Code", ConfiguratorJoint."Def. Joint Dimension Code");
-            DefaultDim.Validate("Dimension Value Code", ConfiguratorJoint."Def. Joint Dim. Value Code");
-            DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
-            DefaultDim.Insert(true);
-        end;
-
-        //<< UE-651
-
-        if ConfiguratorItem."Create New Raw Material" then begin
-            ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, ConfiguratorItem.Grit);
-            ConfiguratorMaterialGrit.TestField("Creating Raw Material Item");
-            ConfiguratorMaterialGrit."Material Item No." := Item."No.";
-            ConfiguratorMaterialGrit."Material Configurator No." := ConfiguratorItem."Configurator No.";
-            ConfiguratorMaterialGrit."Creating Raw Material Item" := false;
-            ConfiguratorMaterialGrit.Modify;
-            ConfiguratorItem."Create New Raw Material" := false;
-            ConfiguratorItem."Raw Material Created" := true;
-        end;
-
-        BuildBOMandRouting(not "Routing OK", not "BOM OK");
-
-        ConfiguratorItem."Production BOM No." := "Production BOM No.";
-        ConfiguratorItem."Routing No." := "Routing No.";
-        ItemUpdateFields(Item, ConfiguratorItem, true, false);
-
-        //>> UNE-192
-        SalesPrice.Init;
-        SalesPrice."Sales Type" := SalesPrice."sales type"::"Customer Price Group";
-        SalesPrice.Validate("Sales Code", 'SAMPLE');
-        SalesPrice."Starting Date" := Today;
-        SalesPrice.Validate("Item No.", Item."No.");
-        SalesPrice.Validate("Unit of Measure Code", Item."Base Unit of Measure");
-        SalesPrice.Validate("Unit Price", 0.1);
-        SalesPrice.Insert(true);
-        //<< UNE-192
+        // Item.Init();
+        // Item."No." := ConfiguratorSetup."Item Prefix" + "Configurator Suffix";
+        // //Item."Sales Qty. Disc. Code" := Item."No.";
+        // Item."Base Unit of Measure" := "Base Unit of Measure";
+        // ItemUOM."Item No." := Item."No.";
+        // ItemUOM.Code := "Base Unit of Measure";
+        // ItemUOM."Qty. per Unit of Measure" := 1;
+        // //ECL LOT
+        // // 100615
+        // if ConfiguratorItem.Shape <> '' then
+        //     GetShape();
+        // if ConfiguratorShape."Auto Lot Tracking" then begin
+        //     l_ItemTrackCode.SetRange(l_ItemTrackCode."Auto Track", true);
+        //     if l_ItemTrackCode.FindFirst() then
+        //         Item."Item Tracking Code" := l_ItemTrackCode.Code;
+        // end;
+        // //
 
 
-        ConfiguratorItem."Item No." := Item."No.";
-        //>> UNE-165
-        //ConfiguratorItem.Status := ConfiguratorItem.Status::Item;
-        ConfiguratorItem.Status := ConfiguratorSetup."Configurator Item Status";
-        //<< UNE-165
-        ConfiguratorItem.Modify;
-        Delete;
-        ConfiguratorItem.SetRange("Configurator No.", tempconfno);
-        if ConfiguratorItem.FindFirst then begin
-            // CLEAR(Rec);
-            // CLEAR(ConfPAGE);
-            // ConfPAGE.SETTABLEVIEW(ConfiguratorItem);
-            // ConfPAGE.SETRECORD(ConfiguratorItem);
-            // ConfPAGE.RUN;
-            NewRecVal := ConfiguratorItem;
-        end;
-        //>> EC VAR003
-        //IF Shape <> '' THEN BEGIN
-        //  IF ConfiguratorShape.GET(Shape) THEN BEGIN
-        //    IF ConfiguratorShape."Create SKU's" THEN BEGIN
-        if "Create SKU's" then begin
-            Location.SetRange("Create SKU's", true);
-            if Location.FindSet then
-                repeat
-                    if not StockkeepingUnit.Get(Location.Code, Item."No.", '') then begin
-                        ItemVar.SetRange("Item No.", Item."No.");
-                        if ItemVar.FindSet then begin
-                            repeat
-                                StockkeepingUnit.Init;
-                                StockkeepingUnit."Item No." := Item."No.";
-                                StockkeepingUnit."Location Code" := Location.Code;
-                                StockkeepingUnit."Variant Code" := ItemVar.Code;
-                                StockkeepingUnit."Shelf No." := Item."Shelf No.";
-                                StockkeepingUnit."Standard Cost" := Item."Standard Cost";
-                                StockkeepingUnit."Last Direct Cost" := Item."Last Direct Cost";
-                                StockkeepingUnit."Unit Cost" := Item."Unit Cost";
-                                StockkeepingUnit."Vendor No." := Item."Vendor No.";
-                                StockkeepingUnit."Vendor Item No." := Item."Vendor Item No.";
-                                StockkeepingUnit."Lead Time Calculation" := Item."Lead Time Calculation";
-                                StockkeepingUnit."Reorder Point" := Item."Reorder Point";
-                                StockkeepingUnit."Maximum Inventory" := Item."Maximum Inventory";
-                                StockkeepingUnit."Reorder Quantity" := Item."Reorder Quantity";
-                                StockkeepingUnit."Lot Size" := Item."Lot Size";
-                                StockkeepingUnit."Reordering Policy" := Item."Reordering Policy";
-                                StockkeepingUnit."Include Inventory" := Item."Include Inventory";
-                                StockkeepingUnit."Assembly Policy" := Item."Assembly Policy";
-                                StockkeepingUnit."Manufacturing Policy" := Item."Manufacturing Policy";
-                                StockkeepingUnit."Discrete Order Quantity" := Item."Discrete Order Quantity";
-                                StockkeepingUnit."Minimum Order Quantity" := Item."Minimum Order Quantity";
-                                StockkeepingUnit."Maximum Order Quantity" := Item."Maximum Order Quantity";
-                                StockkeepingUnit."Safety Stock Quantity" := Item."Safety Stock Quantity";
-                                StockkeepingUnit."Order Multiple" := Item."Order Multiple";
-                                StockkeepingUnit."Safety Lead Time" := Item."Safety Lead Time";
-                                StockkeepingUnit."Flushing Method" := Item."Flushing Method";
-                                if Location."Def. SKU Replenishment System" <> 4 then
-                                    StockkeepingUnit."Replenishment System" := Location."Def. SKU Replenishment System"
-                                else
-                                    StockkeepingUnit."Replenishment System" := Item."Replenishment System";
-                                if Location."Def. SKU Transfer-from Code" <> '' then
-                                    StockkeepingUnit."Transfer-from Code" := Location."Def. SKU Transfer-from Code";
-                                StockkeepingUnit."Time Bucket" := Item."Time Bucket";
-                                StockkeepingUnit."Rescheduling Period" := Item."Rescheduling Period";
-                                StockkeepingUnit."Lot Accumulation Period" := Item."Lot Accumulation Period";
-                                StockkeepingUnit."Dampener Period" := Item."Dampener Period";
-                                StockkeepingUnit."Dampener Quantity" := Item."Dampener Quantity";
-                                StockkeepingUnit."Overflow Level" := Item."Overflow Level";
-                                StockkeepingUnit."Last Date Modified" := WorkDate;
-                                StockkeepingUnit."Special Equipment Code" := Item."Special Equipment Code";
-                                StockkeepingUnit."Put-away Template Code" := Item."Put-away Template Code";
-                                StockkeepingUnit."Phys Invt Counting Period Code" :=
-                                  Item."Phys Invt Counting Period Code";
-                                StockkeepingUnit."Put-away Unit of Measure Code" :=
-                                  Item."Put-away Unit of Measure Code";
-                                StockkeepingUnit."Use Cross-Docking" := Item."Use Cross-Docking";
-                                //       StockkeepingUnit."Reordering Policy" := ConfiguratorShape."Def. SKU Reordering Policy";
-                                StockkeepingUnit."Reordering Policy" := "Def. SKU Reordering Policy";
+        // if ItemUOM.Insert() then
+        //   ;
 
-                                StockkeepingUnit.Shape := Item.Shape;  // UE-438
-                                StockkeepingUnit.Insert(true);
-                            until ItemVar.Next = 0;
-                        end else begin
-                            StockkeepingUnit.Init;
-                            StockkeepingUnit."Item No." := Item."No.";
-                            StockkeepingUnit."Location Code" := Location.Code;
-                            StockkeepingUnit."Variant Code" := '';
-                            StockkeepingUnit."Shelf No." := Item."Shelf No.";
-                            StockkeepingUnit."Standard Cost" := Item."Standard Cost";
-                            StockkeepingUnit."Last Direct Cost" := Item."Last Direct Cost";
-                            StockkeepingUnit."Unit Cost" := Item."Unit Cost";
-                            StockkeepingUnit."Vendor No." := Item."Vendor No.";
-                            StockkeepingUnit."Vendor Item No." := Item."Vendor Item No.";
-                            StockkeepingUnit."Lead Time Calculation" := Item."Lead Time Calculation";
-                            StockkeepingUnit."Reorder Point" := Item."Reorder Point";
-                            StockkeepingUnit."Maximum Inventory" := Item."Maximum Inventory";
-                            StockkeepingUnit."Reorder Quantity" := Item."Reorder Quantity";
-                            StockkeepingUnit."Lot Size" := Item."Lot Size";
-                            StockkeepingUnit."Reordering Policy" := Item."Reordering Policy";
-                            StockkeepingUnit."Include Inventory" := Item."Include Inventory";
-                            StockkeepingUnit."Assembly Policy" := Item."Assembly Policy";
-                            StockkeepingUnit."Manufacturing Policy" := Item."Manufacturing Policy";
-                            StockkeepingUnit."Discrete Order Quantity" := Item."Discrete Order Quantity";
-                            StockkeepingUnit."Minimum Order Quantity" := Item."Minimum Order Quantity";
-                            StockkeepingUnit."Maximum Order Quantity" := Item."Maximum Order Quantity";
-                            StockkeepingUnit."Safety Stock Quantity" := Item."Safety Stock Quantity";
-                            StockkeepingUnit."Order Multiple" := Item."Order Multiple";
-                            StockkeepingUnit."Safety Lead Time" := Item."Safety Lead Time";
-                            StockkeepingUnit."Flushing Method" := Item."Flushing Method";
-                            if Location."Def. SKU Replenishment System" <> 4 then
-                                StockkeepingUnit."Replenishment System" := Location."Def. SKU Replenishment System"
-                            else
-                                StockkeepingUnit."Replenishment System" := Item."Replenishment System";
-                            if Location."Def. SKU Transfer-from Code" <> '' then
-                                StockkeepingUnit."Transfer-from Code" := Location."Def. SKU Transfer-from Code";
-                            StockkeepingUnit."Time Bucket" := Item."Time Bucket";
-                            StockkeepingUnit."Rescheduling Period" := Item."Rescheduling Period";
-                            StockkeepingUnit."Lot Accumulation Period" := Item."Lot Accumulation Period";
-                            StockkeepingUnit."Dampener Period" := Item."Dampener Period";
-                            StockkeepingUnit."Dampener Quantity" := Item."Dampener Quantity";
-                            StockkeepingUnit."Overflow Level" := Item."Overflow Level";
-                            StockkeepingUnit."Last Date Modified" := WorkDate;
-                            StockkeepingUnit."Special Equipment Code" := Item."Special Equipment Code";
-                            StockkeepingUnit."Put-away Template Code" := Item."Put-away Template Code";
-                            StockkeepingUnit."Phys Invt Counting Period Code" :=
-                              Item."Phys Invt Counting Period Code";
-                            StockkeepingUnit."Put-away Unit of Measure Code" :=
-                              Item."Put-away Unit of Measure Code";
-                            StockkeepingUnit."Use Cross-Docking" := Item."Use Cross-Docking";
-                            //    StockkeepingUnit."Reordering Policy" := ConfiguratorShape."Def. SKU Reordering Policy";
-                            StockkeepingUnit."Reordering Policy" := "Def. SKU Reordering Policy";
-                            StockkeepingUnit.Shape := Item.Shape;  // UE-438
+        // Item.Insert(true);
 
-                            StockkeepingUnit.Insert(true);
-                        end;
-                    end;
-                until Location.Next = 0;
-        end;
-        //END;
-        //END;
-        //<< EC VAR003
+        // //>> UE-651 Create Item Default Dimension
+        // if Shape <> '' then begin
+        //     ConfiguratorShape.Get(Shape);
+        //     DefaultDim.Validate("Table ID", 27);
+        //     DefaultDim.Validate("No.", Item."No.");
+        //     DefaultDim.Validate("Dimension Code", ConfiguratorShape."Def. Shape Dimension Code");
+        //     DefaultDim.Validate("Dimension Value Code", ConfiguratorShape."Def. Shape Dim. Value Code");
+        //     DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
+        //     DefaultDim.Insert(true);
+        // end;
+        // if Material <> '' then begin
+        //     ConfiguratorMaterial.Get(Material);
+        //     DefaultDim.Validate("Table ID", 27);
+        //     DefaultDim.Validate("No.", Item."No.");
+        //     DefaultDim.Validate("Dimension Code", ConfiguratorMaterial."Def. Mat. Dimension Code");
+        //     DefaultDim.Validate("Dimension Value Code", ConfiguratorMaterial."Def. Mat. Dim. Value Code");
+        //     DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
+        //     DefaultDim.Insert(true);
+        // end;
+        // if Grit <> '' then begin
+        //     ConfiguratorGrit.Get(Grit);
+        //     DefaultDim.Validate("Table ID", 27);
+        //     DefaultDim.Validate("No.", Item."No.");
+        //     DefaultDim.Validate("Dimension Code", ConfiguratorGrit."Def. Grit Dimension Code");
+        //     DefaultDim.Validate("Dimension Value Code", ConfiguratorGrit."Def. Grit Dim. Value Code");
+        //     DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
+        //     DefaultDim.Insert(true);
+        // end;
+        // if Specification <> '' then begin
+        //     ConfiguratorSpecification.Get(Specification);
+        //     DefaultDim.Validate("Table ID", 27);
+        //     DefaultDim.Validate("No.", Item."No.");
+        //     DefaultDim.Validate("Dimension Code", ConfiguratorSpecification."Def. Spec. Dimension Code");
+        //     DefaultDim.Validate("Dimension Value Code", ConfiguratorSpecification."Def. Spec. Dim. Value Code");
+        //     DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
+        //     DefaultDim.Insert(true);
+        // end;
+        // if Joint <> '' then begin
+        //     ConfiguratorJoint.Get(Joint);
+        //     DefaultDim.Validate("Table ID", 27);
+        //     DefaultDim.Validate("No.", Item."No.");
+        //     DefaultDim.Validate("Dimension Code", ConfiguratorJoint."Def. Joint Dimension Code");
+        //     DefaultDim.Validate("Dimension Value Code", ConfiguratorJoint."Def. Joint Dim. Value Code");
+        //     DefaultDim."Value Posting" := DefaultDim."value posting"::"Same Code";
+        //     DefaultDim.Insert(true);
+        // end;
+
+        // //<< UE-651
+
+        // if ConfiguratorItem."Create New Raw Material" then begin
+        //     ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, ConfiguratorItem.Grit);
+        //     ConfiguratorMaterialGrit.TestField("Creating Raw Material Item");
+        //     ConfiguratorMaterialGrit."Material Item No." := Item."No.";
+        //     ConfiguratorMaterialGrit."Material Configurator No." := ConfiguratorItem."Configurator No.";
+        //     ConfiguratorMaterialGrit."Creating Raw Material Item" := false;
+        //     ConfiguratorMaterialGrit.Modify;
+        //     ConfiguratorItem."Create New Raw Material" := false;
+        //     ConfiguratorItem."Raw Material Created" := true;
+        // end;
+
+        // BuildBOMandRouting(not "Routing OK", not "BOM OK");
+
+        // ConfiguratorItem."Production BOM No." := "Production BOM No.";
+        // ConfiguratorItem."Routing No." := "Routing No.";
+        // ItemUpdateFields(Item, ConfiguratorItem, true, false);
+
+        // //>> UNE-192
+        // SalesPrice.Init();
+        // SalesPrice."Sales Type" := SalesPrice."sales type"::"Customer Price Group";
+        // SalesPrice.Validate("Sales Code", 'SAMPLE');
+        // SalesPrice."Starting Date" := Today;
+        // SalesPrice.Validate("Item No.", Item."No.");
+        // SalesPrice.Validate("Unit of Measure Code", Item."Base Unit of Measure");
+        // SalesPrice.Validate("Unit Price", 0.1);
+        // SalesPrice.Insert(true);
+        // //<< UNE-192
+
+
+        // ConfiguratorItem."Item No." := Item."No.";
+        // //>> UNE-165
+        // //ConfiguratorItem.Status := ConfiguratorItem.Status::Item;
+        // ConfiguratorItem.Status := ConfiguratorSetup."Configurator Item Status";
+        // //<< UNE-165
+        // ConfiguratorItem.Modify;
+        // Delete();
+        // ConfiguratorItem.SetRange("Configurator No.", tempconfno);
+        // if ConfiguratorItem.FindFirst then begin
+        //     // CLEAR(Rec);
+        //     // CLEAR(ConfPAGE);
+        //     // ConfPAGE.SETTABLEVIEW(ConfiguratorItem);
+        //     // ConfPAGE.SETRECORD(ConfiguratorItem);
+        //     // ConfPAGE.RUN;
+        //     NewRecVal := ConfiguratorItem;
+        // end;
+        // //>> EC VAR003
+        // //IF Shape <> '' THEN BEGIN
+        // //  IF ConfiguratorShape.GET(Shape) THEN BEGIN
+        // //    IF ConfiguratorShape."Create SKU's" THEN BEGIN
+        // if "Create SKU's" then begin
+        //     Location.SetRange("Create SKU's", true);
+        //     if Location.FindSet() then
+        //         repeat
+        //             if not StockkeepingUnit.Get(Location.Code, Item."No.", '') then begin
+        //                 ItemVar.SetRange("Item No.", Item."No.");
+        //                 if ItemVar.FindSet() then begin
+        //                     repeat
+        //                         StockkeepingUnit.Init();
+        //                         StockkeepingUnit."Item No." := Item."No.";
+        //                         StockkeepingUnit."Location Code" := Location.Code;
+        //                         StockkeepingUnit."Variant Code" := ItemVar.Code;
+        //                         StockkeepingUnit."Shelf No." := Item."Shelf No.";
+        //                         StockkeepingUnit."Standard Cost" := Item."Standard Cost";
+        //                         StockkeepingUnit."Last Direct Cost" := Item."Last Direct Cost";
+        //                         StockkeepingUnit."Unit Cost" := Item."Unit Cost";
+        //                         StockkeepingUnit."Vendor No." := Item."Vendor No.";
+        //                         StockkeepingUnit."Vendor Item No." := Item."Vendor Item No.";
+        //                         StockkeepingUnit."Lead Time Calculation" := Item."Lead Time Calculation";
+        //                         StockkeepingUnit."Reorder Point" := Item."Reorder Point";
+        //                         StockkeepingUnit."Maximum Inventory" := Item."Maximum Inventory";
+        //                         StockkeepingUnit."Reorder Quantity" := Item."Reorder Quantity";
+        //                         StockkeepingUnit."Lot Size" := Item."Lot Size";
+        //                         StockkeepingUnit."Reordering Policy" := Item."Reordering Policy";
+        //                         StockkeepingUnit."Include Inventory" := Item."Include Inventory";
+        //                         StockkeepingUnit."Assembly Policy" := Item."Assembly Policy";
+        //                         StockkeepingUnit."Manufacturing Policy" := Item."Manufacturing Policy";
+        //                         StockkeepingUnit."Discrete Order Quantity" := Item."Discrete Order Quantity";
+        //                         StockkeepingUnit."Minimum Order Quantity" := Item."Minimum Order Quantity";
+        //                         StockkeepingUnit."Maximum Order Quantity" := Item."Maximum Order Quantity";
+        //                         StockkeepingUnit."Safety Stock Quantity" := Item."Safety Stock Quantity";
+        //                         StockkeepingUnit."Order Multiple" := Item."Order Multiple";
+        //                         StockkeepingUnit."Safety Lead Time" := Item."Safety Lead Time";
+        //                         StockkeepingUnit."Flushing Method" := Item."Flushing Method";
+        //                         if Location."Def. SKU Replenishment System" <> 4 then
+        //                             StockkeepingUnit."Replenishment System" := Location."Def. SKU Replenishment System"
+        //                         else
+        //                             StockkeepingUnit."Replenishment System" := Item."Replenishment System";
+        //                         if Location."Def. SKU Transfer-from Code" <> '' then
+        //                             StockkeepingUnit."Transfer-from Code" := Location."Def. SKU Transfer-from Code";
+        //                         StockkeepingUnit."Time Bucket" := Item."Time Bucket";
+        //                         StockkeepingUnit."Rescheduling Period" := Item."Rescheduling Period";
+        //                         StockkeepingUnit."Lot Accumulation Period" := Item."Lot Accumulation Period";
+        //                         StockkeepingUnit."Dampener Period" := Item."Dampener Period";
+        //                         StockkeepingUnit."Dampener Quantity" := Item."Dampener Quantity";
+        //                         StockkeepingUnit."Overflow Level" := Item."Overflow Level";
+        //                         StockkeepingUnit."Last Date Modified" := WorkDate();
+        //                         StockkeepingUnit."Special Equipment Code" := Item."Special Equipment Code";
+        //                         StockkeepingUnit."Put-away Template Code" := Item."Put-away Template Code";
+        //                         StockkeepingUnit."Phys Invt Counting Period Code" :=
+        //                           Item."Phys Invt Counting Period Code";
+        //                         StockkeepingUnit."Put-away Unit of Measure Code" :=
+        //                           Item."Put-away Unit of Measure Code";
+        //                         StockkeepingUnit."Use Cross-Docking" := Item."Use Cross-Docking";
+        //                         //       StockkeepingUnit."Reordering Policy" := ConfiguratorShape."Def. SKU Reordering Policy";
+        //                         StockkeepingUnit."Reordering Policy" := "Def. SKU Reordering Policy";
+
+        //                         StockkeepingUnit.Shape := Item."NV8 Shape";  // UE-438
+        //                         StockkeepingUnit.Insert(true);
+        //                     until ItemVar.Next() = 0;
+        //                 end else begin
+        //                     StockkeepingUnit.Init();
+        //                     StockkeepingUnit."Item No." := Item."No.";
+        //                     StockkeepingUnit."Location Code" := Location.Code;
+        //                     StockkeepingUnit."Variant Code" := '';
+        //                     StockkeepingUnit."Shelf No." := Item."Shelf No.";
+        //                     StockkeepingUnit."Standard Cost" := Item."Standard Cost";
+        //                     StockkeepingUnit."Last Direct Cost" := Item."Last Direct Cost";
+        //                     StockkeepingUnit."Unit Cost" := Item."Unit Cost";
+        //                     StockkeepingUnit."Vendor No." := Item."Vendor No.";
+        //                     StockkeepingUnit."Vendor Item No." := Item."Vendor Item No.";
+        //                     StockkeepingUnit."Lead Time Calculation" := Item."Lead Time Calculation";
+        //                     StockkeepingUnit."Reorder Point" := Item."Reorder Point";
+        //                     StockkeepingUnit."Maximum Inventory" := Item."Maximum Inventory";
+        //                     StockkeepingUnit."Reorder Quantity" := Item."Reorder Quantity";
+        //                     StockkeepingUnit."Lot Size" := Item."Lot Size";
+        //                     StockkeepingUnit."Reordering Policy" := Item."Reordering Policy";
+        //                     StockkeepingUnit."Include Inventory" := Item."Include Inventory";
+        //                     StockkeepingUnit."Assembly Policy" := Item."Assembly Policy";
+        //                     StockkeepingUnit."Manufacturing Policy" := Item."Manufacturing Policy";
+        //                     StockkeepingUnit."Discrete Order Quantity" := Item."Discrete Order Quantity";
+        //                     StockkeepingUnit."Minimum Order Quantity" := Item."Minimum Order Quantity";
+        //                     StockkeepingUnit."Maximum Order Quantity" := Item."Maximum Order Quantity";
+        //                     StockkeepingUnit."Safety Stock Quantity" := Item."Safety Stock Quantity";
+        //                     StockkeepingUnit."Order Multiple" := Item."Order Multiple";
+        //                     StockkeepingUnit."Safety Lead Time" := Item."Safety Lead Time";
+        //                     StockkeepingUnit."Flushing Method" := Item."Flushing Method";
+        //                     if Location."Def. SKU Replenishment System" <> 4 then
+        //                         StockkeepingUnit."Replenishment System" := Location."Def. SKU Replenishment System"
+        //                     else
+        //                         StockkeepingUnit."Replenishment System" := Item."Replenishment System";
+        //                     if Location."Def. SKU Transfer-from Code" <> '' then
+        //                         StockkeepingUnit."Transfer-from Code" := Location."Def. SKU Transfer-from Code";
+        //                     StockkeepingUnit."Time Bucket" := Item."Time Bucket";
+        //                     StockkeepingUnit."Rescheduling Period" := Item."Rescheduling Period";
+        //                     StockkeepingUnit."Lot Accumulation Period" := Item."Lot Accumulation Period";
+        //                     StockkeepingUnit."Dampener Period" := Item."Dampener Period";
+        //                     StockkeepingUnit."Dampener Quantity" := Item."Dampener Quantity";
+        //                     StockkeepingUnit."Overflow Level" := Item."Overflow Level";
+        //                     StockkeepingUnit."Last Date Modified" := WorkDate();
+        //                     StockkeepingUnit."Special Equipment Code" := Item."Special Equipment Code";
+        //                     StockkeepingUnit."Put-away Template Code" := Item."Put-away Template Code";
+        //                     StockkeepingUnit."Phys Invt Counting Period Code" :=
+        //                       Item."Phys Invt Counting Period Code";
+        //                     StockkeepingUnit."Put-away Unit of Measure Code" :=
+        //                       Item."Put-away Unit of Measure Code";
+        //                     StockkeepingUnit."Use Cross-Docking" := Item."Use Cross-Docking";
+        //                     //    StockkeepingUnit."Reordering Policy" := ConfiguratorShape."Def. SKU Reordering Policy";
+        //                     StockkeepingUnit."Reordering Policy" := "Def. SKU Reordering Policy";
+        //                     StockkeepingUnit."NV8 Shape" := Item."NV8 Shape";  // UE-438
+
+        //                     StockkeepingUnit.Insert(true);
+        //                 end;
+        //             end;
+        //         until Location.Next() = 0;
+        // end;
+        // //END;
+        // //END;
+        // //<< EC VAR003
     end;
 
 
     procedure ValidateItem()
     begin
-        CheckConfiguration;
+        CheckConfiguration();
         CalcFields("Item Created");
         TestField("Item Created");
         Item.Get("Item No.");
@@ -1405,43 +1407,43 @@ Table 85001 "NV8 Configurator Item"
         ItemUpdateFields(Item, Rec, false, true);
 
         Status := ConfiguratorItem.Status::"Valid Item";
-        Modify;
+        Modify();
     end;
 
 
     procedure IsItemBlocked(): Boolean
     begin
-        if (Status >= Status::Item) and ("Configurator No." <> GetConfiguratorNo) then
+        if (Status >= Status::Item) and ("Configurator No." <> GetConfiguratorNo()) then
             exit(true);
         CalcFields("Item Blocked", "Item Created");
         if "Item Blocked" or not "Item Created" then
             exit(true);
         if (Shape = '') then
             exit(true);
-        if not GetShape or ConfiguratorShape.Blocked then
+        if not GetShape() or ConfiguratorShape.Blocked then
             exit(true);
         if (ConfiguratorShape."Material Rule" >= ConfiguratorShape."material rule"::Mandatory) and (Material = '') then
             exit(true);
         if (Material <> '') then
-            if not GetMaterial or ConfiguratorMaterial.Blocked then
+            if not GetMaterial() or ConfiguratorMaterial.Blocked then
                 exit(true);
         if (ConfiguratorShape."Specification Rule" >= ConfiguratorShape."specification rule"::Mandatory) and (Specification = '') then
             exit(true);
         if (Specification <> '') then
-            if not GetSpec or ConfiguratorSpecification.Blocked then
+            if not GetSpec() or ConfiguratorSpecification.Blocked then
                 exit(true);
         if (ConfiguratorShape."Grit Rule" >= ConfiguratorShape."grit rule"::Mandatory) and (Grit = '') then
             exit(true);
         if (Grit <> '') then
-            if not GetGrit or ConfiguratorGrit.Blocked then
+            if not GetGrit() or ConfiguratorGrit.Blocked then
                 exit(true);
         if (ConfiguratorShape."Joint Rule" >= ConfiguratorShape."joint rule"::Mandatory) and (Joint = '') then
             exit(true);
         if (Joint <> '') then
-            if not GetJoint or ConfiguratorJoint.Blocked then
+            if not GetJoint() or ConfiguratorJoint.Blocked then
                 exit(true);
         if ((Material <> '') and (Grit <> '')) then
-            if not GetMaterialGrit or ConfiguratorMaterialGrit.Blocked then
+            if not GetMaterialGrit() or ConfiguratorMaterialGrit.Blocked then
                 exit(true);
         exit(false);
     end;
@@ -1450,7 +1452,7 @@ Table 85001 "NV8 Configurator Item"
     procedure ItemBlockedError()
     begin
         if Status >= Status::Item then
-            TestField("Configurator No.", GetConfiguratorNo);
+            TestField("Configurator No.", GetConfiguratorNo());
         CalcFields("Item Blocked");
         TestField("Item Blocked", false);
         if ("Item No." <> '') then begin
@@ -1484,11 +1486,11 @@ Table 85001 "NV8 Configurator Item"
     end;
 
 
-    procedure ItemUpdateFields(var Item: Record Item; var SourceConfiguratorItem: Record "Configurator Item"; CreateNew: Boolean; UpdateHistory: Boolean)
+    procedure ItemUpdateFields(var Item: Record Item; var SourceConfiguratorItem: Record "NV8 Configurator Item"; CreateNew: Boolean; UpdateHistory: Boolean)
     begin
         with SourceConfiguratorItem do begin
             //UNE-191
-            Item.Validate("Configurator No.", "Configurator No.");
+            Item.Validate("NV8 Configurator No.", "Configurator No.");
             Item.Validate(Description, "Item Description");
             Item.Validate("Description 2", "Item Description 2");
 
@@ -1498,7 +1500,7 @@ Table 85001 "NV8 Configurator Item"
             ItemUOM."Item No." := Item."No.";
             ItemUOM.Code := "Base Unit of Measure";
             ItemUOM."Qty. per Unit of Measure" := 1;
-            if ItemUOM.Insert then
+            if ItemUOM.Insert() then
               ;
 
             if CreateNew then begin
@@ -1519,22 +1521,22 @@ Table 85001 "NV8 Configurator Item"
 
             if (not CreateNew) and UpdateHistory then
                 if
-                  (Item.Material <> Material) or
-                  (Item.Specification <> Specification) or
-                  (Item.Grit <> Grit) or
-                  (Item.Joint <> Joint) then
+                  (Item."NV8 Material" <> Material) or
+                  (Item."NV8 Specification" <> Specification) or
+                  (Item."NV8 Grit" <> Grit) or
+                  (Item."NV8 Joint" <> Joint) then
                     UpdateILEHistory(Item, SourceConfiguratorItem);
 
-            Item.Shape := Shape;
-            Item.Material := Material;
-            Item."Dimension 1" := "Dimension 1";
-            Item."Dimension 2" := "Dimension 2";
-            Item."Dimension 3" := "Dimension 3";
+            Item."NV8 Shape" := Shape;
+            Item."NV8 Material" := Material;
+            Item."NV8 Dimension 1" := "Dimension 1";
+            Item."NV8 Dimension 2" := "Dimension 2";
+            Item."NV8 Dimension 3" := "Dimension 3";
             //  Item."Dimension 4" := "Dimension 4";
-            Item.Specification := Specification;
-            Item.Grit := Grit;
-            Item.Joint := Joint;
-            Item."File Pro No." := "File Pro No.";
+            Item."NV8 Specification" := Specification;
+            Item."NV8 Grit" := Grit;
+            Item."NV8 Joint" := Joint;
+            Item."NV8 File Pro No." := "File Pro No.";
             Item."Routing No." := "Routing No.";
             Item."Production BOM No." := "Production BOM No.";
             // for raw materials craeted manually
@@ -1543,9 +1545,9 @@ Table 85001 "NV8 Configurator Item"
                 if "Item Created" and ("Raw Material Item No." = "Item No.") then
                     "Raw Material Created" := true;
             end;
-            Item."Raw Material Roll" := "Raw Material Created";
+            Item."NV8 Raw Material Roll" := "Raw Material Created";
 
-            GetShape;
+            GetShape();
             //  Item."Requisition Method Code" := ConfiguratorShape."Requisition Method Code";
             //  Item."Requisition System" := ConfiguratorShape."Requisition System";
             //>> VAR003
@@ -1564,16 +1566,16 @@ Table 85001 "NV8 Configurator Item"
             "Requisition System" := ConfiguratorShape."Requisition System";
 
             //UE-193 start
-            Item."Catalog No." := "Catalog No.";
-            Item."Material Type" := "Material Type";
-            Item."Quantity 1" := "Quantity 1";
-            Item."Quantity 2" := "Quantity 2";
-            Item."Quantity 3" := "Quantity 3";
-            Item."Quantity 4" := "Quantity 4";
-            Item."UOM 1" := "UOM 1";
-            Item."UOM 2" := "UOM 2";
-            Item."UOM 3" := "UOM 3";
-            Item."UOM 4" := "UOM 4";
+            Item."NV8 Catalog No." := "Catalog No.";
+            Item."NV8 Material Type" := "Material Type";
+            Item."NV8 Quantity 1" := "Quantity 1";
+            Item."NV8 Quantity 2" := "Quantity 2";
+            Item."NV8 Quantity 3" := "Quantity 3";
+            Item."NV8 Quantity 4" := "Quantity 4";
+            Item."NV8 UOM 1" := "UOM 1";
+            Item."NV8 UOM 2" := "UOM 2";
+            Item."NV8 UOM 3" := "UOM 3";
+            Item."NV8 UOM 4" := "UOM 4";
             //UE-192 end
 
             Item."Base Unit of Measure" := "Base Unit of Measure";
@@ -1583,22 +1585,22 @@ Table 85001 "NV8 Configurator Item"
             //Item.Reserve := Item.Reserve::Always;
             Item.Reserve := Item.Reserve::Optional;
             //EC1.01  08.31.15
-            Item.Modify;
+            Item.Modify();
         end;
     end;
 
 
     procedure BuildBOMandRouting(BuildRouting: Boolean; BuildBOM: Boolean)
     begin
-        GetShape;
+        GetShape();
         if ConfiguratorShape."BOM and Routing Required" then begin
             if BuildBOM then begin
-                CreateBOM;
-                CreateBOMLines;
+                CreateBOM();
+                CreateBOMLines();
             end;
             if BuildRouting then begin
-                CreateRouting;
-                CreateRoutingLines;
+                CreateRouting();
+                CreateRoutingLines();
             end;
         end;
     end;
@@ -1606,11 +1608,11 @@ Table 85001 "NV8 Configurator Item"
 
     procedure CreateBOM()
     begin
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         if not ProductionBOM.Get("Production BOM No.") then begin
-            ProductionBOM.Init;
+            ProductionBOM.Init();
             if "Configurator Suffix" = '' then
-                CreateCfgSeries;
+                CreateCfgSeries();
             ProductionBOM."No." := ConfiguratorSetup."BOM Prefix" + "Configurator Suffix";
             if ProductionBOM.Insert() then
               ;
@@ -1621,7 +1623,7 @@ Table 85001 "NV8 Configurator Item"
         ProductionBOM.Validate(Status, ProductionBOM.Status::"Under Development");
         ProductionBOM.Description := "Item Description";
         ProductionBOM."Description 2" := "Item Description 2";
-        ProductionBOM.Modify;
+        ProductionBOM.Modify();
     end;
 
 
@@ -1629,20 +1631,20 @@ Table 85001 "NV8 Configurator Item"
     begin
         if not "BOM OK" then
             with ProductionBOMLines do begin
-                Reset;
+                Reset();
                 SetRange("Production BOM No.", ProductionBOM."No.");
-                DeleteAll;
+                DeleteAll();
                 NextLineNo := 10000;
-                if GetMaterial then
+                if GetMaterial() then
                     if ConfiguratorMaterial."Default BOM No." <> '' then
                         AddBOMLines(ConfiguratorMaterial."Default BOM No.");
-                if GetJoint then
+                if GetJoint() then
                     if ConfiguratorJoint."Default BOM No." <> '' then
                         AddBOMLines(ConfiguratorJoint."Default BOM No.");
-                if GetShape then
+                if GetShape() then
                     if ConfiguratorShape."BOM No." <> '' then
                         AddBOMLines(ConfiguratorShape."BOM No.");
-                if GetSpec then
+                if GetSpec() then
                     if ConfiguratorSpecification."Default BOM No." <> '' then
                         AddBOMLines(ConfiguratorSpecification."Default BOM No.");
                 if Find('-') then begin
@@ -1651,9 +1653,9 @@ Table 85001 "NV8 Configurator Item"
                     // there is a commit in here
                     ProductionBOM.Validate(Status, ProductionBOM.Status::Certified);
 
-                    ProductionBOM.Modify;
+                    ProductionBOM.Modify();
                 end else begin
-                    ProductionBOM.Delete;
+                    ProductionBOM.Delete();
                     Rec."Production BOM No." := '';
                 end;
             end;
@@ -1662,65 +1664,64 @@ Table 85001 "NV8 Configurator Item"
 
     procedure AddBOMLines(BOMHeader: Code[20])
     begin
-        ProductionBOMComp.Reset;
+        ProductionBOMComp.Reset();
         ProductionBOMComp.SetRange("Production BOM No.", BOMHeader);
-        ProductionBOMComp.SetFilter("Configurator Type", '<>%1', ProductionBOMComp."configurator type"::"BOM Line");
-        if ProductionBOMComp.Find('-') then begin
+        // ProductionBOMComp.SetFilter("Configurator Type", '<>%1', ProductionBOMComp."configurator type"::"BOM Line"); // TODO PAP
+        if ProductionBOMComp.Find('-') then
             repeat
                 with ProductionBOMLines do begin
                     Copy(ProductionBOMComp);
                     "Production BOM No." := Rec."Production BOM No.";
                     "Line No." := NextLineNo;
                     NextLineNo += 10000;
-                    case "Configurator Type" of
-                        "configurator type"::"Material-Grit":
+                    case "NV8 Configurator Type" of
+                        "NV8 configurator type"::"Material-Grit":
                             begin
-                                "Configurator Type" := "configurator type"::"BOM Line";
+                                "NV8 Configurator Type" := "NV8 configurator type"::"BOM Line";
                                 ConfiguratorMaterialGrit.Get(Rec.Material, Rec.Grit);
                                 ConfiguratorMaterialGrit.TestField("Material Item No.");
                                 Type := Type::Item;
                                 Validate("No.", ConfiguratorMaterialGrit."Material Item No.");
                             end;
-                        "configurator type"::Configurator:
+                        "NV8 configurator type"::Configurator:
                             begin
-                                "Configurator Type" := "configurator type"::"BOM Line";
+                                "NV8 Configurator Type" := "NV8 configurator type"::"BOM Line";
                             end;
                     end;
 
-                    case "Configurator Calc. per Meter" of
-                        "configurator calc. per meter"::" ":
+                    case "NV8 Configurator Calc. per Meter" of
+                        "NV8 configurator calc. per meter"::" ":
                             ;
-                        "configurator calc. per meter"::Factor:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor";
-                        "configurator calc. per meter"::FactorxD1:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 1" / 39;
-                        "configurator calc. per meter"::FactorxD2:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 2" / 39;
-                        "configurator calc. per meter"::FactorxD1xD2:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 1" * "Quantity 2" / 39 / 39;
-                        "configurator calc. per meter"::"FactorxD1^2":
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 1" * "Quantity 1" / 39 / 39;
+                        "NV8 configurator calc. per meter"::Factor:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor";
+                        "NV8 configurator calc. per meter"::FactorxD1:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" / 39;
+                        "NV8 configurator calc. per meter"::FactorxD2:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 2" / 39;
+                        "NV8 configurator calc. per meter"::FactorxD1xD2:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 2" / 39 / 39;
+                        "NV8 configurator calc. per meter"::"FactorxD1^2":
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 1" / 39 / 39;
                         else
-                            FieldError("Configurator Calc. per Meter", AG007);
+                            FieldError("NV8 Configurator Calc. per Meter", AG007);
                     end;
                     Validate("Unit of Measure Code");
                     Validate("Quantity per");
                     Quantity := "Quantity per";
                     "Calculation Formula" := "calculation formula"::" ";
-                    Insert;
+                    Insert();
                 end;
-            until ProductionBOMComp.Next = 0
-        end;
+            until ProductionBOMComp.Next() = 0
     end;
 
 
     procedure CreateRouting()
     begin
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         if not Routing.Get("Routing No.") then begin
             if "Configurator Suffix" = '' then
-                CreateCfgSeries;
-            Routing.Init;
+                CreateCfgSeries();
+            Routing.Init();
             Routing."No." := ConfiguratorSetup."Routing Prefix" + "Configurator Suffix";
             if Routing.Insert() then
               ;
@@ -1730,9 +1731,9 @@ Table 85001 "NV8 Configurator Item"
         Routing."Description 2" := "Item Description 2";
         // there is a commit in here
         Routing.Validate(Status, Routing.Status::"Under Development");
-        GetShape;
+        GetShape();
         //Routing."Std. Production Run Qty." := ConfiguratorShape."Std. Production Run Qty.";
-        Routing.Modify;
+        Routing.Modify();
     end;
 
 
@@ -1740,9 +1741,9 @@ Table 85001 "NV8 Configurator Item"
     begin
         if not "Routing OK" then
             with RoutingLines do begin
-                Reset;
+                Reset();
                 SetRange("Routing No.", Routing."No.");
-                DeleteAll;
+                DeleteAll();
                 NextLineNo := 10000;
                 if ConfiguratorMaterial.Get(Material) then
                     if ConfiguratorMaterial."Default Routing No." <> '' then
@@ -1750,7 +1751,7 @@ Table 85001 "NV8 Configurator Item"
                 if ConfiguratorJoint.Get(Joint) then
                     if ConfiguratorJoint."Default Routing No." <> '' then
                         AddRoutingLines(ConfiguratorJoint."Default Routing No.");
-                if GetShape then
+                if GetShape() then
                     if ConfiguratorShape."BOM No." <> '' then
                         AddRoutingLines(ConfiguratorShape."Routing No.");
                 if ConfiguratorSpecification.Get(Specification) then
@@ -1759,9 +1760,9 @@ Table 85001 "NV8 Configurator Item"
                 if Find('-') then begin
                     // there is a commit in here
                     Routing.Validate(Status, Routing.Status::Certified);
-                    Routing.Modify;
+                    Routing.Modify();
                 end else begin
-                    Routing.Delete;
+                    Routing.Delete();
                     Rec."Routing No." := '';
                 end;
             end;
@@ -1770,7 +1771,7 @@ Table 85001 "NV8 Configurator Item"
 
     procedure AddRoutingLines(RoutingHeader: Code[20])
     begin
-        RoutingComp.Reset;
+        RoutingComp.Reset();
         RoutingComp.SetRange("Routing No.", RoutingHeader);
         if RoutingComp.Find('-') then begin
             repeat
@@ -1791,9 +1792,9 @@ Table 85001 "NV8 Configurator Item"
                      END;*/
                     // Quantity := "Quantity per";
                     // "Calculation Formula" := "Calculation Formula"::" ";
-                    Insert;
+                    Insert();
                 end;
-            until RoutingComp.Next = 0
+            until RoutingComp.Next() = 0
         end;
 
     end;
@@ -1817,7 +1818,7 @@ Table 85001 "NV8 Configurator Item"
     procedure CopyNewConfigurator()
     begin
         with ConfiguratorItem do begin
-            Init;
+            Init();
             "Configurator No." := '';
             Insert(true);
             Validate(Shape, Rec.Shape);
@@ -1829,14 +1830,14 @@ Table 85001 "NV8 Configurator Item"
             Validate(Specification, Rec.Specification);
             Validate(Grit, Rec.Grit);
             Validate(Joint, Rec.Joint);
-            Modify;
+            Modify();
         end;
         Rec.Copy(ConfiguratorItem);
-        Find;
+        Find();
     end;
 
 
-    procedure UpdateILEHistory(Item: Record Item; ConfiguratorItem: Record "Configurator Item")
+    procedure UpdateILEHistory(Item: Record Item; ConfiguratorItem: Record "NV8 Configurator Item")
     var
         ItemLedgEntry: Record "Item Ledger Entry";
     begin
@@ -1865,7 +1866,7 @@ Table 85001 "NV8 Configurator Item"
         if ConfiguratorShape.Get(Shape) then
             if not ConfiguratorShape.Blocked then
                 exit(true);
-        ConfiguratorShape.Init;
+        ConfiguratorShape.Init();
         exit(false);
     end;
 
@@ -1877,7 +1878,7 @@ Table 85001 "NV8 Configurator Item"
         if ConfiguratorMaterial.Get(Material) then
             if not ConfiguratorMaterial.Blocked then
                 exit(true);
-        ConfiguratorMaterial.Init;
+        ConfiguratorMaterial.Init();
         exit(false);
     end;
 
@@ -1889,7 +1890,7 @@ Table 85001 "NV8 Configurator Item"
         if ConfiguratorSpecification.Get(Specification) then
             if not ConfiguratorSpecification.Blocked then
                 exit(true);
-        ConfiguratorSpecification.Init;
+        ConfiguratorSpecification.Init();
         exit(false);
     end;
 
@@ -1901,7 +1902,7 @@ Table 85001 "NV8 Configurator Item"
         if ConfiguratorGrit.Get(Grit) then
             if not ConfiguratorGrit.Blocked then
                 exit(true);
-        ConfiguratorGrit.Init;
+        ConfiguratorGrit.Init();
         exit(false);
     end;
 
@@ -1922,7 +1923,7 @@ Table 85001 "NV8 Configurator Item"
     procedure GetMaterialGrit(): Boolean
     begin
         if (Material = '') or (Grit = '') then begin
-            ConfiguratorMaterialGrit.Init;
+            ConfiguratorMaterialGrit.Init();
             exit(false);
         end;
         if (ConfiguratorMaterialGrit."Material Code" = Material) and (ConfiguratorMaterialGrit."Grit Code" = Grit) then
@@ -1930,7 +1931,7 @@ Table 85001 "NV8 Configurator Item"
         if ConfiguratorMaterialGrit.Get(Material, Grit) then
             if not ConfiguratorMaterialGrit.Blocked then
                 exit(true);
-        ConfiguratorMaterialGrit.Init;
+        ConfiguratorMaterialGrit.Init();
         exit(false);
     end;
 
@@ -1958,7 +1959,7 @@ Table 85001 "NV8 Configurator Item"
 
     local procedure GetCaption(Dimval: Integer) Captionval: Text[80]
     var
-        LShapeREC: Record "Configurator Shape";
+        LShapeREC: Record "NV8 Configurator Shape";
     begin
         exit(LShapeREC.ReturnCaptionVal(Shape, Dimval));
     end;
@@ -1972,17 +1973,17 @@ Table 85001 "NV8 Configurator Item"
         if ItemT.Get("Item No.") then
             CalcFields("Raw Material Item No.");
         if ItemT.Get("Raw Material Item No.") then begin
-            GetShape;
+            GetShape();
             if ConfiguratorShape."BOM and Routing Required" then begin
                 if BuildBOM then
                     if "Production BOM No." <> '' then begin
-                        CreateBOMVer;
-                        CreateBOMLinesVer;
+                        CreateBOMVer();
+                        CreateBOMLinesVer();
                     end;
                 if BuildRouting then
                     if "Routing No." <> '' then begin
-                        CreateRoutingVer;
-                        CreateRoutingLinesVer;
+                        CreateRoutingVer();
+                        CreateRoutingLinesVer();
                     end;
             end;
         end;
@@ -1992,11 +1993,11 @@ Table 85001 "NV8 Configurator Item"
     procedure CreateBOMVer()
     begin
         //>>UE-619
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
         ProductionBOM.Get("Production BOM No.");
-        ProductionBOMVer.Init;
+        ProductionBOMVer.Init();
         ProductionBOMVer.SetRange("Production BOM No.", ProductionBOM."No.");
-        if not ProductionBOMVer.FindLast then
+        if not ProductionBOMVer.FindLast() then
             ProductionBOMVer."Version Code" := '1'
         else
             ProductionBOMVer."Version Code" := IncStr(ProductionBOMVer."Version Code");
@@ -2006,7 +2007,7 @@ Table 85001 "NV8 Configurator Item"
         ProductionBOMVer."Unit of Measure Code" := ProductionBOM."Unit of Measure Code";
         ProductionBOMVer.Validate(Status, ProductionBOM.Status::"Under Development");
         ProductionBOMVer.Description := ProductionBOM.Description;
-        ProductionBOMVer.Modify;
+        ProductionBOMVer.Modify();
     end;
 
 
@@ -2015,25 +2016,25 @@ Table 85001 "NV8 Configurator Item"
         //>>UE-619
         if not "BOM OK" then
             with ProductionBOMLines do begin
-                Reset;
+                Reset();
                 NextLineNo := 10000;
                 ProductionBOMLines."Version Code" := ProductionBOMVer."Version Code";
-                if GetMaterial then
+                if GetMaterial() then
                     if ConfiguratorMaterial."Default BOM No." <> '' then
                         AddBOMLinesVer(ConfiguratorMaterial."Default BOM No.", ProductionBOMLines."Version Code");
-                if GetJoint then
+                if GetJoint() then
                     if ConfiguratorJoint."Default BOM No." <> '' then
                         AddBOMLinesVer(ConfiguratorJoint."Default BOM No.", ProductionBOMLines."Version Code");
-                if GetShape then
+                if GetShape() then
                     if ConfiguratorShape."BOM No." <> '' then
                         AddBOMLinesVer(ConfiguratorShape."BOM No.", ProductionBOMLines."Version Code");
-                if GetSpec then
+                if GetSpec() then
                     if ConfiguratorSpecification."Default BOM No." <> '' then
                         AddBOMLinesVer(ConfiguratorSpecification."Default BOM No.", ProductionBOMLines."Version Code");
                 if Find('-') then
                     ProductionBOMVer.Validate(Status, ProductionBOMVer.Status::Certified);
 
-                ProductionBOMVer.Modify;
+                ProductionBOMVer.Modify();
             end;
     end;
 
@@ -2041,12 +2042,12 @@ Table 85001 "NV8 Configurator Item"
     procedure AddBOMLinesVer(BOMHeader: Code[20]; BOMVer: Code[10])
     begin
         //>>UE-619
-        ProductionBOMComp.Reset;
+        ProductionBOMComp.Reset();
         ProductionBOMComp.SetRange("Production BOM No.", BOMHeader);
         //ProductionBOMComp.SETRANGE("Version Code",BOMVer);
-        ProductionBOMComp.SetFilter("Configurator Type", '<>%1', ProductionBOMComp."configurator type"::"BOM Line");
+        ProductionBOMComp.SetFilter("NV8 Configurator Type", '<>%1', ProductionBOMComp."NV8 configurator type"::"BOM Line");
 
-        if ProductionBOMComp.Find('-') then begin
+        if ProductionBOMComp.Find('-') then
             repeat
                 with ProductionBOMLines do begin
                     Copy(ProductionBOMComp);
@@ -2054,52 +2055,49 @@ Table 85001 "NV8 Configurator Item"
                     "Version Code" := BOMVer;
                     "Line No." := NextLineNo;
                     NextLineNo += 10000;
-                    case "Configurator Type" of
-                        "configurator type"::"Material-Grit":
+                    case "NV8 Configurator Type" of
+                        "NV8 configurator type"::"Material-Grit":
                             begin
-                                "Configurator Type" := "configurator type"::"BOM Line";
+                                "NV8 Configurator Type" := "NV8 configurator type"::"BOM Line";
                                 ConfiguratorMaterialGrit.Get(Rec.Material, Rec.Grit);
                                 ConfiguratorMaterialGrit.TestField("Material Item No.");
                                 Type := Type::Item;
                                 Validate("No.", ConfiguratorMaterialGrit."Material Item No.");
                             end;
-                        "configurator type"::Configurator:
-                            begin
-                                "Configurator Type" := "configurator type"::"BOM Line";
-                            end;
+                        "NV8 configurator type"::Configurator:
+                            "NV8 Configurator Type" := "NV8 configurator type"::"BOM Line";
                     end;
 
-                    case "Configurator Calc. per Meter" of
-                        "configurator calc. per meter"::" ":
+                    case "NV8 Configurator Calc. per Meter" of
+                        "NV8 configurator calc. per meter"::" ":
                             ;
-                        "configurator calc. per meter"::Factor:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor";
-                        "configurator calc. per meter"::FactorxD1:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 1" / 39;
-                        "configurator calc. per meter"::FactorxD2:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 2" / 39;
-                        "configurator calc. per meter"::FactorxD1xD2:
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 1" * "Quantity 2" / 39 / 39;
-                        "configurator calc. per meter"::"FactorxD1^2":
-                            "Quantity per" := ProductionBOMComp."Configurator Factor" * "Quantity 1" * "Quantity 1" / 39 / 39;
+                        "NV8 configurator calc. per meter"::Factor:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor";
+                        "NV8 configurator calc. per meter"::FactorxD1:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" / 39;
+                        "NV8 configurator calc. per meter"::FactorxD2:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 2" / 39;
+                        "NV8 configurator calc. per meter"::FactorxD1xD2:
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 2" / 39 / 39;
+                        "NV8 configurator calc. per meter"::"FactorxD1^2":
+                            "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 1" / 39 / 39;
                         else
-                            FieldError("Configurator Calc. per Meter", AG007);
+                            FieldError("NV8 Configurator Calc. per Meter", AG007);
                     end;
                     Validate("Unit of Measure Code");
                     Validate("Quantity per");
                     Quantity := "Quantity per";
                     "Calculation Formula" := "calculation formula"::" ";
-                    Insert;
+                    Insert();
                 end;
-            until ProductionBOMComp.Next = 0
-        end;
+            until ProductionBOMComp.Next() = 0
     end;
 
 
     procedure CreateRoutingVer()
     begin
         //>>UE-619
-        ConfiguratorSetup.Get;
+        ConfiguratorSetup.Get();
 
         /*--->> 4/3/19
         IF NOT Routing.GET("Routing No.") THEN BEGIN
@@ -2122,16 +2120,16 @@ Table 85001 "NV8 Configurator Item"
         << 4/3/19---*/
 
         Routing.Get("Routing No.");
-        RoutingVer.Init;
+        RoutingVer.Init();
         RoutingVer.SetRange("Routing No.", Routing."No.");
-        if not RoutingVer.FindLast then
+        if not RoutingVer.FindLast() then
             RoutingVer."Version Code" := '1'
         else
             RoutingVer."Version Code" := IncStr(RoutingVer."Version Code");
         RoutingVer."Routing No." := Routing."No.";
         if RoutingVer.Insert() then;
         RoutingVer.Validate(Status, RoutingVer.Status::"Under Development");
-        RoutingVer.Modify;
+        RoutingVer.Modify();
 
     end;
 
@@ -2142,7 +2140,7 @@ Table 85001 "NV8 Configurator Item"
         RoutingLines.SetRange("Version Code", '');
         if not "Routing OK" then
             with RoutingLines do begin
-                Reset;
+                Reset();
                 /*------>> 4/3/19
                       SETRANGE("Routing No.",Routing."No.");
                       DELETEALL;
@@ -2172,21 +2170,21 @@ Table 85001 "NV8 Configurator Item"
 
                 NextLineNo := 10000;
                 RoutingLines."Version Code" := RoutingVer."Version Code";
-                if GetMaterial then
+                if GetMaterial() then
                     if ConfiguratorMaterial."Default Routing No." <> '' then
                         AddRoutingLinesVer(ConfiguratorMaterial."Default Routing No.", RoutingLines."Version Code");
-                if GetJoint then
+                if GetJoint() then
                     if ConfiguratorJoint."Default Routing No." <> '' then
                         AddRoutingLinesVer(ConfiguratorJoint."Default Routing No.", RoutingLines."Version Code");
-                if GetShape then
+                if GetShape() then
                     if ConfiguratorShape."BOM No." <> '' then
                         AddRoutingLinesVer(ConfiguratorShape."Routing No.", RoutingLines."Version Code");
-                if GetSpec then
+                if GetSpec() then
                     if ConfiguratorSpecification."Default Routing No." <> '' then
                         AddRoutingLinesVer(ConfiguratorSpecification."Default Routing No.", RoutingLines."Version Code");
-                if FindFirst then
+                if FindFirst() then
                     RoutingVer.Validate(Status, RoutingVer.Status::Certified);
-                RoutingVer.Modify;
+                RoutingVer.Modify();
             end;
 
     end;
@@ -2195,7 +2193,7 @@ Table 85001 "NV8 Configurator Item"
     procedure AddRoutingLinesVer(RoutingHeader: Code[20]; RoutingVer: Code[10])
     begin
         //>> UE-619
-        RoutingComp.Reset;
+        RoutingComp.Reset();
         RoutingComp.SetRange("Routing No.", RoutingHeader);
         RoutingComp.SetRange("Version Code", '');
         if RoutingComp.Find('-') then begin
@@ -2206,9 +2204,9 @@ Table 85001 "NV8 Configurator Item"
                     "Version Code" := RoutingVer;
                     "Operation No." := Format(NextLineNo);
                     NextLineNo += 10;
-                    Insert;
+                    Insert();
                 end;
-            until RoutingComp.Next = 0
+            until RoutingComp.Next() = 0
         end;
     end;
 }

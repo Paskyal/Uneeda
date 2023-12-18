@@ -138,7 +138,7 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
                 l_ResEntry.SetRange(l_ResEntry."Source ID", "Source No.");
                 l_ResEntry.SetRange(l_ResEntry."Source Ref. No.", "Source Line No.");
 
-                if l_ResEntry.FindFirst then
+                if l_ResEntry.FindFirst() then
                     //VALIDATE("Qty. to Receive (Base)",ROUND(l_ResEntry."Quantity (Base)" * Rec."Pieces to Receive",0.00001))
                     "Qty. to Receive (Base)" := ROUND(l_ResEntry."Quantity (Base)" * Rec."Pieces to Receive", 0.00001)
             end;

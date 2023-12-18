@@ -55,12 +55,6 @@ Table 85000 "NV8 Configurator Setup"
         {
             OptionMembers = Decimals,"64ths";
 
-            trigger OnLookup()
-            var
-                AG001: ;
-            begin
-            end;
-
             trigger OnValidate()
             begin
                 if not Confirm(AG001, false) then
@@ -155,16 +149,16 @@ Table 85000 "NV8 Configurator Setup"
         }
         field(1010; "Raw Material Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape" where("Dimensioned Roll" = const(true));
+            TableRelation = "NV8 Configurator Shape" where("Dimensioned Roll" = const(true));
         }
         field(1011; "Re-Cut Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(68100; "Purchase Shape Setup"; Code[10])
         {
             Caption = 'Purchase Shape Setup';
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(68101; "Configurator Item Status"; Option)
         {

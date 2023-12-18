@@ -1,4 +1,4 @@
-Table 50025 "NV8 ENVAllocation Entry"
+Table 50025 "NV8 Allocation Entry"
 {
     DataClassification = CustomerContent;
 
@@ -19,7 +19,7 @@ Table 50025 "NV8 ENVAllocation Entry"
 
             trigger OnValidate()
             begin
-                SetProdOrder;
+                SetProdOrder();
                 UpdateStatus(0);
             end;
         }
@@ -45,7 +45,7 @@ Table 50025 "NV8 ENVAllocation Entry"
 
             trigger OnValidate()
             begin
-                SetItemEntry;
+                SetItemEntry();
                 UpdateStatus(0);
             end;
         }
@@ -56,7 +56,7 @@ Table 50025 "NV8 ENVAllocation Entry"
 
             trigger OnValidate()
             begin
-                SetItemEntry;
+                SetItemEntry();
                 UpdateStatus(0);
             end;
         }
@@ -102,11 +102,11 @@ Table 50025 "NV8 ENVAllocation Entry"
         }
         field(30; "Material Needed"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(31; "Grit Needed"; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
         field(33; "Item Needed"; Code[20])
         {
@@ -156,12 +156,13 @@ Table 50025 "NV8 ENVAllocation Entry"
             //This property is currently not supported
             //TestTableRelation = false;
 
-            trigger OnLookup()
-            var
-                LoginMgt: Codeunit "User Management";
-            begin
-                LoginMgt.LookupUserID("Created By");
-            end;
+            // TODO PAP
+            // trigger OnLookup()
+            // var
+            //     LoginMgt: Codeunit "User Management";
+            // begin
+            //     LoginMgt.LookupUserID("Created By");
+            // end;
         }
         field(45; Description; Text[50])
         {
@@ -194,7 +195,7 @@ Table 50025 "NV8 ENVAllocation Entry"
         }
         field(85020; "Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Location Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Location Code"));
         }
         field(85021; "FIFO Code"; Code[7])
         {
@@ -236,15 +237,15 @@ Table 50025 "NV8 ENVAllocation Entry"
         }
         field(85110; Shape; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(85120; Material; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85180; Grit; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
     }
 
@@ -292,19 +293,19 @@ Table 50025 "NV8 ENVAllocation Entry"
     procedure SetProdOrder()
     begin
         ProdOrder.Get(ProdOrder.Status::Released, "Prod. Order No.");
-        "Created From Document Type" := ProdOrder."Created From Document Type";
-        "Created From Document No." := ProdOrder."Created From Document No.";
-        "Created From Line No." := ProdOrder."Created From Line No.";
+        "Created From Document Type" := ProdOrder."NV8 Created From Document Type";
+        "Created From Document No." := ProdOrder."NV8 Created From Document No.";
+        "Created From Line No." := ProdOrder."NV8 Created From Line No.";
 
         "Due Date" := ProdOrder."Due Date";
-        "Material Needed" := ProdOrder.Material;
-        "Grit Needed" := ProdOrder.Grit;
-        ProdOrderComp.Reset;
+        "Material Needed" := ProdOrder."NV8 Material";
+        "Grit Needed" := ProdOrder."NV8 Grit";
+        ProdOrderComp.Reset();
         ProdOrderComp.SetRange(Status, ProdOrder.Status::Released);
         ProdOrderComp.SetRange("Prod. Order No.", "Prod. Order No.");
-        ProdOrderComp.SetRange(Material, "Material Needed");
-        ProdOrderComp.SetRange(Grit, "Grit Needed");
-        if ProdOrderComp.FindFirst then begin
+        ProdOrderComp.SetRange("NV8 Material", "Material Needed");
+        ProdOrderComp.SetRange("NV8 Grit", "Grit Needed");
+        if ProdOrderComp.FindFirst() then begin
             "Quantity Needed" := ProdOrderComp."Expected Quantity";
             "Item Needed" := ProdOrderComp."Item No.";
         end;
@@ -318,15 +319,15 @@ Table 50025 "NV8 ENVAllocation Entry"
         "Qty. per Unit of Measure" := ItemLedgerEntry."Qty. per Unit of Measure";
         "Location Code" := ItemLedgerEntry."Location Code";
         "Variant Code" := ItemLedgerEntry."Variant Code";
-        "Bin Location" := ItemLedgerEntry."Bin Location";
-        "FIFO Code" := ItemLedgerEntry."FIFO Code";
-        "FIFO Date" := ItemLedgerEntry."FIFO Date";
-        "Unit Width Inches" := ItemLedgerEntry."Unit Width Inches";
-        "Unit Length meters" := ItemLedgerEntry."Unit Length meters";
-        "Unit Width Code" := ItemLedgerEntry."Unit Width Code";
-        Shape := ItemLedgerEntry.Shape;
-        Material := ItemLedgerEntry.Material;
-        Grit := ItemLedgerEntry.Grit;
+        "Bin Location" := ItemLedgerEntry."NV8 Bin Location";
+        "FIFO Code" := ItemLedgerEntry."NV8 FIFO Code";
+        "FIFO Date" := ItemLedgerEntry."NV8 FIFO Date";
+        "Unit Width Inches" := ItemLedgerEntry."NV8 Unit Width Inches";
+        "Unit Length meters" := ItemLedgerEntry."NV8 Unit Length meters";
+        "Unit Width Code" := ItemLedgerEntry."NV8 Unit Width Code";
+        Shape := ItemLedgerEntry."NV8 Shape";
+        Material := ItemLedgerEntry."NV8 Material";
+        Grit := ItemLedgerEntry."NV8 Grit";
 
         if ItemLedgerEntry."Remaining Quantity" > "Quantity Needed" then
             Quantity := "Quantity Needed"
@@ -347,42 +348,42 @@ Table 50025 "NV8 ENVAllocation Entry"
         if "Location Needed" = '' then
             "Location Needed" := 'AA-FLOOR';
         if "Allocated ILE" = 0 then begin
-            ItemLedgerEntry.Reset;
+            ItemLedgerEntry.Reset();
             ItemLedgerEntry.SetCurrentkey("Item No.", "Variant Code", "Drop Shipment", "Location Code");
             ItemLedgerEntry.SetRange("Item No.", "Item No.");
             ItemLedgerEntry.SetRange("Location Code", "Location Needed");
-            ItemLedgerEntry.SetRange("Allocation ID", "Initial Item Ledger Entry No.");
-            if ItemLedgerEntry.FindFirst then
+            ItemLedgerEntry.SetRange("NV8 Allocation ID", "Initial Item Ledger Entry No.");
+            if ItemLedgerEntry.FindFirst() then
                 "Allocated ILE" := ItemLedgerEntry."Entry No.";
-            Modify;
-            Commit;
+            Modify();
+            Commit();
         end;
 
         if "Item Needed" = '' then begin
-            ProdOrderComp.Reset;
+            ProdOrderComp.Reset();
             ProdOrderComp.SetRange(Status, ProdOrder.Status::Released);
             ProdOrderComp.SetRange("Prod. Order No.", "Prod. Order No.");
-            ProdOrderComp.SetRange(Material, "Material Needed");
-            ProdOrderComp.SetRange(Grit, "Grit Needed");
-            if ProdOrderComp.FindFirst then
+            ProdOrderComp.SetRange("NV8 Material", "Material Needed");
+            ProdOrderComp.SetRange("NV8 Grit", "Grit Needed");
+            if ProdOrderComp.FindFirst() then
                 "Item Needed" := ProdOrderComp."Item No.";
-            Modify;
-            Commit;
+            Modify();
+            Commit();
         end;
 
         CalcFields("Reserved ILE");
         if "Reserved ILE" <> 0 then begin
             "Reservation Status" := "reservation status"::"Substituted Item";
-            Modify;
+            Modify();
             exit;
         end;
 
-        ProdOrderComp.Reset;
+        ProdOrderComp.Reset();
         ProdOrderComp.SetRange(Status, ProdOrder.Status::Released);
         ProdOrderComp.SetRange("Prod. Order No.", "Prod. Order No.");
-        ProdOrderComp.SetRange(Material, "Material Needed");
-        ProdOrderComp.SetRange(Grit, "Grit Needed");
-        ProdOrderComp.FindFirst;
+        ProdOrderComp.SetRange("NV8 Material", "Material Needed");
+        ProdOrderComp.SetRange("NV8 Grit", "Grit Needed");
+        ProdOrderComp.FindFirst();
         ProdOrderComp.TestField("Due Date");
         ReservEntry."Source Type" := Database::"Prod. Order Component";
         ReservEntry."Source Subtype" := ProdOrderComp.Status;
@@ -398,14 +399,14 @@ Table 50025 "NV8 ENVAllocation Entry"
         ReservEntry."Shipment Date" := ProdOrderComp."Due Date";
         UnitOfMeasureCode := ProdOrderComp."Unit of Measure Code";
 
-        ReservEntry.LockTable;
+        ReservEntry.LockTable();
         Clear(ReservMgt);
-        ReservMgt.SetProdOrderComponent(ProdOrderComp);
+        // ReservMgt.SetProdOrderComponent(ProdOrderComp);//TODO PAP
         // get ILE
         // ItemLedgerEntry.GET("Item Ledger Entry No.");
         ItemLedgerEntry.Get("Allocated ILE");
         // rec --> ItemLedgerEntry
-        ReservMgt.ItemLedgEntryUpdateValues(ItemLedgerEntry, QtyToReserve, QtyReservedThisLine);
+        // ReservMgt.ItemLedgEntryUpdateValues(ItemLedgerEntry, QtyToReserve, QtyReservedThisLine);// TODO PAP
         //ECL
         //NewQtyReservedThisLine := ReservMgt.CalculateRemainingQty;
         ReservMgt.CopySign(NewQtyReservedThisLine, QtyToReserve);
@@ -430,7 +431,7 @@ Table 50025 "NV8 ENVAllocation Entry"
 
         //UpdateReservMgt;
         Clear(ReservMgt);
-        ReservMgt.SetProdOrderComponent(ProdOrderComp);
+        // ReservMgt.SetProdOrderComponent(ProdOrderComp);//TODO PAP
 
         //ECL
         //
@@ -475,9 +476,9 @@ Table 50025 "NV8 ENVAllocation Entry"
     procedure ShowProdOrder()
     begin
         with ProdOrder do begin
-            Reset;
+            Reset();
             SetRange("No.", Rec."Prod. Order No.");
-            if ProdOrder.FindFirst then begin
+            if ProdOrder.FindFirst() then begin
                 case Status of
                     Status::Simulated:
                         Page.Run(Page::"Simulated Production Order", ProdOrder);

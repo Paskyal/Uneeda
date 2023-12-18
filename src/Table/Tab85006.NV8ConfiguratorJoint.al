@@ -3,8 +3,9 @@ Table 85006 "NV8 Configurator Joint"
     // UE-651  DB  4/13/20 Added Default Dimension fields
     // UE-651  DB  66/13/20  Expand Item Description and Item Description 2 to 50
 
-    DrillDownPageID = UnknownPage85012;
-    LookupPageID = UnknownPage85012;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85012;
+    // LookupPageID = UnknownPage85012;
     DataClassification = CustomerContent;
 
     fields
@@ -111,7 +112,7 @@ Table 85006 "NV8 Configurator Joint"
     begin
 
         with ConfiguratorItem do begin
-            Reset;
+            Reset();
             SetCurrentkey(Shape, Material, "Dimension 1", "Dimension 2", "Dimension 3", "Dimension 4", Specification, Grit, Joint);
             SetRange(Joint, Rec.Code);
             if Find('=><') then
@@ -120,7 +121,7 @@ Table 85006 "NV8 Configurator Joint"
     end;
 
     var
-        ConfiguratorItem: Record "Configurator Item";
+        ConfiguratorItem: Record "NV8 Configurator Item";
         UEI001: label 'You can not rename the components of a Configurator Item';
         UEI002: label 'You can not delete %1, %2 because it is used in %3, %4';
 }

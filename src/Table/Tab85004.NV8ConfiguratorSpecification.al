@@ -3,8 +3,9 @@ Table 85004 "NV8 Configurator Specification"
     // UE-651  DB  4/13/20 Added Default Dimension fields
     // UE-651  DB  66/13/20  Expand Item Description and Item Description 2 to 50
 
-    DrillDownPageID = UnknownPage85008;
-    LookupPageID = UnknownPage85008;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85008;
+    // LookupPageID = UnknownPage85008;
     DataClassification = CustomerContent;
 
     fields
@@ -84,7 +85,7 @@ Table 85004 "NV8 Configurator Specification"
     }
 
     var
-        ConfiguratorItem: Record "Configurator Item";
+        ConfiguratorItem: Record "NV8 Configurator Item";
         UEI001: label 'You can not rename the components of a Configurator Item';
         UEI002: label 'You can not delete %1, %2 because it is used in %3, %4';
 }

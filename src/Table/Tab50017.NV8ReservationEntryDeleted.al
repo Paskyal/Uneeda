@@ -29,7 +29,7 @@ Table 50017 "NV8 ReservationEntry-Deleted"
 
             trigger OnValidate()
             begin
-                Quantity := CalcReservationQuantity;
+                Quantity := CalcReservationQuantity();
                 "Qty. to Handle (Base)" := "Quantity (Base)";
                 "Qty. to Invoice (Base)" := "Quantity (Base)";
             end;
@@ -104,12 +104,13 @@ Table 50017 "NV8 ReservationEntry-Deleted"
             //This property is currently not supported
             //TestTableRelation = false;
 
-            trigger OnLookup()
-            var
-                UserMgt: Codeunit "User Management";
-            begin
-                UserMgt.LookupUserID("Created By");
-            end;
+            //TODO PAP
+            // trigger OnLookup()
+            // var
+            //     UserMgt: Codeunit "User Management";
+            // begin
+            //     UserMgt.LookupUserID("Created By");
+            // end;
         }
         field(27; "Changed By"; Code[50])
         {
@@ -118,12 +119,13 @@ Table 50017 "NV8 ReservationEntry-Deleted"
             //This property is currently not supported
             //TestTableRelation = false;
 
-            trigger OnLookup()
-            var
-                UserMgt: Codeunit "User Management";
-            begin
-                UserMgt.LookupUserID("Changed By");
-            end;
+            // TODO PAP
+            // trigger OnLookup()
+            // var
+            //     UserMgt: Codeunit "User Management";
+            // begin
+            //     UserMgt.LookupUserID("Changed By");
+            // end;
         }
         field(28; Positive; Boolean)
         {
@@ -299,7 +301,7 @@ Table 50017 "NV8 ReservationEntry-Deleted"
     begin
         ActionMessageEntry.SetCurrentkey("Reservation Entry");
         ActionMessageEntry.SetRange("Reservation Entry", "Entry No.");
-        ActionMessageEntry.DeleteAll;
+        ActionMessageEntry.DeleteAll();
     end;
 
     var
@@ -407,8 +409,8 @@ Table 50017 "NV8 ReservationEntry-Deleted"
         Rec2.SetCurrentkey("Item No.");
         if "Item No." <> '' then
             Rec2.SetRange("Item No.", "Item No.");
-        Rec2.LockTable;
-        if Rec2.FindLast then;
+        Rec2.LockTable();
+        if Rec2.FindLast() then;
     end;
 
 
@@ -416,7 +418,8 @@ Table 50017 "NV8 ReservationEntry-Deleted"
     var
         ItemTrackingMgt: Codeunit "Item Tracking Management";
     begin
-        "Item Tracking" := ItemTrackingMgt.ItemTrackingOption("Lot No.", "Serial No.");
+        // TODO PAP
+        // "Item Tracking" := ItemTrackingMgt.ItemTrackingOption("Lot No.", "Serial No.");
     end;
 
 
@@ -424,13 +427,13 @@ Table 50017 "NV8 ReservationEntry-Deleted"
     begin
         "Lot No." := '';
         "Serial No." := '';
-        UpdateItemTracking;
+        UpdateItemTracking();
     end;
 
 
     procedure FilterLinesWithItemToPlan(var Item: Record Item; IsReceipt: Boolean)
     begin
-        Reset;
+        Reset();
         SetCurrentkey(
           "Item No.", "Variant Code", "Location Code", "Reservation Status", "Shipment Date", "Expected Receipt Date");
         SetRange("Item No.", Item."No.");

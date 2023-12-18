@@ -177,7 +177,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
                       TransHeader.Rsq::"4", TransHeader.Rsq::"3"] then begin
                         if TransHeader.Status <> TransHeader.Status::Open then begin
                             TransHeader.Status := TransHeader.Status::Open;
-                            TransHeader.Modify;
+                            TransHeader.Modify();
                         end;
                         if "Original Ordered Quantity" = 0 then
                             "Original Ordered Quantity" := Quantity;
@@ -194,7 +194,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
                       TransHeader.Rsq::"4", TransHeader.Rsq::"3"] then begin
                         if TransHeader.Status <> TransHeader.Status::Open then begin
                             TransHeader.Status := TransHeader.Status::Open;
-                            TransHeader.Modify;
+                            TransHeader.Modify();
                         end;
                         Validate(Quantity, "Original Ordered Quantity");
                     end;
@@ -310,7 +310,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
                 GetTransHeaderRSQ;
                 if TransHeader.Status <> TransHeader.Status::Open then begin
                     TransHeader.Status := TransHeader.Status::Open;
-                    TransHeader.Modify;
+                    TransHeader.Modify();
                 end;
                 UpdatePieces;
             end;
@@ -429,7 +429,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
                 ReturnedCrossRef: Record "Item Cross Reference";
             begin
                 with ReturnedCrossRef do begin
-                    Reset;
+                    Reset();
                     SetCurrentkey("Cross-Reference No.", "Cross-Reference Type", "Cross-Reference Type No.");
                     SetRange("Cross-Reference Type", "cross-reference type"::Customer);
                     SetRange("Cross-Reference Type No.", Rec."Consignment Customer");
@@ -553,10 +553,10 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
 
 
                 if not ConfiguratorFound then begin
-                    Commit;
+                    Commit();
                     if Confirm(AG012, false) then begin
                         ConfiguratorItem.Insert(true);
-                        Commit;
+                        Commit();
 
                         if Page.RunModal(Page::"Configurator Item Card", ConfiguratorItem) = Action::LookupOK then begin
                             Validate("Item No.", ConfiguratorItem."Item No.");

@@ -160,22 +160,22 @@ Table 50015 "NV8 Bin Content Buff-Uneeda"
         }
         field(85100; "Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
         }
         field(85110; Shape; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(85120; Material; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85180; Grit; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
     }
 

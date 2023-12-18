@@ -19,13 +19,13 @@ Table 50013 "NV8 Prod. Order Scan"
             begin
                 if WorkCenterREC.Get("Work/Machine Center") then begin
                     "Work Center Code" := WorkCenterREC."No.";
-                    "Scan Date" := WorkDate;
+                    "Scan Date" := WorkDate();
                     "Scan Time" := Time;
                 end;
 
                 if MachineCREC.Get("Work/Machine Center") then begin
                     "Machine Center Code" := MachineCREC."No.";
-                    "Scan Date" := WorkDate;
+                    "Scan Date" := WorkDate();
                     "Scan Time" := Time;
                 end;
             end;
@@ -67,10 +67,10 @@ Table 50013 "NV8 Prod. Order Scan"
 
     trigger OnInsert()
     var
-        l_ScanREC: Record "Prod. Order Scan";
+        l_ScanREC: Record "NV8 Prod. Order Scan";
     begin
         l_ScanREC.SetCurrentkey(l_ScanREC."Entry No.");
-        if l_ScanREC.FindLast then
+        if l_ScanREC.FindLast() then
             "Entry No." := l_ScanREC."Entry No." + 1
         else
             "Entry No." := 1;

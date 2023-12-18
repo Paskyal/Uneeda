@@ -492,7 +492,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
 
             trigger OnValidate()
             begin
-                GetSalesHeader;
+                GetSalesHeader();
                 "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
                 UpdatePieces;
             end;

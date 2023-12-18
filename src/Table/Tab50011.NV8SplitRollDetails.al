@@ -98,161 +98,161 @@ Table 50011 "NV8 Split Roll Details"
         field(10050; "Original Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Production Order".Pieces where("No." = field("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."NV8 Pieces" where("No." = field("Prod. Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10051; "Original Width Inches"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Production Order"."Unit Width Inches" where("No." = field("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."NV8 Unit Width Inches" where("No." = field("Prod. Order No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10058; "Original Total Length Meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Production Order"."Total Length meters" where("No." = field("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."NV8 Total Length meters" where("No." = field("Prod. Order No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10064; "Original Total M2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Production Order"."Total Area m2" where("No." = field("Prod. Order No.")));
+            CalcFormula = lookup("Production Order"."NV8 Total Area m2" where("No." = field("Prod. Order No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10150; "Split Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details".Pieces where("Prod. Order No." = field("Prod. Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details".Pieces where("Prod. Order No." = field("Prod. Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10151; "Split Width Inches"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Split Roll Details"."Unit Width Inches" where("Prod. Order No." = field("Prod. Order No.")));
+            CalcFormula = lookup("NV8 Split Roll Details"."Unit Width Inches" where("Prod. Order No." = field("Prod. Order No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10158; "Split Total Length Meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Prod. Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Prod. Order No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10164; "Split Total M2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Prod. Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Prod. Order No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10250; "Rem. Split Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details".Pieces where("Prod. Order No." = field("Prod. Order No."),
-                                                                 Shipped = const(No)));
+            CalcFormula = sum("NV8 Split Roll Details".Pieces where("Prod. Order No." = field("Prod. Order No."),
+                                                                 Shipped = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10251; "Rem. Split Width Inches"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Split Roll Details"."Unit Width Inches" where("Prod. Order No." = field("Prod. Order No."),
-                                                                                 Shipped = const(No)));
+            CalcFormula = lookup("NV8 Split Roll Details"."Unit Width Inches" where("Prod. Order No." = field("Prod. Order No."),
+                                                                                 Shipped = const(false)));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10258; "Rem. Split Total Length Meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Prod. Order No."),
-                                                                                Shipped = const(No)));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Prod. Order No."),
+                                                                                Shipped = const(false)));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(10264; "Rem. Split Total M2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Prod. Order No."),
-                                                                          Shipped = const(No)));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Prod. Order No."),
+                                                                          Shipped = const(false)));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85050; Pieces; Decimal)
@@ -262,7 +262,7 @@ Table 50011 "NV8 Split Roll Details"
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85051; "Unit Width Inches"; Decimal)
@@ -288,7 +288,7 @@ Table 50011 "NV8 Split Roll Details"
             trigger OnValidate()
             begin
                 "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85053; "Unit Length Inches"; Decimal)
@@ -298,7 +298,7 @@ Table 50011 "NV8 Split Roll Details"
             trigger OnValidate()
             begin
                 "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85054; "Unit Area m2"; Decimal)
@@ -319,7 +319,7 @@ Table 50011 "NV8 Split Roll Details"
                 "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
                 // IF "Unit Width Inches" <> 0 THEN
                 //   VALIDATE("Unit Cost","Cost Per meter" / "Unit Width Inches" * 39);
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85056; "Unit Width Text"; Text[30])
@@ -345,7 +345,7 @@ Table 50011 "NV8 Split Roll Details"
         }
         field(85100; "Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -382,13 +382,13 @@ Table 50011 "NV8 Split Roll Details"
     var
         Item: Record Item;
         ProdOrder: Record "Production Order";
-        ConfiguratorSetup: Record "Configurator Setup";
-        ConfiguratorItem: Record "Configurator Item";
-        ConfiguratorShape: Record "Configurator Shape";
-        ConfiguratorMaterial: Record "Configurator Material";
-        ConfiguratorJoint: Record "Configurator Joint";
-        ConfiguratorGrit: Record "Configurator Grit";
-        ConfiguratorMaterialGrit: Record "Configurator Material-Grits";
+        ConfiguratorSetup: Record "NV8 Configurator Setup";
+        ConfiguratorItem: Record "NV8 Configurator Item";
+        ConfiguratorShape: Record "NV8 Configurator Shape";
+        ConfiguratorMaterial: Record "NV8 Configurator Material";
+        ConfiguratorJoint: Record "NV8 Configurator Joint";
+        ConfiguratorGrit: Record "NV8 Configurator Grit";
+        ConfiguratorMaterialGrit: Record "NV8 Config Material-Grits";
         Temp: Integer;
 
 
@@ -399,7 +399,7 @@ Table 50011 "NV8 Split Roll Details"
 
     procedure UpdatePieces()
     begin
-        UpdateConfiguration;
+        UpdateConfiguration();
         "Unit Area m2" := ROUND("Unit Width Inches" * "Unit Length meters" / 39, 0.00001);
         "Total Area m2" := Pieces * "Unit Area m2";
         "Total Length meters" := Pieces * "Unit Length meters";
@@ -408,14 +408,14 @@ Table 50011 "NV8 Split Roll Details"
 
     procedure GetProdOrder()
     begin
-        ProdOrder.Reset;
+        ProdOrder.Reset();
         ProdOrder.SetRange("No.", "Prod. Order No.");
         ProdOrder.Find('-');
         Status := ProdOrder.Status;
 
-        "Usage Type" := ProdOrder."Created From Document Type";
-        "Document No." := ProdOrder."Created From Document No.";
-        "Document Line No." := ProdOrder."Created From Line No.";
+        "Usage Type" := ProdOrder."NV8 Created From Document Type";
+        "Document No." := ProdOrder."NV8 Created From Document No.";
+        "Document Line No." := ProdOrder."NV8 Created From Line No.";
         "Item No." := ProdOrder."Source No.";
         "Location Code" := ProdOrder."Location Code";
         "Shipment Date" := ProdOrder."Due Date";
@@ -426,8 +426,8 @@ Table 50011 "NV8 Split Roll Details"
     begin
         if "Prod. Order No." = '' then
             exit;
-        GetProdOrder;
-        Validate("Unit Width Code", ProdOrder."Unit Width Code");
+        GetProdOrder();
+        Validate("Unit Width Code", ProdOrder."NV8 Unit Width Code");
     end;
 
 
@@ -435,13 +435,13 @@ Table 50011 "NV8 Split Roll Details"
     var
         NextEntryNo: Integer;
     begin
-        Reset;
+        Reset();
         SetCurrentkey("Prod. Order No.");
-        SetRange("Prod. Order No.", ShipmentLine."Production Order No.");
+        SetRange("Prod. Order No.", ShipmentLine."NV8 Production Order No.");
         SetRange(Shipped, false);
         if not Find('-') then
             exit;
-        NextEntryNo := GetLastEntryNo;
+        NextEntryNo := GetLastEntryNo();
         repeat
             NextEntryNo += 1;
             "Entry No." := NextEntryNo;
@@ -452,8 +452,8 @@ Table 50011 "NV8 Split Roll Details"
             "Ship Type" := "ship type"::Sales;
             "Shipment No." := ShipmentLine."Document No.";
             "Shipment Line No." := ShipmentLine."Line No.";
-            Modify;
-        until Next = 0;
+            Modify();
+        until Next() = 0;
     end;
 
 
@@ -461,13 +461,13 @@ Table 50011 "NV8 Split Roll Details"
     var
         NextEntryNo: Integer;
     begin
-        Reset;
+        Reset();
         SetCurrentkey("Prod. Order No.");
-        SetRange("Prod. Order No.", ShipmentLine."Production Order No.");
+        SetRange("Prod. Order No.", ShipmentLine."NV8 Production Order No.");
         SetRange(Shipped, false);
         if not Find('-') then
             exit;
-        NextEntryNo := GetLastEntryNo;
+        NextEntryNo := GetLastEntryNo();
         repeat
             NextEntryNo += 1;
             "Entry No." := NextEntryNo;
@@ -478,17 +478,17 @@ Table 50011 "NV8 Split Roll Details"
             "Ship Type" := "ship type"::Transfer;
             "Shipment No." := ShipmentLine."Document No.";
             "Shipment Line No." := ShipmentLine."Line No.";
-            Modify;
-        until Next = 0;
+            Modify();
+        until Next() = 0;
     end;
 
 
     procedure GetLastEntryNo(): Integer
     var
-        SplitRollLine: Record "KBM Payroll ImportBuff";
+        SplitRollLine: Record "NV8 Split Roll Details";
     begin
         with SplitRollLine do begin
-            Reset;
+            Reset();
             SetCurrentkey("Entry No.");
             if Find('+') then
                 exit("Entry No.")
@@ -502,20 +502,20 @@ Table 50011 "NV8 Split Roll Details"
     var
         NextEntryNo: Integer;
     begin
-        Reset;
+        Reset();
         SetCurrentkey("Prod. Order No.");
-        SetRange("Prod. Order No.", ShipmentLine."Production Order No.");
+        SetRange("Prod. Order No.", ShipmentLine."NV8 Production Order No.");
         SetRange("Invoiced or Received", false);
         if not Find('-') then
             exit;
-        NextEntryNo := GetLastEntryNo;
+        NextEntryNo := GetLastEntryNo();
         repeat
             NextEntryNo += 1;
             "Entry No." := NextEntryNo;
             "Invoiced or Received" := true;
             "Invoice or Receipt No." := ShipmentLine."Document No.";
-            Modify;
-        until Next = 0;
+            Modify();
+        until Next() = 0;
     end;
 
 
@@ -523,20 +523,20 @@ Table 50011 "NV8 Split Roll Details"
     var
         NextEntryNo: Integer;
     begin
-        Reset;
+        Reset();
         SetCurrentkey("Prod. Order No.");
-        SetRange("Prod. Order No.", ShipmentLine."Production Order No.");
+        SetRange("Prod. Order No.", ShipmentLine."NV8 Production Order No.");
         SetRange(Shipped, false);
         if not Find('-') then
             exit;
-        NextEntryNo := GetLastEntryNo;
+        NextEntryNo := GetLastEntryNo();
         repeat
             NextEntryNo += 1;
             "Entry No." := NextEntryNo;
             "Invoiced or Received" := true;
             "Invoice or Receipt No." := ShipmentLine."Document No.";
-            Modify;
-        until Next = 0;
+            Modify();
+        until Next() = 0;
     end;
 }
 

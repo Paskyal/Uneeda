@@ -460,7 +460,7 @@ tableextension 50008 "NV8 Item Ledger Entry" extends "Item Ledger Entry" //32
             var
                 SalesReps: Record "Salesperson/Purchaser";
             begin
-                SalesReps.Reset;
+                SalesReps.Reset();
                 //SalesReps.SETFILTER(Code,STRSUBSTNO('%1',"Sales Reps (All)"));
                 Page.RunModal(0, SalesReps);
             end;

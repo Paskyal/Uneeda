@@ -44,7 +44,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
                 SetUpNewLine(xRec);
                 Validate("Entry Type", "entry type"::Output);
 
-                Validate("FIFO Date", WorkDate);
+                Validate("FIFO Date", WorkDate());
                 ProdOrder.Get(ProdOrder.Status::Released, "Output Prod. Order No.");
                 Validate("Order No.", "Output Prod. Order No.");
                 ProdOrderLine.Reset;
@@ -161,10 +161,10 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
                 ProdOrderComp: Record "Prod. Order Component";
             begin
                 if "Line No." = 0 then begin
-                    ItemJnlLine.Reset;
+                    ItemJnlLine.Reset();
                     ItemJnlLine.SetRange("Journal Template Name", "Journal Template Name");
                     ItemJnlLine.SetRange("Journal Batch Name", "Journal Batch Name");
-                    if ItemJnlLine.FindLast then
+                    if ItemJnlLine.FindLast() then
                         "Line No." := ItemJnlLine."Line No." + 10000
                     else
                         "Line No." := 10000;
@@ -172,7 +172,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
                 ItemJnlLine.Copy(Rec);
                 ProdOrder.Get(ProdOrder.Status::Released, "MFG Raw Material");
                 Description := ProdOrder.Description;
-                ProdOrderComp.Reset;
+                ProdOrderComp.Reset();
                 ProdOrderComp.SetCurrentkey(Status, "Prod. Order No.");
                 ProdOrderComp.SetRange(Status, ProdOrderLine.Status::Released);
                 ProdOrderComp.SetRange("Prod. Order No.", "MFG Raw Material");
@@ -180,11 +180,11 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
                 repeat
                     ItemJnlLine.Validate("Item No.", ProdOrderComp."Item No.");
                     ItemJnlLine.Validate(Quantity, ProdOrderComp."Expected Quantity");
-                    if not ItemJnlLine.Insert then
-                        ItemJnlLine.Modify;
+                    if not ItemJnlLine.Insert() then
+                        ItemJnlLine.Modify();
                     ItemJnlLine."Line No." += 10000;
-                until ProdOrderComp.Next = 0;
-                Rec.Find; //COPY(ItemJnlLine);
+                until ProdOrderComp.Next() = 0;
+                Rec.Find(); //COPY(ItemJnlLine);
             end;
         }
         field(68904; "NV8 From Entry Type"; Option)
@@ -781,4 +781,11 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DataClassification = CustomerContent;
         }
     }
+    procedure "NV8 SkipCheck"()
+    begin
+        G_SkipCheck := true;
+    end;
+
+    var
+        G_SkipCheck: Boolean;
 }

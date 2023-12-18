@@ -571,7 +571,7 @@ Table 50008 "NV8 Posted Roll Allocator Line"
         NavigateForm: Page Navigate;
     begin
         NavigateForm.SetDoc("Posting Date", "Source No.");
-        NavigateForm.Run;
+        NavigateForm.Run();
     end;
 }
 

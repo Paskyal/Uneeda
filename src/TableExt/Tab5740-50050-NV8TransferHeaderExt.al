@@ -139,11 +139,11 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
                 ProdOrder.SetFilter(Status, '%1|%2', ProdOrder.Status::"Firm Planned", ProdOrder.Status::Released);
                 ProdOrder.SetRange("Source Doc Type", ProdOrder."source doc type"::"Transfer Order");
                 ProdOrder.SetRange("Source Doc No.", "No.");
-                if ProdOrder.FindFirst then
+                if ProdOrder.FindFirst() then
                     repeat
                         ProdOrder.RSQ := RSQ;
-                        ProdOrder.Modify;
-                    until ProdOrder.Next = 0;
+                        ProdOrder.Modify();
+                    until ProdOrder.Next() = 0;
             end;
         }
         field(85041; "NV8 Red Dot"; Boolean)
@@ -213,7 +213,7 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
             var
                 SalesReps: Record "Salesperson/Purchaser";
             begin
-                SalesReps.Reset;
+                SalesReps.Reset();
                 //SalesReps.SETFILTER(Code,STRSUBSTNO('%1',"Sales Reps (All)"));
                 Page.RunModal(0, SalesReps);
             end;

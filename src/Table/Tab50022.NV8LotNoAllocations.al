@@ -1,7 +1,8 @@
 Table 50022 "NV8 Lot No Allocations"
 {
-    DrillDownPageID = UnknownPage50034;
-    LookupPageID = UnknownPage50034;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage50034;
+    // LookupPageID = UnknownPage50034;
     DataClassification = CustomerContent;
 
     fields

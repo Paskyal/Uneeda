@@ -35,7 +35,7 @@ Table 85007 "NV8 Roll Selector Line"
         {
             CalcFormula = sum("Item Ledger Entry".Quantity where("Item No." = field("Item No."),
                                                                   "Lot No." = field(filter("Lot No.")),
-                                                                  "Lot Group Code" = field("Lot Group Code")));
+                                                                  "NV8 Lot Group Code" = field("Lot Group Code")));
             Caption = 'Quantity';
             DecimalPlaces = 0 : 5;
             FieldClass = FlowField;
@@ -95,7 +95,7 @@ Table 85007 "NV8 Roll Selector Line"
         }
         field(68056; "Jumbo Raw Material Status"; Option)
         {
-            CalcFormula = lookup("Configurator Material-Grits"."Set Raw Material Status" where("Material Code" = field(Material),
+            CalcFormula = lookup("NV8 Config Material-Grits"."Set Raw Material Status" where("Material Code" = field(Material),
                                                                                                 "Grit Code" = field(Grit)));
             Editable = false;
             FieldClass = FlowField;
@@ -117,13 +117,13 @@ Table 85007 "NV8 Roll Selector Line"
         }
         field(68102; "Allocated MFG"; Integer)
         {
-            CalcFormula = count("Allocation Entry" where("Item Ledger Entry No." = field("Allocation ID")));
+            CalcFormula = count("NV8 Allocation Entry" where("Item Ledger Entry No." = field("Allocation ID")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(68103; "Allocated UNY"; Integer)
         {
-            CalcFormula = count("Allocation Entry" where("Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = count("NV8 Allocation Entry" where("Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -217,7 +217,7 @@ Table 85007 "NV8 Roll Selector Line"
         }
         field(85020; "Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Location Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Location Code"));
         }
         field(85021; "FIFO Code"; Code[7])
         {
@@ -247,7 +247,7 @@ Table 85007 "NV8 Roll Selector Line"
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85051; "Unit Width Inches"; Decimal)
@@ -276,7 +276,7 @@ Table 85007 "NV8 Roll Selector Line"
             trigger OnValidate()
             begin
                 "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85053; "Unit Length Inches"; Decimal)
@@ -288,7 +288,7 @@ Table 85007 "NV8 Roll Selector Line"
             trigger OnValidate()
             begin
                 "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85054; "Unit Area m2"; Decimal)
@@ -304,11 +304,11 @@ Table 85007 "NV8 Roll Selector Line"
 
             trigger OnValidate()
             begin
-                ConfiguratorSetup.Get;
+                ConfiguratorSetup.Get();
                 ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
                 "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
                 "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85056; "Unit Width Text"; Text[30])
@@ -378,45 +378,45 @@ Table 85007 "NV8 Roll Selector Line"
             var
                 SalesReps: Record "Salesperson/Purchaser";
             begin
-                SalesReps.Reset;
+                SalesReps.Reset();
                 //SalesReps.SETFILTER(Code,STRSUBSTNO('%1',"Sales Reps (All)"));
                 Page.RunModal(0, SalesReps);
             end;
         }
         field(85100; "Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item";
+            TableRelation = "NV8 Configurator Item";
         }
         field(85110; Shape; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(85120; Material; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85121; "Original Material"; Code[10])
         {
         }
         field(85122; "Subst. Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85170; Specification; Code[10])
         {
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
         }
         field(85180; Grit; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
         field(85190; Joint; Code[10])
         {
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
         }
         field(85200; "Economy Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85201; "PO No."; Code[20])
         {
@@ -496,7 +496,7 @@ Table 85007 "NV8 Roll Selector Line"
         field(85321; "Allocated Quantity"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Roll Allocator Line"."Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
+            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("NV8 Item Ledger Entry No." = field("Entry No."),
                                                                                 "Line No." = filter(> 0)));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -504,13 +504,13 @@ Table 85007 "NV8 Roll Selector Line"
         }
         field(85322; "Allocated On"; Date)
         {
-            CalcFormula = lookup("Roll Allocator Line"."Allocated On" where("Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated On" where("NV8 Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85323; "Allocated By"; Code[20])
         {
-            CalcFormula = lookup("Roll Allocator Line"."Allocated By" where("Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated By" where("NV8 Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = User;
@@ -542,7 +542,7 @@ Table 85007 "NV8 Roll Selector Line"
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85412; "Split Total Length meters"; Decimal)
@@ -553,7 +553,7 @@ Table 85007 "NV8 Roll Selector Line"
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85413; "Split Total Area m2"; Decimal)
@@ -564,7 +564,7 @@ Table 85007 "NV8 Roll Selector Line"
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85420; "Shipped Split Pieces"; Decimal)
@@ -575,12 +575,12 @@ Table 85007 "NV8 Roll Selector Line"
 
             trigger OnValidate()
             begin
-                UpdatePieces;
+                UpdatePieces();
             end;
         }
         field(85511; "FG Cost ($/UOM)"; Decimal)
         {
-            CalcFormula = lookup(Item."FG Cost (/UOM)" where("No." = field("Item No.")));
+            CalcFormula = lookup(Item."NV8 FG Cost (/UOM)" where("No." = field("Item No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -598,7 +598,7 @@ Table 85007 "NV8 Roll Selector Line"
         {
             CalcFormula = sum("Warehouse Entry".Quantity where("Item No." = field("Item No."),
                                                                 "Lot No." = field(filter("Lot No.")),
-                                                                "Lot Group Code" = field(filter("Lot Group Code")),
+                                                                "NV8 Lot Group Code" = field(filter("Lot Group Code")),
                                                                 "Zone Code" = field(filter("Warehouse Zone")),
                                                                 "Bin Code" = filter(<> 'ADJUSTMENT')));
             FieldClass = FlowField;
@@ -651,9 +651,9 @@ Table 85007 "NV8 Roll Selector Line"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Entry No.", Description, "Item No.", "Posting Date", Field4, Field6)
-        {
-        }
+        // fieldgroup(DropDown; "Entry No.", Description, "Item No.", "Posting Date", Field4, Field6) //TODo PAP
+        // {
+        // }
     }
 
     var
@@ -666,11 +666,11 @@ Table 85007 "NV8 Roll Selector Line"
         IsNotOnInventoryErr: label 'You have insufficient quantity of Item %1 on inventory.';
         Item: Record Item;
         InventorySetup: Record "Inventory Setup";
-        ConfiguratorSetup: Record "Configurator Setup";
-        ConfiguratorItem: Record "Configurator Item";
-        ConfiguratorShape: Record "Configurator Shape";
-        ConfiguratorMaterial: Record "Configurator Material";
-        ConfiguratorMaterialGrit: Record "Configurator Material-Grits";
+        ConfiguratorSetup: Record "NV8 Configurator Setup";
+        ConfiguratorItem: Record "NV8 Configurator Item";
+        ConfiguratorShape: Record "NV8 Configurator Shape";
+        ConfiguratorMaterial: Record "NV8 Configurator Material";
+        ConfiguratorMaterialGrit: Record "NV8 Config Material-Grits";
         Location: Record Location;
         YieldRate: Decimal;
         Cust: Record Customer;
@@ -692,22 +692,22 @@ Table 85007 "NV8 Roll Selector Line"
 
     procedure AGGetConfigurator(ItemJnlLine: Record "Item Journal Line")
     begin
-        "Material Type" := ItemJnlLine."Material Type";
-        Pieces := ItemJnlLine.Pieces;
-        "Unit Width Inches" := ItemJnlLine."Unit Width Inches";
-        "Unit Length meters" := ItemJnlLine."Unit Length meters";
-        "Unit Length Inches" := ItemJnlLine."Unit Length Inches";
-        "Unit Width Code" := ItemJnlLine."Unit Width Code";
-        "Unit Width Text" := ItemJnlLine."Unit Width Text";
-        "Unit Area m2" := ItemJnlLine."Unit Area m2";
-        "Total Length meters" := ItemJnlLine."Total Length meters";
-        "Cost Per meter" := ItemJnlLine."Cost Per meter";
-        "Total Area m2" := ItemJnlLine."Total Area m2";
-        if ItemJnlLine."FIFO Date" = 0D then
+        "Material Type" := ItemJnlLine."NV8 Material Type";
+        Pieces := ItemJnlLine."NV8 Pieces";
+        "Unit Width Inches" := ItemJnlLine."NV8 Unit Width Inches";
+        "Unit Length meters" := ItemJnlLine."NV8 Unit Length meters";
+        "Unit Length Inches" := ItemJnlLine."NV8 Unit Length Inches";
+        "Unit Width Code" := ItemJnlLine."NV8 Unit Width Code";
+        "Unit Width Text" := ItemJnlLine."NV8 Unit Width Text";
+        "Unit Area m2" := ItemJnlLine."NV8 Unit Area m2";
+        "Total Length meters" := ItemJnlLine."NV8 Total Length meters";
+        "Cost Per meter" := ItemJnlLine."NV8 Cost Per meter";
+        "Total Area m2" := ItemJnlLine."NV8 Total Area m2";
+        if ItemJnlLine."NV8 FIFO Date" = 0D then
             Validate("FIFO Date", "Posting Date")
         else
-            Validate("FIFO Date", ItemJnlLine."FIFO Date");
-        "Skid No." := ItemJnlLine."Skid No.";
+            Validate("FIFO Date", ItemJnlLine."NV8 FIFO Date");
+        "Skid No." := ItemJnlLine."NV8 Skid No.";
         /*
         IF Quantity > 0 THEN BEGIN
           //"Bin Location" := ItemJnlLine."Bin Location";
@@ -728,8 +728,8 @@ Table 85007 "NV8 Roll Selector Line"
 
 
         Item.Get("Item No.");
-        if ConfiguratorItem.Get(Item."Configurator No.") then begin
-            "Configurator No." := Item."Configurator No.";
+        if ConfiguratorItem.Get(Item."NV8 Configurator No.") then begin
+            "Configurator No." := Item."NV8 Configurator No.";
             Shape := ConfiguratorItem.Shape;
             Material := ConfiguratorItem.Material;
             Specification := ConfiguratorItem.Specification;
@@ -763,7 +763,7 @@ Table 85007 "NV8 Roll Selector Line"
           ("Unit Area m2" <> 0) then
             "Total Area m2" := Quantity * "Unit Area m2";
 
-        "Jumbo Pull" := ItemJnlLine."Jumbo Pull";
+        "Jumbo Pull" := ItemJnlLine."NV8 Jumbo Pull";
 
     end;
 
@@ -775,7 +775,7 @@ Table 85007 "NV8 Roll Selector Line"
 
     procedure UpdatePieces()
     begin
-        UpdateRemainingQty;
+        UpdateRemainingQty();
     end;
 
 
@@ -783,7 +783,7 @@ Table 85007 "NV8 Roll Selector Line"
     begin
         if "Material Type" = "material type"::" " then
             exit;
-        Pieces := ROUND(TruePieces, 1);
+        Pieces := ROUND(TruePieces(), 1);
     end;
 
 
@@ -816,16 +816,16 @@ Table 85007 "NV8 Roll Selector Line"
 
     procedure AllocQty(): Decimal
     var
+        RollAlloc: Record "NV8 Roll Allocator Line";
         NewAlloc: Decimal;
-        RollAlloc: Record "KBM KABOOM BOOMBase CP Type";
     begin
-        RollAlloc.Reset;
+        RollAlloc.Reset();
         NewAlloc := 0;
-        RollAlloc.SetRange("Item Ledger Entry No.", "Entry No.");
-        if RollAlloc.FindSet then begin
+        RollAlloc.SetRange("NV8 Item Ledger Entry No.", "Entry No.");
+        if RollAlloc.FindSet() then begin
             repeat
-                NewAlloc += RollAlloc."Allocated Quantity";
-            until RollAlloc.Next = 0;
+                NewAlloc += RollAlloc."NV8 Allocated Quantity";
+            until RollAlloc.Next() = 0;
             exit(NewAlloc);
         end else
             exit(0);
@@ -837,9 +837,9 @@ Table 85007 "NV8 Roll Selector Line"
         NoSeries: Code[20];
     begin
         TestField("Roll ID", '');
-        InventorySetup.Get;
-        InventorySetup.TestField("Roll ID Nos.");
-        NoSeriesMgt.InitSeries(InventorySetup."Roll ID Nos.", '', 0D, "Roll ID", NoSeries);
+        InventorySetup.Get();
+        InventorySetup.TestField("NV8 Roll ID Nos.");
+        NoSeriesMgt.InitSeries(InventorySetup."NV8 Roll ID Nos.", '', 0D, "Roll ID", NoSeries);
     end;
 
 

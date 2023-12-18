@@ -84,5 +84,7 @@ permissionset 50000 "NV8 PermissionSet"
         table "NV8 Split Roll Details" = X,
         table "NV8 Temp Table - Item Stat" = X,
         table "NV8 Transfer Planning Line" = X,
-        table "NV8 User Location Access" = X;
+        table "NV8 User Location Access" = X,
+        tabledata "NV8 Allocation Entry" = RIMD,
+        table "NV8 Allocation Entry" = X;
 }

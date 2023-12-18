@@ -3,8 +3,9 @@ Table 85003 "NV8 Configurator Material"
     // UE-651  DB  2/28/20 Added Default Dimension fields
     // UE-651  DB  66/13/20  Expand Item Description and Item Description 2 to 50
 
-    DrillDownPageID = UnknownPage85006;
-    LookupPageID = UnknownPage85006;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85006;
+    // LookupPageID = UnknownPage85006;
     DataClassification = CustomerContent;
 
     fields
@@ -65,7 +66,7 @@ Table 85003 "NV8 Configurator Material"
         }
         field(95; "Replacement Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(100; "Jumbo Min. Width"; Decimal)
         {
@@ -109,14 +110,14 @@ Table 85003 "NV8 Configurator Material"
                     exit;
                 end;
                 with MaterialGrit do begin
-                    Reset;
+                    Reset();
                     SetCurrentkey("Material Code");
                     SetRange("Material Code", Rec.Code);
                     if Find('-') then
                         repeat
                             Validate("Vendor Classification", Rec."Default Vendor Classification");
-                            Modify;
-                        until Next = 0;
+                            Modify();
+                        until Next() = 0;
                 end;
             end;
         }
@@ -164,8 +165,8 @@ Table 85003 "NV8 Configurator Material"
     }
 
     var
-        ConfiguratorItem: Record "Configurator Item";
-        MaterialGrit: Record "Configurator Material-Grits";
+        ConfiguratorItem: Record "NV8 Configurator Item";
+        MaterialGrit: Record "NV8 Config Material-Grits";
         SalesLine: Record "Sales Line";
         ItemLedgerEntry: Record "Item Ledger Entry";
         CU22: Codeunit "Item Jnl.-Post Line";

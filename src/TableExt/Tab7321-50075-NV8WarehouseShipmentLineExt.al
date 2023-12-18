@@ -42,7 +42,7 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
                         Quantity := "Qty. Shipped" + "Qty. to Ship";
                         "Qty. Outstanding" := Quantity - "Qty. Shipped";
                         "Qty. Outstanding (Base)" := "Qty. (Base)" - "Qty. Shipped (Base)";
-                        Modify;
+                        Modify();
                         //  VALIDATE(Quantity,("Qty. Shipped" + "Qty. to Ship"));
                         // VALIDATE("Qty. Outstanding",Quantity - "Qty. Shipped");
                         //<< UE-65  2/10/17
@@ -58,7 +58,7 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
                             //>>UE-65
                             SalesLine."Fully Shipped" := true;
                             //<<UE-65
-                            SalesLine.Modify;
+                            SalesLine.Modify();
                         end;
                         //>>UE-65
                         SalesHeader.Status := SalesHeaderTemp.Status;
@@ -70,18 +70,18 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
 
                     if "Source Type" = Database::"Transfer Line" then begin
                         TransHeader.SetRange(TransHeader."No.", "Source No.");
-                        TransHeader.FindFirst;
+                        TransHeader.FindFirst();
                         //>>UE-65
 
                         TransHEaderTemp.Copy(TransHeader);
                         TransHeader.Status := TransHeader.Status::Open;
-                        TransHeader.Modify;
+                        TransHeader.Modify();
                         //>> UE-65  2/10/17
                         "Qty. (Base)" := "Qty. to Ship (Base)" + "Qty. Shipped (Base)";
                         Quantity := "Qty. Shipped" + "Qty. to Ship";
                         "Qty. Outstanding" := Quantity - "Qty. Shipped";
                         "Qty. Outstanding (Base)" := "Qty. (Base)" - "Qty. Shipped (Base)";
-                        Modify;
+                        Modify();
                         //  VALIDATE(Quantity,("Qty. Shipped" + "Qty. to Ship"));
                         // VALIDATE("Qty. Outstanding",Quantity - "Qty. Shipped");
                         //<< UE-65  2/10/17
@@ -97,11 +97,11 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
                             //>>UE-65
                             TransLine."Fully Shipped" := true;
                             //<<UE-65
-                            TransLine.Modify;
+                            TransLine.Modify();
                         end;
                         //>>UE-65
                         TransHeader.Status := TransHEaderTemp.Status;
-                        TransHeader.Modify;
+                        TransHeader.Modify();
                         //<<UE-65
                     end;
 
@@ -124,7 +124,7 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
                         //>>UE-65
                         SalesLine."Fully Shipped" := false;
                         //<<UE-65
-                        SalesLine.Modify;
+                        SalesLine.Modify();
                         //>>UE-65
                         SalesHeader.Status := SalesHeaderTemp.Status;
                         SalesHeader.Modify;
@@ -135,12 +135,12 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
                         //>>UE-65
 
                         TransHeader.SetRange(TransHeader."No.", "Source No.");
-                        TransHeader.FindFirst;
+                        TransHeader.FindFirst();
                         //>>UE-65
 
                         TransHEaderTemp.Copy(TransHeader);
                         TransHeader.Status := TransHeader.Status::Open;
-                        TransHeader.Modify;
+                        TransHeader.Modify();
                         Validate(Quantity, TransLine."Original Ordered Quantity");
                         //<<UE-65
                         TransLine.Quantity := TransLine."Original Ordered Quantity";
@@ -148,10 +148,10 @@ tableextension 50075 "NV8 Warehouse Shipment Line" extends "Warehouse Shipment L
                         //>>UE-65
                         TransLine."Fully Shipped" := false;
                         //<<UE-65
-                        TransLine.Modify;
+                        TransLine.Modify();
                         //>>UE-65
                         TransHeader.Status := TransHEaderTemp.Status;
-                        TransHeader.Modify;
+                        TransHeader.Modify();
                         //<<UE-65
                     end;
 

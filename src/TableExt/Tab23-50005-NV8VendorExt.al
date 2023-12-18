@@ -29,7 +29,7 @@ tableextension 50005 "NV8 Vendor" extends Vendor //23
         field(50004; "NV8 Commission Recipient"; Code[20])
         {
             Description = 'UE-279';
-            TableRelation = "Commission Recipient";
+            // TableRelation = "Commission Recipient"; //PAP 5000000 range
             DataClassification = CustomerContent;
         }
     }

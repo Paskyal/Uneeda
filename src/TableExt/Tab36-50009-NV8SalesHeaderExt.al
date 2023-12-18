@@ -145,8 +145,8 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
                     UserSetup.Get(UserId);
                     if UserSetup."Release Credit Hold" then begin
                         "Credit Hold Released By" := UserId;
-                        "Credit Hold Released On" := WorkDate;
-                        Modify;
+                        "Credit Hold Released On" := WorkDate();
+                        Modify();
                     end else
                         Error(Text50003);
 
@@ -166,8 +166,8 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
                     UserSetup.Get(UserId);
                     if UserSetup."Release Price Hold" then begin
                         "Price Hold Released By" := UserId;
-                        "Price Hold Released On" := WorkDate;
-                        Modify;
+                        "Price Hold Released On" := WorkDate();
+                        Modify();
                     end else
                         Error(Text50003);
 
@@ -191,8 +191,8 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
                     UserSetup.Get(UserId);
                     if UserSetup."Release Manual Hold" then begin
                         "Manual Hold Released By" := UserId;
-                        "Manual Hold Released On" := WorkDate;
-                        Modify;
+                        "Manual Hold Released On" := WorkDate();
+                        Modify();
                     end else
                         Error(Text50003);
 
@@ -267,9 +267,9 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
                     UserSetup.Get(UserId);
                     if UserSetup."Release Item Hold" then begin
                         "Item Hold Released By" := UserId;
-                        "Item Hold Released On" := WorkDate;
-                        Modify;
-                        SalesLine.Reset;
+                        "Item Hold Released On" := WorkDate();
+                        Modify();
+                        SalesLine.Reset();
                         SalesLine.SetRange("Document Type", "Document Type");
                         SalesLine.SetRange("Document No.", "No.");
                         SalesLine.SetRange("Item Hold", true);
@@ -331,7 +331,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
                            (ShipToAddr."Free Freight" = false) then
                             "Free Freight" := false;
                     end;
-                    Modify;
+                    Modify();
                     //>>UE-105
 
                 end;  //>> UE-105  4/5/16

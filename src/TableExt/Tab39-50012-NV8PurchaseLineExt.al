@@ -185,13 +185,13 @@ tableextension 50012 "NV8 Purchase Line" extends "Purchase Line" //39
                 if "Document Type" = "document type"::Order then begin
                     if Type = Type::Item then begin
                         if "Fully Received" then begin
-                            GetPurchHeader;
+                            GetPurchHeader();
                             Validate("Qty. to Receive");
                             Validate(Quantity, "Qty. to Receive" + "Quantity Received");
                             if "Unit Area m2" <> 0 then Validate(Pieces, (Quantity / "Unit Area m2"));  //Lhr *************
                         end;
                         if not "Fully Received" then begin
-                            GetPurchHeader;
+                            GetPurchHeader();
                             // VALIDATE(Quantity,"Original Ordered Quantity");
                         end;
                     end else

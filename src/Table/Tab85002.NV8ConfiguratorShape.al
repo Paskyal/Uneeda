@@ -10,9 +10,9 @@ Table 85002 "NV8 Configurator Shape"
     // UE-683  DB  12/9/20 Change Option from Both to All(S-T-AC)
     // UNE-158 DB  11/17/21  Add Current  Production  Date field
     // UNE-174 DB  11/18/21  Add "Shape Production Area" field
-
-    DrillDownPageID = UnknownPage85004;
-    LookupPageID = UnknownPage85004;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85004;
+    // LookupPageID = UnknownPage85004;
     DataClassification = CustomerContent;
 
     fields
@@ -117,7 +117,7 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(122; "Material List"; Integer)
         {
-            CalcFormula = count("Configurator Material");
+            CalcFormula = count("NV8 Configurator Material");
             Description = 'Drill down to table';
             Editable = false;
             FieldClass = FlowField;
@@ -224,7 +224,7 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(172; "Specification List"; Integer)
         {
-            CalcFormula = count("Configurator Specification");
+            CalcFormula = count("NV8 Configurator Specification");
             Description = 'Drill down to table';
             Editable = false;
             FieldClass = FlowField;
@@ -247,7 +247,7 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(182; "Grit List"; Integer)
         {
-            CalcFormula = count("Configurator Grit");
+            CalcFormula = count("NV8 Configurator Grit");
             Description = 'Drill down to table';
             Editable = false;
             FieldClass = FlowField;
@@ -270,7 +270,7 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(192; "Joint List"; Integer)
         {
-            CalcFormula = count("Configurator Shape-Joints" where(Shape = field(Code)));
+            CalcFormula = count("NV8 Configurator Shape-Joints" where(Shape = field(Code)));
             Description = 'Drill down to table';
             Editable = false;
             FieldClass = FlowField;
@@ -313,7 +313,7 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(50020; "Total ILE Qty."; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry".Quantity where(Shape = field(Code),
+            CalcFormula = sum("Item Ledger Entry".Quantity where("NV8 Shape" = field(Code),
                                                                   "Posting Date" = field("ILE Date Filter"),
                                                                   "Entry Type" = field("Entry Type Filter")));
             Description = 'UE-624';
@@ -333,7 +333,7 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(50023; "ILE Qty."; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry".Quantity where(Shape = field(Code),
+            CalcFormula = sum("Item Ledger Entry".Quantity where("NV8 Shape" = field(Code),
                                                                   "Posting Date" = field("Date Filter"),
                                                                   "Entry Type" = field("Entry Type Filter")));
             Description = 'UE-624';
@@ -348,9 +348,9 @@ Table 85002 "NV8 Configurator Shape"
         field(52000; "Scheduled Qty."; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter"),
-                                                                                "Scheduled Date" = field("Scheduled Date Filter")));
+                                                                                "NV8 Scheduled Date" = field("Scheduled Date Filter")));
             DecimalPlaces = 0 : 5;
             Description = 'UNE-173';
             Editable = false;
@@ -359,7 +359,7 @@ Table 85002 "NV8 Configurator Shape"
         field(52001; "Total Qty."; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter")));
             DecimalPlaces = 0 : 5;
             Description = 'UNE-173';
@@ -368,9 +368,9 @@ Table 85002 "NV8 Configurator Shape"
         }
         field(52002; "Scheduled Blank Qty"; Decimal)
         {
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter"),
-                                                                                "Scheduled Date" = field("Scheduled Blank Date Filter")));
+                                                                                "NV8 Scheduled Date" = field("Scheduled Blank Date Filter")));
             Description = 'UNE-173';
             FieldClass = FlowField;
         }
@@ -387,9 +387,9 @@ Table 85002 "NV8 Configurator Shape"
         field(52005; "Scheduled Past Due Qty"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter"),
-                                                                                "Scheduled Date" = field("Scheduled Past Date Filter")));
+                                                                                "NV8 Scheduled Date" = field("Scheduled Past Date Filter")));
             DecimalPlaces = 0 : 5;
             Description = 'UNE-173';
             Editable = false;
@@ -414,7 +414,7 @@ Table 85002 "NV8 Configurator Shape"
         field(68047; "Past Due Qty."; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter"),
                                                                                 "Due Date" = field("Past Due Date Filter")));
             DecimalPlaces = 0 : 5;
@@ -424,7 +424,7 @@ Table 85002 "NV8 Configurator Shape"
         field(68048; "Total Due Qty."; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter")));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -433,7 +433,7 @@ Table 85002 "NV8 Configurator Shape"
         field(68049; "Production Qty"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Remaining Qty. (Base)" where("NV8 Shape" = field(Code),
                                                                                 Status = field("Status Filter"),
                                                                                 "Due Date" = field("Date Filter")));
             DecimalPlaces = 0 : 5;
@@ -443,7 +443,7 @@ Table 85002 "NV8 Configurator Shape"
         field(68050; "Qty. On Production"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Prod. Order Line"."Quantity (Base)" where(Shape = field(Code),
+            CalcFormula = sum("Prod. Order Line"."Quantity (Base)" where("NV8 Shape" = field(Code),
                                                                           Status = field("Status Filter")));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -502,7 +502,7 @@ Table 85002 "NV8 Configurator Shape"
         field(85071; "Shape Production Area"; Code[20])
         {
             Description = 'UNE-174';
-            TableRelation = "Shape Production Area";
+            TableRelation = "NV8 Shape Production Area";
         }
     }
 
@@ -519,14 +519,14 @@ Table 85002 "NV8 Configurator Shape"
     }
 
     var
-        ConfiguratorItem: Record "Configurator Item";
+        ConfiguratorItem: Record "NV8 Configurator Item";
         UEI001: label 'You can not rename the components of a Configurator Item';
         UEI002: label 'You can not delete %1, %2 because it is used in %3, %4';
 
 
     procedure ReturnCaptionVal(ShapeVal: Code[20]; DimNo: Integer) CaptionVal: Text[80]
     var
-        ShapeREC: Record "Configurator Shape";
+        ShapeREC: Record "NV8 Configurator Shape";
     begin
         if ShapeREC.Get(ShapeVal) then begin
             case DimNo of
