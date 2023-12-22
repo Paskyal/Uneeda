@@ -5,7 +5,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         field(68090; "NV8 Allocated Raw Material Qty"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Allocation Entry".Quantity where("Prod. Order No." = field("Prod. Order No.")));
+            CalcFormula = sum("NV8 Allocation Entry".Quantity where("Prod. Order No." = field("Prod. Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -18,7 +18,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         }
         field(68092; "NV8 Allocated Item"; Code[20])
         {
-            CalcFormula = lookup("Allocation Entry"."Item No." where("Prod. Order No." = field("Prod. Order No.")));
+            CalcFormula = lookup("NV8 Allocation Entry"."Item No." where("Prod. Order No." = field("Prod. Order No.")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Item;
@@ -34,7 +34,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         }
         field(68095; "NV8 Allocated ILE"; Integer)
         {
-            CalcFormula = lookup("Allocation Entry"."Initial Item Ledger Entry No." where("Prod. Order No." = field("Prod. Order No."),
+            CalcFormula = lookup("NV8 Allocation Entry"."Initial Item Ledger Entry No." where("Prod. Order No." = field("Prod. Order No."),
                                                                                            "Item No." = field("Item No.")));
             Editable = false;
             FieldClass = FlowField;
@@ -59,7 +59,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         }
         field(68400; "NV8 Catalog No."; Code[20])
         {
-            CalcFormula = lookup(Item."Catalog No." where("No." = field("Item No.")));
+            CalcFormula = lookup(Item."NV8 Catalog No." where("No." = field("Item No.")));
             Caption = 'Catalog No.';
             Editable = false;
             FieldClass = FlowField;
@@ -87,7 +87,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         field(85100; "NV8 Configurator No."; Code[100])
         {
             Description = 'EC1.MFG04.01';
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"),
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"),
                                                        "Location Filter" = field("Location Code"));
             //This property is currently not supported
             //TestTableRelation = false;
@@ -98,21 +98,21 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         {
             Description = 'EC1.MFG04.01';
             Editable = false;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85102; "NV8 Material"; Code[10])
         {
             Description = 'EC1.MFG04.01';
             Editable = false;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85108; "NV8 Grit"; Code[10])
         {
             Description = 'EC1.MFG04.01';
             Editable = false;
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
         field(85120; "NV8 Substitute Material"; Boolean)
@@ -121,48 +121,48 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
         }
         field(85121; "NV8 Ori. Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85122; "NV8 Ori. Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85128; "NV8 Ori. Grit"; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
         field(85130; "NV8 Ori. Item No."; Code[20])
         {
             TableRelation = Item;
             DataClassification = CustomerContent;
+            // TODO PAP Uncomment
+            // trigger OnValidate()
+            // begin
+            //     WhseValidateSourceLine.ProdComponentVerifyChange(Rec, xRec);
+            //     ReserveProdOrderComp.VerifyChange(Rec, xRec);
+            //     CalcFields("Reserved Qty. (Base)");
+            //     TestField("Reserved Qty. (Base)", 0);
+            //     TestField("Remaining Qty. (Base)", "Expected Qty. (Base)");
+            //     if "Item No." = '' then begin
+            //         CreateDim(Database::Item, "Item No.",
+            //                 Database::Location, "Location Code");  // UE-651
+            //         exit;
+            //     end;
 
-            trigger OnValidate()
-            begin
-                WhseValidateSourceLine.ProdComponentVerifyChange(Rec, xRec);
-                ReserveProdOrderComp.VerifyChange(Rec, xRec);
-                CalcFields("Reserved Qty. (Base)");
-                TestField("Reserved Qty. (Base)", 0);
-                TestField("Remaining Qty. (Base)", "Expected Qty. (Base)");
-                if "Item No." = '' then begin
-                    CreateDim(Database::Item, "Item No.",
-                            Database::Location, "Location Code");  // UE-651
-                    exit;
-                end;
+            //     Item.Get("Item No.");
+            //     Description := Item.Description;
+            //     Item.TestField("Base Unit of Measure");
+            //     Validate("Unit of Measure Code", Item."Base Unit of Measure");
+            //     GetUpdateFromSKU;
+            //     CreateDim(Database::Item, "Item No.",
+            //               Database::Location, "Location Code");  // UE-651
 
-                Item.Get("Item No.");
-                Description := Item.Description;
-                Item.TestField("Base Unit of Measure");
-                Validate("Unit of Measure Code", Item."Base Unit of Measure");
-                GetUpdateFromSKU;
-                CreateDim(Database::Item, "Item No.",
-                          Database::Location, "Location Code");  // UE-651
-
-                // >> Configurator
-                UpdateConfiguration;
-            end;
+            //     // >> Configurator
+            //     UpdateConfiguration;
+            // end;
         }
     }
 }

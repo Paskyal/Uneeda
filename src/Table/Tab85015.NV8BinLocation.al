@@ -23,7 +23,7 @@ Table 85015 "NV8 Bin Location"
             CalcFormula = count("Item Ledger Entry" where(Open = const(true),
                                                            Positive = const(true),
                                                            "Location Code" = field("Location Code"),
-                                                           "Bin Location" = field(Code)));
+                                                           "NV8 Bin Location" = field(Code)));
             Editable = false;
             FieldClass = FlowField;
         }

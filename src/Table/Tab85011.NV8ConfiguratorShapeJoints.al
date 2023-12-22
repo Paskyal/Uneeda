@@ -1,7 +1,8 @@
 Table 85011 "NV8 Configurator Shape-Joints"
 {
-    DrillDownPageID = UnknownPage85021;
-    LookupPageID = UnknownPage85021;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85021;
+    // LookupPageID = UnknownPage85021;
     DataClassification = CustomerContent;
 
     fields
@@ -9,12 +10,12 @@ Table 85011 "NV8 Configurator Shape-Joints"
         field(1; Shape; Code[10])
         {
             NotBlank = true;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(3; Joint; Code[10])
         {
             NotBlank = true;
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
         }
         field(10; Description; Text[30])
         {
@@ -26,11 +27,11 @@ Table 85011 "NV8 Configurator Shape-Joints"
         field(20; "Material Filter"; Code[10])
         {
             FieldClass = FlowFilter;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(21; "Valid Shape"; Boolean)
         {
-            CalcFormula = exist("Configurator Material-Joints" where("Material Code" = field("Material Filter"),
+            CalcFormula = exist("NV8 Config Material-Joints" where("Material Code" = field("Material Filter"),
                                                                       "Joint Code" = field(Joint)));
             Editable = false;
             FieldClass = FlowField;

@@ -17,7 +17,7 @@ tableextension 50029 "NV8 Purch. Inv. Line" extends "Purch. Inv. Line" //123
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
         }
-        field(50003; "NV8 Original Unit Length (Meters)"; Decimal)
+        field(50003; "NV8 OriginalUnitLength(Meters)"; Decimal)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
@@ -149,38 +149,38 @@ tableextension 50029 "NV8 Purch. Inv. Line" extends "Purch. Inv. Line" //123
         }
         field(85101; "NV8 Shape"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Shape where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Shape where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(85102; "NV8 Material"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Material where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Material where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85107; "NV8 Specification"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Specification where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Specification where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
         }
         field(85108; "NV8 Grit"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Grit where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Grit where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
         field(85109; "NV8 Joint"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Joint where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Joint where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
         }
         field(85130; "NV8 Dimension 1"; Code[10])
         {
@@ -202,7 +202,7 @@ tableextension 50029 "NV8 Purch. Inv. Line" extends "Purch. Inv. Line" //123
             Description = 'UE-420';
             DataClassification = CustomerContent;
         }
-        field(85204; "NV8 Original Total Length Meters"; Decimal)
+        field(85204; "NV8 OriginalTotalLengthMeters"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;

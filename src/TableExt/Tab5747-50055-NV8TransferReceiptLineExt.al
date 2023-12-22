@@ -8,14 +8,14 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         }
         field(68110; "NV8 Sec. Territory Code"; Code[10])
         {
-            CalcFormula = lookup("Transfer Receipt Header".Field9586660 where("No." = field("Document No.")));
+            // CalcFormula = lookup("Transfer Receipt Header".Field9586660 where("No." = field("Document No.")));//TODO PAP Check the field
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Territory;
         }
         field(68400; "NV8 Catalog No."; Code[20])
         {
-            CalcFormula = lookup(Item."Catalog No." where("No." = field("Item No.")));
+            CalcFormula = lookup(Item."NV8 Catalog No." where("No." = field("Item No.")));
             Caption = 'Catalog No.';
             Editable = false;
             FieldClass = FlowField;
@@ -45,12 +45,12 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         }
         field(85020; "NV8 From Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Transfer-from Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Transfer-from Code"));
             DataClassification = CustomerContent;
         }
         field(85021; "NV8 To Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Transfer-to Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Transfer-to Code"));
             DataClassification = CustomerContent;
         }
         field(85040; "NV8 Material Type"; Option)
@@ -131,25 +131,25 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         }
         field(85092; "NV8 Cross-Reference No."; Code[20])
         {
-            TableRelation = "Item Cross Reference"."Cross-Reference No." where("Cross-Reference Type" = const(Customer),
-                                                                                "Cross-Reference Type No." = field("Consignment Customer"));
+            TableRelation = "Item Reference"."Reference No." where("Reference Type" = const(Customer),
+                                                                                "Reference Type No." = field("NV8 Consignment Customer"));
             DataClassification = CustomerContent;
 
             trigger OnValidate()
             var
-                ReturnedCrossRef: Record "Item Cross Reference";
+                ReturnedCrossRef: Record "Item Reference";
             begin
             end;
         }
         field(85093; "NV8 Customer Name"; Text[30])
         {
-            CalcFormula = lookup(Customer.Name where("No." = field("Consignment Customer")));
+            CalcFormula = lookup(Customer.Name where("No." = field("NV8 Consignment Customer")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -158,7 +158,7 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         field(85311; "NV8 Split Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details".Pieces where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details".Pieces where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -166,7 +166,7 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         field(85312; "NV8 Split Total Length meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Length meters" where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -174,7 +174,7 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         field(85313; "NV8 Split Total Area m2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Area m2" where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -196,7 +196,7 @@ tableextension 50055 "NV8 Transfer Receipt Line" extends "Transfer Receipt Line"
         }
         field(89102; "NV8 Production Order No."; Code[20])
         {
-            TableRelation = "Production Order"."No." where(Status = field("Production Order Status"));
+            TableRelation = "Production Order"."No." where(Status = field("NV8 Production Order Status"));
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }

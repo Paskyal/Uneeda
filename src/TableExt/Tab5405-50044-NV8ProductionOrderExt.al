@@ -1,13 +1,14 @@
 tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
 {
+    // TODO PAP Uncomment OnValidate triggers
     fields
     {
         field(50200; "NV8 Source Doc No."; Code[20])
         {
             Editable = false;
-            TableRelation = if ("Source Doc Type" = const("Transfer Order")) "Transfer Header"."No."
+            TableRelation = if ("NV8 Source Doc Type" = const("Transfer Order")) "Transfer Header"."No."
             else
-            if ("Source Doc Type" = const("Sales Order")) "Sales Header"."No.";
+            if ("NV8 Source Doc Type" = const("Sales Order")) "Sales Header"."No.";
             DataClassification = CustomerContent;
         }
         field(50205; "NV8 Source Doc Type"; Option)
@@ -37,9 +38,9 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
 
 
                 //>> UNE-195
-                if "Material Reviewed" then begin
-                    "Material Reviewed By" := UserId;
-                    "Material Reviewed Date" := WorkDate();
+                if "NV8 Material Reviewed" then begin
+                    "NV8 Material Reviewed By" := UserId;
+                    "NV8 Material Reviewed Date" := WorkDate();
                     Modify();
 
                 end;
@@ -269,8 +270,8 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         }
         field(68055; "NV8 Jumbo Raw Material Status"; Option)
         {
-            CalcFormula = lookup("Configurator Material-Grits"."Set Raw Material Status" where("Material Code" = field(Material),
-                                                                                                "Grit Code" = field(Grit)));
+            CalcFormula = lookup("NV8 Config Material-Grits"."Set Raw Material Status" where("Material Code" = field("NV8 Material"),
+                                                                                                "Grit Code" = field("NV8 Grit")));
             Editable = false;
             FieldClass = FlowField;
             OptionMembers = ,Normal,Low,"Jumbo Out",Out,Discontinued;
@@ -301,7 +302,7 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         field(68090; "NV8 Allocated Raw Material Qty"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Allocation Entry".Quantity where("Prod. Order No." = field("No.")));
+            CalcFormula = sum("NV8 Allocation Entry".Quantity where("Prod. Order No." = field("No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -329,7 +330,7 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         }
         field(68400; "NV8 Catalog No."; Code[20])
         {
-            CalcFormula = lookup(Item."Catalog No." where("No." = field("Source No.")));
+            CalcFormula = lookup(Item."NV8 Catalog No." where("No." = field("Source No.")));
             Caption = 'Catalog No.';
             Editable = false;
             Enabled = false;
@@ -388,17 +389,17 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         }
         field(85011; "NV8 Created From Document No."; Code[150])
         {
-            TableRelation = if ("Created From Document Type" = filter("Sales Order")) "Sales Header"."No." where("Document Type" = field("Created From Document Type"))
+            TableRelation = if ("NV8 Created From Document Type" = filter("Sales Order")) "Sales Header"."No." where("Document Type" = field("NV8 Created From Document Type"))
             else
-            if ("Created From Document Type" = filter("Transfer Order")) "Transfer Header"."No.";
+            if ("NV8 Created From Document Type" = filter("Transfer Order")) "Transfer Header"."No.";
             DataClassification = CustomerContent;
         }
         field(85012; "NV8 Created From Line No."; Integer)
         {
-            TableRelation = if ("Created From Document Type" = const("Sales Order")) "Sales Line"."Line No." where("Document Type" = field("Created From Document Type"),
-                                                                                                                  "Document No." = field("Created From Document No."))
+            TableRelation = if ("NV8 Created From Document Type" = const("Sales Order")) "Sales Line"."Line No." where("Document Type" = field("NV8 Created From Document Type"),
+                                                                                                                  "Document No." = field("NV8 Created From Document No."))
             else
-            if ("Created From Document Type" = const("Transfer Order")) "Transfer Line"."Line No." where("Document No." = field("Created From Document No."));
+            if ("NV8 Created From Document Type" = const("Transfer Order")) "Transfer Line"."Line No." where("Document No." = field("NV8 Created From Document No."));
             DataClassification = CustomerContent;
         }
         field(85013; "NV8 Pro No."; Code[20])
@@ -461,9 +462,9 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         }
         field(85043; "NV8 Red Dot Transfer"; Boolean)
         {
-            CalcFormula = exist("Transfer Line" where("Document No." = field("Created From Document No."),
-                                                       "Line No." = field("Created From Line No."),
-                                                       "Red Dot" = const(true)));
+            CalcFormula = exist("Transfer Line" where("Document No." = field("NV8 Created From Document No."),
+                                                       "Line No." = field("NV8 Created From Line No."),
+                                                       "NV8 Red Dot" = const(true)));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -473,10 +474,10 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     UpdatePieces;
+            // end;
         }
         field(85051; "NV8 Unit Width Inches"; Decimal)
         {
@@ -486,13 +487,13 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
             MinValue = 0;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                Temp := ROUND("Unit Width Inches", 1, '<') * 100;
-                Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
+            // trigger OnValidate()
+            // begin
+            //     Temp := ROUND("Unit Width Inches", 1, '<') * 100;
+            //     Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
 
-                Validate("Unit Width Code", Format(Temp, 5, '<integer>'));
-            end;
+            //     Validate("Unit Width Code", Format(Temp, 5, '<integer>'));
+            // end;
         }
         field(85052; "NV8 Unit Length meters"; Decimal)
         {
@@ -500,22 +501,22 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85053; "NV8 Unit Length Inches"; Decimal)
         {
             BlankZero = true;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85054; "NV8 Unit Area m2"; Decimal)
         {
@@ -529,16 +530,16 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
             CharAllowed = '09';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                ConfiguratorSetup.Get;
-                ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
-                "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
-                "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
-                if "Unit Width Inches" <> 0 then
-                    Validate("Unit Cost", "Cost Per meter" / "Unit Width Inches" * 39);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     ConfiguratorSetup.Get;
+            //     ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
+            //     "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
+            //     "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
+            //     if "Unit Width Inches" <> 0 then
+            //         Validate("Unit Cost", "Cost Per meter" / "Unit Width Inches" * 39);
+            //     UpdatePieces;
+            // end;
         }
         field(85056; "NV8 Unit Width Text"; Text[30])
         {
@@ -553,8 +554,8 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
 
             trigger OnValidate()
             begin
-                TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                TestField("NV8 Pieces");
+                Validate("NV8 Unit Length meters", ROUND("NV8 Total Length meters" / "NV8 Pieces", 0.00001));
             end;
         }
         field(85059; "NV8 Cost Per meter"; Decimal)
@@ -563,12 +564,12 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
             BlankZero = true;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                if "Unit Width Inches" <> 0 then
-                    Validate("Unit Cost", "Cost Per meter" / "Unit Width Inches" * 39);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     if "NV8 Unit Width Inches" <> 0 then
+            //         Validate("Unit Cost", "NV8 Cost Per meter" / "NV8 Unit Width Inches" * 39);
+            //     UpdatePieces;
+            // end;
         }
         field(85064; "NV8 Total Area m2"; Decimal)
         {
@@ -579,42 +580,42 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            var
-                ConfiguratorFound: Boolean;
-                Component: Code[100];
-                Remaining: Code[100];
-            begin
-                //>>AG003 - Start
-                ConfiguratorFound := false;
-                Found := false;
-                if "Configurator No." = '' then
-                    exit;
-                if (ConfiguratorItem.Get("Configurator No.")) then begin
-                    if ConfiguratorItem."Item No." <> '' then begin
-                        Validate("Source Type", "source type"::Item);
-                        Validate("Source No.", ConfiguratorItem."Item No.");
-                        ConfiguratorFound := true;
-                    end;
-                end;
-            end;
+            // trigger OnValidate()
+            // var
+            //     ConfiguratorFound: Boolean;
+            //     Component: Code[100];
+            //     Remaining: Code[100];
+            // begin
+            //     //>>AG003 - Start
+            //     ConfiguratorFound := false;
+            //     Found := false;
+            //     if "Configurator No." = '' then
+            //         exit;
+            //     if (ConfiguratorItem.Get("Configurator No.")) then begin
+            //         if ConfiguratorItem."Item No." <> '' then begin
+            //             Validate("Source Type", "source type"::Item);
+            //             Validate("Source No.", ConfiguratorItem."Item No.");
+            //             ConfiguratorFound := true;
+            //         end;
+            //     end;
+            // end;
         }
         field(85101; "NV8 Shape"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85102; "NV8 Material"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85103; "NV8 Dimension 1"; Code[10])
@@ -636,63 +637,63 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         field(85107; "NV8 Specification"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
             DataClassification = CustomerContent;
         }
         field(85108; "NV8 Grit"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
         field(85109; "NV8 Joint"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
             DataClassification = CustomerContent;
         }
         field(85111; "NV8 Shape Production Area"; Code[20])
         {
-            CalcFormula = lookup("Configurator Shape"."Shape Production Area" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Shape Production Area" where(Code = field("NV8 Shape")));
             Description = 'UNE-174';
             FieldClass = FlowField;
-            TableRelation = "Shape Production Area";
+            TableRelation = "NV8 Shape Production Area";
         }
         field(85112; "NV8 Scheduled Date"; Date)
         {
             DataClassification = CustomerContent;
             Description = 'UNE-158';
 
-            trigger OnValidate()
-            begin
+            // trigger OnValidate()
+            // begin
 
-                //>>CAS-40377-V0H3X3
-                //IF Rec."Scheduled Date" = 0D THEN EXIT ;
-                if ("Scheduled Date" = 0D) and ("Original Schedule Date" <> 0D) then
-                    if Confirm('Do you want to update the Original Scheduled Date?') then
-                        "Original Schedule Date" := "Scheduled Date";
-                //<<CAS-40377-V0H3X3
-                if "Scheduled Date" = "Original Schedule Date" then exit;
-                if "Original Schedule Date" = 0D then
-                    "Original Schedule Date" := "Scheduled Date"
-                else
-                    if Confirm('Do you want to update the Original Scheduled Date?') then
-                        "Original Schedule Date" := "Scheduled Date";
+            //     //>>CAS-40377-V0H3X3
+            //     //IF Rec."Scheduled Date" = 0D THEN EXIT ;
+            //     if ("NV8 Scheduled Date" = 0D) and ("NV8 Original Schedule Date" <> 0D) then
+            //         if Confirm('Do you want to update the Original Scheduled Date?') then
+            //             "NV8 Original Schedule Date" := "NV8 Scheduled Date";
+            //     //<<CAS-40377-V0H3X3
+            //     if "NV8 Scheduled Date" = "NV8 Original Schedule Date" then exit;
+            //     if "NV8 Original Schedule Date" = 0D then
+            //         "NV8 Original Schedule Date" := "NV8 Scheduled Date"
+            //     else
+            //         if Confirm('Do you want to update the Original Scheduled Date?') then
+            //             "NV8 Original Schedule Date" := "NV8 Scheduled Date";
 
-                //<<UNE-173
-                Clear(ProdOrderLine);
-                ProdOrderLine.SetRange(Status, Rec.Status);
-                ProdOrderLine.SetRange("Prod. Order No.", Rec."No.");
-                if ProdOrderLine.FindLast() then
-                    repeat
-                        ProdOrderLine."Scheduled Date" := Rec."Scheduled Date";
-                        ProdOrderLine.Modify(false);
-                    until ProdOrderLine.Next() = 0;
-                //>> UNE-173
+            //     //<<UNE-173
+            //     Clear(ProdOrderLine);
+            //     ProdOrderLine.SetRange(Status, Rec.Status);
+            //     ProdOrderLine.SetRange("Prod. Order No.", Rec."No.");
+            //     if ProdOrderLine.FindLast() then
+            //         repeat
+            //             ProdOrderLine."Scheduled Date" := Rec."Scheduled Date";
+            //             ProdOrderLine.Modify(false);
+            //         until ProdOrderLine.Next() = 0;
+            //     //>> UNE-173
 
 
 
-            end;
+            // end;
         }
         field(85245; "NV8 Created By"; Code[100])
         {
@@ -724,35 +725,35 @@ tableextension 50044 "NV8 Production Order" extends "Production Order" //5405
         }
         field(90040; "NV8 Scanned Machine Center Desc"; Text[100])
         {
-            CalcFormula = lookup("Machine Center".Name where("No." = field("Scanned Machine Center")));
+            CalcFormula = lookup("Machine Center".Name where("No." = field("NV8 Scanned Machine Center")));
             FieldClass = FlowField;
         }
         field(90041; "NV8 Scannded Work Center Desc"; Text[100])
         {
-            CalcFormula = lookup("Work Center".Name where("No." = field("Scanned Work Center")));
+            CalcFormula = lookup("Work Center".Name where("No." = field("NV8 Scanned Work Center")));
             FieldClass = FlowField;
         }
         field(90045; "NV8 Source Sell-to Code"; Code[20])
         {
-            CalcFormula = lookup("Sales Header"."Sell-to Customer No." where("No." = field("Source Doc No.")));
+            CalcFormula = lookup("Sales Header"."Sell-to Customer No." where("No." = field("NV8 Source Doc No.")));
             Description = 'UE-581';
             FieldClass = FlowField;
         }
         field(90046; "NV8 Source Sell-to Name"; Text[50])
         {
-            CalcFormula = lookup("Sales Header"."Sell-to Customer Name" where("No." = field("Source Doc No.")));
+            CalcFormula = lookup("Sales Header"."Sell-to Customer Name" where("No." = field("NV8 Source Doc No.")));
             Description = 'UE-581';
             FieldClass = FlowField;
         }
         field(90047; "NV8 Source Transfer-to Code"; Code[20])
         {
-            CalcFormula = lookup("Transfer Header"."Transfer-to Code" where("No." = field("Source Doc No.")));
+            CalcFormula = lookup("Transfer Header"."Transfer-to Code" where("No." = field("NV8 Source Doc No.")));
             Description = 'UE-581';
             FieldClass = FlowField;
         }
         field(90048; "NV8 Soruce Transfer-to Name"; Text[50])
         {
-            CalcFormula = lookup("Transfer Header"."Transfer-to Name" where("No." = field("Source Doc No.")));
+            CalcFormula = lookup("Transfer Header"."Transfer-to Name" where("No." = field("NV8 Source Doc No.")));
             Description = 'UE-581';
             FieldClass = FlowField;
         }

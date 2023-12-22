@@ -1,7 +1,8 @@
 Table 85012 "NV8 Config Material-Joints"
 {
-    DrillDownPageID = UnknownPage85022;
-    LookupPageID = UnknownPage85022;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85022;
+    // LookupPageID = UnknownPage85022;
     DataClassification = CustomerContent;
 
     fields
@@ -9,12 +10,12 @@ Table 85012 "NV8 Config Material-Joints"
         field(1; "Material Code"; Code[10])
         {
             NotBlank = true;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(3; "Joint Code"; Code[10])
         {
             NotBlank = true;
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
         }
         field(10; Description; Text[30])
         {
@@ -73,7 +74,7 @@ Table 85012 "NV8 Config Material-Joints"
         }
         field(85091; "Consignment Customer"; Code[20])
         {
-            CalcFormula = lookup(Location."Consignment Customer Code" where(Code = field("Consignment Location")));
+            CalcFormula = lookup(Location."NV8 Consignment Customer Code" where(Code = field("Consignment Location")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Customer;

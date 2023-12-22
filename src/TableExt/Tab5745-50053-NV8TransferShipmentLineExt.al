@@ -41,12 +41,12 @@ tableextension 50053 "NV8 Transfer Shipment Line" extends "Transfer Shipment Lin
         }
         field(85020; "NV8 From Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Transfer-from Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Transfer-from Code"));
             DataClassification = CustomerContent;
         }
         field(85021; "NV8 To Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Transfer-to Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Transfer-to Code"));
             DataClassification = CustomerContent;
         }
         field(85040; "NV8 Material Type"; Option)
@@ -137,13 +137,13 @@ tableextension 50053 "NV8 Transfer Shipment Line" extends "Transfer Shipment Lin
         }
         field(85092; "NV8 Cross-Reference No."; Code[20])
         {
-            TableRelation = "Item Cross Reference"."Cross-Reference No." where("Cross-Reference Type" = const(Customer),
-                                                                                "Cross-Reference Type No." = field("Consignment Customer"));
+            TableRelation = "Item Reference"."Reference No." where("Reference Type" = const(Customer),
+                                                                                "Reference Type No." = field("NV8 Consignment Customer"));
             DataClassification = CustomerContent;
 
             trigger OnValidate()
             var
-                ReturnedCrossRef: Record "Item Cross Reference";
+                ReturnedCrossRef: Record "Item Reference";
             begin
             end;
         }
@@ -156,7 +156,7 @@ tableextension 50053 "NV8 Transfer Shipment Line" extends "Transfer Shipment Lin
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -179,7 +179,7 @@ tableextension 50053 "NV8 Transfer Shipment Line" extends "Transfer Shipment Lin
         }
         field(89102; "NV8 Production Order No."; Code[20])
         {
-            TableRelation = "Production Order"."No." where(Status = field("Production Order Status"));
+            TableRelation = "Production Order"."No." where(Status = field("NV8 Production Order Status"));
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }

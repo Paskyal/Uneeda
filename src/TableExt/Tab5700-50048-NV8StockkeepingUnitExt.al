@@ -13,7 +13,7 @@ tableextension 50048 "NV8 Stockkeeping Unit" extends "Stockkeeping Unit" //5700
         }
         field(50001; "NV8 Customer Stock Agreement"; Decimal)
         {
-            CalcFormula = sum("Customer Stocking Agreements".Quantity where("Location Code" = field("Location Code"),
+            CalcFormula = sum("NV8 Customer Stocking Agr".Quantity where("Location Code" = field("Location Code"),
                                                                              "Item No." = field("Item No.")));
             Description = 'UE-438';
             Editable = false;
@@ -25,8 +25,8 @@ tableextension 50048 "NV8 Stockkeeping Unit" extends "Stockkeeping Unit" //5700
                                                                   "Variant Code" = field("Variant Code"),
                                                                   "Location Code" = field("Location Code"),
                                                                   Positive = const(false),
-                                                                  "Posting Date" = field("Reorder Date Filter"),
-                                                                  "Entry Type" = field("Reorder Entry Type Filter")));
+                                                                  "Posting Date" = field("NV8 Reorder Date Filter"),
+                                                                  "Entry Type" = field("NV8 Reorder Entry Type Filter")));
             DecimalPlaces = 0 : 0;
             Description = 'UE-438,UE-474';
             Editable = false;
@@ -38,8 +38,8 @@ tableextension 50048 "NV8 Stockkeeping Unit" extends "Stockkeeping Unit" //5700
                                                                   "Variant Code" = field("Variant Code"),
                                                                   "Location Code" = field("Location Code"),
                                                                   Positive = const(false),
-                                                                  "Posting Date" = field("Max Date Filter"),
-                                                                  "Entry Type" = field("Reorder Entry Type Filter")));
+                                                                  "Posting Date" = field("NV8 Max Date Filter"),
+                                                                  "Entry Type" = field("NV8 Reorder Entry Type Filter")));
             DecimalPlaces = 0 : 0;
             Description = 'UE-438,UE-474';
             Editable = false;
@@ -52,7 +52,7 @@ tableextension 50048 "NV8 Stockkeeping Unit" extends "Stockkeeping Unit" //5700
         }
         field(50060; "NV8 Def.Reorder Calculation Option"; Option)
         {
-            CalcFormula = lookup("Configurator Shape"."Def.Reorder Calculation Option" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Def.Reorder Calculation Option" where(Code = field("NV8 Shape")));
             Description = 'UE-438';
             Editable = false;
             FieldClass = FlowField;
@@ -97,14 +97,14 @@ tableextension 50048 "NV8 Stockkeeping Unit" extends "Stockkeeping Unit" //5700
         }
         field(68005; "NV8 Def. Max Inventory Formula"; DateFormula)
         {
-            CalcFormula = lookup("Configurator Shape"."Def. Safety Stock Formula" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Def. Safety Stock Formula" where(Code = field("NV8 Shape")));
             Description = 'UE-438';
             Editable = false;
             FieldClass = FlowField;
         }
         field(68006; "NV8 Def. Reorder Point Formula"; DateFormula)
         {
-            CalcFormula = lookup("Configurator Shape"."Def. Reorder Point Formula" where(Code = field(Shape)));
+            CalcFormula = lookup("NV8 Configurator Shape"."Def. Reorder Point Formula" where(Code = field("NV8 Shape")));
             Description = 'UE-438';
             Editable = false;
             FieldClass = FlowField;
@@ -113,7 +113,7 @@ tableextension 50048 "NV8 Stockkeeping Unit" extends "Stockkeeping Unit" //5700
         {
             Description = 'UE-438';
             Editable = false;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
     }

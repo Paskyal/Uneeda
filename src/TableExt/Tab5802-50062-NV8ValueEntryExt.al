@@ -42,13 +42,13 @@ tableextension 50062 "NV8 Value Entry" extends "Value Entry" //5802
         }
         field(85064; "NV8 Configurator No."; Code[100])
         {
-            CalcFormula = lookup(Item."Configurator No." where("No." = field("Item No.")));
+            CalcFormula = lookup(Item."NV8 Configurator No." where("No." = field("Item No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85202; "NV8 Purchase Direct Cost"; Decimal)
         {
-            AutoFormatExpression = "Purchase Currency Code";
+            AutoFormatExpression = "NV8 Purchase Currency Code";
             AutoFormatType = 2;
             BlankZero = true;
             CalcFormula = lookup("Purch. Inv. Line"."Direct Unit Cost" where("Document No." = field("Document No."),
@@ -68,7 +68,7 @@ tableextension 50062 "NV8 Value Entry" extends "Value Entry" //5802
         }
         field(85204; "NV8 Purchase Cost Per Meter"; Decimal)
         {
-            AutoFormatExpression = "Purchase Currency Code";
+            AutoFormatExpression = "NV8 Purchase Currency Code";
             AutoFormatType = 2;
             BlankZero = true;
             DecimalPlaces = 0 : 5;

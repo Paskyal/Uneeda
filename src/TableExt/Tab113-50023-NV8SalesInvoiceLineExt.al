@@ -40,7 +40,7 @@ tableextension 50023 "NV8 Sales Invoice Line" extends "Sales Invoice Line" //113
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
         }
-        field(50007; "NV8 Original Unit Length (Meters)"; Decimal)
+        field(50007; "NV8 OriginalUnitLength(Meters)"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
@@ -181,7 +181,7 @@ tableextension 50023 "NV8 Sales Invoice Line" extends "Sales Invoice Line" //113
         field(85311; "NV8 Split Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details".Pieces where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details".Pieces where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             Enabled = false;
@@ -190,7 +190,7 @@ tableextension 50023 "NV8 Sales Invoice Line" extends "Sales Invoice Line" //113
         field(85312; "NV8 Split Total Length meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Length meters" where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             Enabled = false;
@@ -199,7 +199,7 @@ tableextension 50023 "NV8 Sales Invoice Line" extends "Sales Invoice Line" //113
         field(85313; "NV8 Split Total Area m2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Area m2" where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             Enabled = false;
@@ -291,7 +291,7 @@ tableextension 50023 "NV8 Sales Invoice Line" extends "Sales Invoice Line" //113
         }
         field(89102; "NV8 Production Order No."; Code[20])
         {
-            TableRelation = "Production Order"."No." where(Status = field("Production Order Status"));
+            TableRelation = "Production Order"."No." where(Status = field("NV8 Production Order Status"));
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }

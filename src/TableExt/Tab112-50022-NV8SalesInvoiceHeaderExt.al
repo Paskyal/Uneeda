@@ -90,7 +90,7 @@ tableextension 50022 "NV8 Sales Invoice Header" extends "Sales Invoice Header" /
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
         }
-        field(50016; "NV8 Consignment Order Incomplete"; Boolean)
+        field(50016; "NV8 Consignment Ord Incomplete"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
@@ -153,7 +153,7 @@ tableextension 50022 "NV8 Sales Invoice Header" extends "Sales Invoice Header" /
         }
         field(50040; "NV8 Original Ordered Amount"; Decimal)
         {
-            CalcFormula = sum("Sales Invoice Line"."Original Ordered Amount" where("Document No." = field("No."),
+            CalcFormula = sum("Sales Invoice Line"."NV8 Original Ordered Amount" where("Document No." = field("No."),
                                                                                     Type = const(Item)));
             DecimalPlaces = 2 : 2;
             Description = 'UE-635';

@@ -1,5 +1,6 @@
 tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
 {
+    // TODO PAP Uncomment all OnValidate triggers
     fields
     {
         field(50050; "NV8 Your Reference"; Text[35])
@@ -17,21 +18,21 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             Description = 'ECL';
             DataClassification = CustomerContent;
-
-            trigger OnValidate()
-            begin
-                if Partial then Complete := false;
-            end;
+            // TODO PAP
+            // trigger OnValidate() 
+            // begin
+            //     if Partial then Complete := false;
+            // end;
         }
         field(55001; "NV8 Complete"; Boolean)
         {
             Description = 'ECL';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                if Complete then Partial := false;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     if Complete then Partial := false;
+            // end;
         }
         field(68000; "NV8 Output Prod. Order No."; Code[20])
         {
@@ -39,35 +40,35 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             TableRelation = "Production Order"."No." where(Status = const(Released));
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                SetUpNewLine(xRec);
-                Validate("Entry Type", "entry type"::Output);
+            // trigger OnValidate()
+            // begin
+            //     SetUpNewLine(xRec);
+            //     Validate("Entry Type", "entry type"::Output);
 
-                Validate("FIFO Date", WorkDate());
-                ProdOrder.Get(ProdOrder.Status::Released, "Output Prod. Order No.");
-                Validate("Order No.", "Output Prod. Order No.");
-                ProdOrderLine.Reset;
-                ProdOrderLine.SetCurrentkey(Status, "Prod. Order No.", "Line No.");
-                ProdOrderLine.SetRange(Status, ProdOrder.Status);
-                ProdOrderLine.SetRange("Prod. Order No.", ProdOrder."No.");
-                ProdOrderLine.FindLast;
-                Validate("Routing No.", ProdOrderLine."Routing No.");
-                Validate("Item No.", ProdOrderLine."Item No.");
+            //     Validate("FIFO Date", WorkDate());
+            //     ProdOrder.Get(ProdOrder.Status::Released, "Output Prod. Order No.");
+            //     Validate("Order No.", "Output Prod. Order No.");
+            //     ProdOrderLine.Reset;
+            //     ProdOrderLine.SetCurrentkey(Status, "Prod. Order No.", "Line No.");
+            //     ProdOrderLine.SetRange(Status, ProdOrder.Status);
+            //     ProdOrderLine.SetRange("Prod. Order No.", ProdOrder."No.");
+            //     ProdOrderLine.FindLast;
+            //     Validate("Routing No.", ProdOrderLine."Routing No.");
+            //     Validate("Item No.", ProdOrderLine."Item No.");
 
-                "Routing No." := ProdOrderLine."Routing No.";
-                "Routing Reference No." := ProdOrderLine."Routing Reference No.";
+            //     "Routing No." := ProdOrderLine."Routing No.";
+            //     "Routing Reference No." := ProdOrderLine."Routing Reference No.";
 
-                ProdOrderRtngLine.Reset;
-                ProdOrderRtngLine.SetCurrentkey(Status, "Prod. Order No.");
-                ProdOrderRtngLine.SetRange(Status, ProdOrder.Status);
-                ProdOrderRtngLine.SetRange("Prod. Order No.", ProdOrder."No.");
-                ProdOrderRtngLine.SetRange("Routing No.", ProdOrderLine."Routing No.");
-                ProdOrderRtngLine.SetRange("Routing Reference No.", ProdOrderLine."Routing Reference No.");
-                ProdOrderRtngLine.FindLast;
-                Validate("Operation No.", ProdOrderRtngLine."Operation No.");
-                Validate("Item No.", ProdOrderLine."Item No.");
-            end;
+            //     ProdOrderRtngLine.Reset;
+            //     ProdOrderRtngLine.SetCurrentkey(Status, "Prod. Order No.");
+            //     ProdOrderRtngLine.SetRange(Status, ProdOrder.Status);
+            //     ProdOrderRtngLine.SetRange("Prod. Order No.", ProdOrder."No.");
+            //     ProdOrderRtngLine.SetRange("Routing No.", ProdOrderLine."Routing No.");
+            //     ProdOrderRtngLine.SetRange("Routing Reference No.", ProdOrderLine."Routing Reference No.");
+            //     ProdOrderRtngLine.FindLast;
+            //     Validate("Operation No.", ProdOrderRtngLine."Operation No.");
+            //     Validate("Item No.", ProdOrderLine."Item No.");
+            // end;
         }
         field(68050; "NV8 Remaining On Hand"; Decimal)
         {
@@ -104,7 +105,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         }
         field(68060; "NV8 FG Unit Width Inches"; Decimal)
         {
-            CalcFormula = lookup("Production Order"."Unit Width Inches" where("No." = field("Order No.")));
+            CalcFormula = lookup("Production Order"."NV8 Unit Width Inches" where("No." = field("Order No.")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -116,14 +117,14 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         }
         field(68062; "NV8 FG Config"; Code[100])
         {
-            CalcFormula = lookup("Production Order"."Configurator No." where("No." = field("Order No.")));
+            CalcFormula = lookup("Production Order"."NV8 Configurator No." where("No." = field("Order No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(68090; "NV8 Allocated Raw Material Qty"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Allocation Entry".Quantity where("Prod. Order No." = field("Order No.")));
+            CalcFormula = sum("NV8 Allocation Entry".Quantity where("Prod. Order No." = field("Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -132,11 +133,11 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                if "Green To Follow" then
-                    Finished := false;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     if "Green To Follow" then
+            //         Finished := false;
+            // end;
         }
         field(68101; "NV8 Allocation ID"; Integer)
         {
@@ -155,37 +156,37 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             TableRelation = "Production Order"."No." where(Status = const(Released));
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            var
-                ItemJnlLine: Record "Item Journal Line";
-                ProdOrderComp: Record "Prod. Order Component";
-            begin
-                if "Line No." = 0 then begin
-                    ItemJnlLine.Reset();
-                    ItemJnlLine.SetRange("Journal Template Name", "Journal Template Name");
-                    ItemJnlLine.SetRange("Journal Batch Name", "Journal Batch Name");
-                    if ItemJnlLine.FindLast() then
-                        "Line No." := ItemJnlLine."Line No." + 10000
-                    else
-                        "Line No." := 10000;
-                end;
-                ItemJnlLine.Copy(Rec);
-                ProdOrder.Get(ProdOrder.Status::Released, "MFG Raw Material");
-                Description := ProdOrder.Description;
-                ProdOrderComp.Reset();
-                ProdOrderComp.SetCurrentkey(Status, "Prod. Order No.");
-                ProdOrderComp.SetRange(Status, ProdOrderLine.Status::Released);
-                ProdOrderComp.SetRange("Prod. Order No.", "MFG Raw Material");
-                ProdOrderComp.Find('-');
-                repeat
-                    ItemJnlLine.Validate("Item No.", ProdOrderComp."Item No.");
-                    ItemJnlLine.Validate(Quantity, ProdOrderComp."Expected Quantity");
-                    if not ItemJnlLine.Insert() then
-                        ItemJnlLine.Modify();
-                    ItemJnlLine."Line No." += 10000;
-                until ProdOrderComp.Next() = 0;
-                Rec.Find(); //COPY(ItemJnlLine);
-            end;
+            // trigger OnValidate()
+            // var
+            //     ItemJnlLine: Record "Item Journal Line";
+            //     ProdOrderComp: Record "Prod. Order Component";
+            // begin
+            //     if "Line No." = 0 then begin
+            //         ItemJnlLine.Reset();
+            //         ItemJnlLine.SetRange("Journal Template Name", "Journal Template Name");
+            //         ItemJnlLine.SetRange("Journal Batch Name", "Journal Batch Name");
+            //         if ItemJnlLine.FindLast() then
+            //             "Line No." := ItemJnlLine."Line No." + 10000
+            //         else
+            //             "Line No." := 10000;
+            //     end;
+            //     ItemJnlLine.Copy(Rec);
+            //     ProdOrder.Get(ProdOrder.Status::Released, "MFG Raw Material");
+            //     Description := ProdOrder.Description;
+            //     ProdOrderComp.Reset();
+            //     ProdOrderComp.SetCurrentkey(Status, "Prod. Order No.");
+            //     ProdOrderComp.SetRange(Status, ProdOrderLine.Status::Released);
+            //     ProdOrderComp.SetRange("Prod. Order No.", "MFG Raw Material");
+            //     ProdOrderComp.Find('-');
+            //     repeat
+            //         ItemJnlLine.Validate("Item No.", ProdOrderComp."Item No.");
+            //         ItemJnlLine.Validate(Quantity, ProdOrderComp."Expected Quantity");
+            //         if not ItemJnlLine.Insert() then
+            //             ItemJnlLine.Modify();
+            //         ItemJnlLine."Line No." += 10000;
+            //     until ProdOrderComp.Next() = 0;
+            //     Rec.Find(); //COPY(ItemJnlLine);
+            // end;
         }
         field(68904; "NV8 From Entry Type"; Option)
         {
@@ -220,7 +221,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             BlankZero = true;
             TableRelation = "Prod. Order Line"."Line No." where(Status = const(Released),
-                                                                 "Prod. Order No." = field("Jumbo Prod. Order"));
+                                                                 "Prod. Order No." = field("NV8 Jumbo Prod. Order"));
             DataClassification = CustomerContent;
         }
         field(85018; "NV8 Jumbo Comment"; Text[80])
@@ -233,38 +234,38 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         }
         field(85020; "NV8 Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("Location Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Location Code"));
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                InvQty := Quantity;
-                if "Entry Type" in ["entry type"::Sale, "entry type"::"Negative Adjmt.", "entry type"::Consumption] then
-                    InvQty := -Quantity;
-                if InvQty < 0 then
-                    FieldError("Bin Location", 'please select the Bin Location either through the "Applies To ID" or by useing reservations.');
-            end;
+            // trigger OnValidate()
+            // begin
+            //     InvQty := Quantity;
+            //     if "Entry Type" in ["entry type"::Sale, "entry type"::"Negative Adjmt.", "entry type"::Consumption] then
+            //         InvQty := -Quantity;
+            //     if InvQty < 0 then
+            //         FieldError("Bin Location", 'please select the Bin Location either through the "Applies To ID" or by useing reservations.');
+            // end;
         }
         field(85021; "NV8 New Bin Location"; Code[20])
         {
-            TableRelation = "Bin Location".Code where("Location Code" = field("New Location Code"));
+            TableRelation = "NV8 Bin Location".Code where("Location Code" = field("New Location Code"));
             DataClassification = CustomerContent;
         }
         field(85022; "NV8 From Bin Location"; Code[20])
         {
-            CalcFormula = lookup("Item Ledger Entry"."Bin Location" where("Entry No." = field("Applies-to Entry")));
+            CalcFormula = lookup("Item Ledger Entry"."NV8 Bin Location" where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85023; "NV8 From FIFO Code"; Code[20])
         {
-            CalcFormula = lookup("Item Ledger Entry"."FIFO Code" where("Entry No." = field("Applies-to Entry")));
+            CalcFormula = lookup("Item Ledger Entry"."NV8 FIFO Code" where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85024; "NV8 From Skid No."; Text[30])
         {
-            CalcFormula = lookup("Item Ledger Entry"."Skid No." where("Entry No." = field("Applies-to Entry")));
+            CalcFormula = lookup("Item Ledger Entry"."NV8 Skid No." where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -281,15 +282,15 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "FIFO Code" := AGGetFIFOCode("FIFO Date");
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "NV8 FIFO Code" := AGGetFIFOCode("FIFO Date");
+            // end;
         }
         field(85028; "NV8 Bin Pieces Remaining"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Item Ledger Entry"."Remaining Pieces" where("Entry No." = field("Applies-to Entry")));
+            CalcFormula = lookup("Item Ledger Entry"."NV8 Remaining Pieces" where("Entry No." = field("Applies-to Entry")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -304,7 +305,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         }
         field(85030; "NV8 From FIFO Date"; Date)
         {
-            CalcFormula = lookup("Item Ledger Entry"."FIFO Date" where("Entry No." = field("Applies-to Entry")));
+            CalcFormula = lookup("Item Ledger Entry"."NV8 FIFO Date" where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -325,14 +326,14 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                if "Phys. Inventory" then
-                    if CurrFieldNo = FieldNo(Pieces) then
-                        TestField("Phys. Inventory", false);
+            // trigger OnValidate()
+            // begin
+            //     if "Phys. Inventory" then
+            //         if CurrFieldNo = FieldNo("NV8 Pieces") then
+            //             TestField("Phys. Inventory", false);
 
-                UpdatePieces;
-            end;
+            //     UpdatePieces;
+            // end;
         }
         field(85051; "NV8 Unit Width Inches"; Decimal)
         {
@@ -342,15 +343,15 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             MinValue = 0;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                Temp := ROUND("Unit Width Inches", 1, '<') * 100;
-                Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
+            // trigger OnValidate()
+            // begin
+            //     Temp := ROUND("Unit Width Inches", 1, '<') * 100;
+            //     Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
 
-                Validate("Unit Width Code", Format(Temp, 5, '<integer>'));
+            //     Validate("Unit Width Code", Format(Temp, 5, '<integer>'));
 
-                UpdatePieces;
-            end;
+            //     UpdatePieces;
+            // end;
         }
         field(85052; "NV8 Unit Length meters"; Decimal)
         {
@@ -358,22 +359,22 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
-                UpdatePieces;
-            end;
+            //     trigger OnValidate()
+            //     begin
+            //         "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
+            //         UpdatePieces;
+            //     end;
         }
         field(85053; "NV8 Unit Length Inches"; Decimal)
         {
             BlankZero = true;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85054; "NV8 Unit Area m2"; Decimal)
         {
@@ -387,16 +388,16 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             CharAllowed = '09';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                ConfiguratorSetup.Get;
-                ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
-                "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
-                "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
-                if "Unit Width Inches" <> 0 then
-                    Validate("Unit Cost", "Cost Per meter" / "Unit Width Inches" * 39);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     ConfiguratorSetup.Get;
+            //     ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
+            //     "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
+            //     "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
+            //     if "Unit Width Inches" <> 0 then
+            //         Validate("Unit Cost", "Cost Per meter" / "Unit Width Inches" * 39);
+            //     UpdatePieces;
+            // end;
         }
         field(85056; "NV8 Unit Width Text"; Text[30])
         {
@@ -411,8 +412,8 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
 
             trigger OnValidate()
             begin
-                TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                TestField("NV8 Pieces");
+                Validate("NV8 Unit Length meters", ROUND("NV8 Total Length meters" / "NV8 Pieces", 0.00001));
             end;
         }
         field(85059; "NV8 Cost Per meter"; Decimal)
@@ -423,8 +424,8 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
 
             trigger OnValidate()
             begin
-                if "Unit Width Inches" <> 0 then
-                    "Unit Cost" := "Cost Per meter" / "Unit Width Inches" * 39;
+                if "NV8 Unit Width Inches" <> 0 then
+                    "Unit Cost" := "NV8 Cost Per meter" / "NV8 Unit Width Inches" * 39;
                 //UpdatePieces;
             end;
         }
@@ -466,125 +467,125 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                //>>AG003 - Start
-                ConfiguratorFound := false;
-                Found := false;
-                if "Configurator No." = '' then
-                    exit;
-                if (ConfiguratorItem.Get("Configurator No.")) then begin
-                    if ConfiguratorItem."Item No." <> '' then begin
-                        Validate("Item No.", ConfiguratorItem."Item No.");
-                        ConfiguratorFound := true;
-                    end;
-                end;
+            // trigger OnValidate()
+            // begin
+            //     //>>AG003 - Start
+            //     ConfiguratorFound := false;
+            //     Found := false;
+            //     if "Configurator No." = '' then
+            //         exit;
+            //     if (ConfiguratorItem.Get("Configurator No.")) then begin
+            //         if ConfiguratorItem."Item No." <> '' then begin
+            //             Validate("Item No.", ConfiguratorItem."Item No.");
+            //             ConfiguratorFound := true;
+            //         end;
+            //     end;
 
-                if not ConfiguratorFound then begin
-                    if (StrLen("Configurator No.") <= 20) then begin
-                        if (Item.Get("Configurator No.")) then begin
-                            Validate("Item No.", Item."No.");
-                            ConfiguratorFound := true;
-                        end;
-                    end;
-                end;
+            //     if not ConfiguratorFound then begin
+            //         if (StrLen("Configurator No.") <= 20) then begin
+            //             if (Item.Get("Configurator No.")) then begin
+            //                 Validate("Item No.", Item."No.");
+            //                 ConfiguratorFound := true;
+            //             end;
+            //         end;
+            //     end;
 
-                if not ConfiguratorFound then begin
-                    Component := CopyStr("Configurator No.", 1, 2);
-                    Remaining := CopyStr("Configurator No.", 3);
+            //     if not ConfiguratorFound then begin
+            //         Component := CopyStr("Configurator No.", 1, 2);
+            //         Remaining := CopyStr("Configurator No.", 3);
 
-                    ConfiguratorItem.Init;
-                    ConfiguratorItem."Configurator No." := '';
-                    ConfiguratorItem."Temp Configurator No." := "Configurator No.";
-                    if ConfiguratorShape.Get(Component) then begin
-                        ConfiguratorItem.Validate(Shape, Component);
-                        Component := '';
-                        if StrLen(Remaining) > 2 then
-                            repeat
-                                Component := Component + CopyStr(Remaining, 1, 1);
-                                if StrLen(Remaining) > 1 then
-                                    Remaining := CopyStr(Remaining, 2)
-                                else
-                                    Remaining := '';
-                                if ConfiguratorMaterial.Get(Component) then begin
-                                    ConfiguratorItem.Validate(Material, Component);
-                                    Found := true;
-                                end;
-                            until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) = 0);
-                        if not Found then
-                            Remaining := Component + Remaining;
-                    end;
-                end;
+            //         ConfiguratorItem.Init;
+            //         ConfiguratorItem."Configurator No." := '';
+            //         ConfiguratorItem."Temp Configurator No." := "Configurator No.";
+            //         if ConfiguratorShape.Get(Component) then begin
+            //             ConfiguratorItem.Validate(Shape, Component);
+            //             Component := '';
+            //             if StrLen(Remaining) > 2 then
+            //                 repeat
+            //                     Component := Component + CopyStr(Remaining, 1, 1);
+            //                     if StrLen(Remaining) > 1 then
+            //                         Remaining := CopyStr(Remaining, 2)
+            //                     else
+            //                         Remaining := '';
+            //                     if ConfiguratorMaterial.Get(Component) then begin
+            //                         ConfiguratorItem.Validate(Material, Component);
+            //                         Found := true;
+            //                     end;
+            //                 until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) = 0);
+            //             if not Found then
+            //                 Remaining := Component + Remaining;
+            //         end;
+            //     end;
 
-                if Found and (StrLen(Remaining) >= 3) then begin
-                    Found := false;
-                    Component := CopyStr(Remaining, StrLen(Remaining) - 2);
-                    if ConfiguratorJoint.Get(Component) then begin
-                        ConfiguratorItem.Validate(Joint, Component);
-                        if StrLen(Remaining) > 3 then
-                            Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 3)
-                        else
-                            Remaining := '';
-                    end;
-                    Component := '';
-                    if StrLen(Remaining) > 1 then
-                        repeat
-                            Component := CopyStr(Remaining, StrLen(Remaining), 1) + Component;
-                            if StrLen(Remaining) > 1 then
-                                Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 1)
-                            else
-                                Remaining := '';
-                            if ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, Component) then begin
-                                ConfiguratorItem.Validate(Grit, Component);
-                                Found := true;
-                            end;
-                        until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) < 1);
-                    if not Found then
-                        Remaining := Component + Remaining;
-                end;
+            //     if Found and (StrLen(Remaining) >= 3) then begin
+            //         Found := false;
+            //         Component := CopyStr(Remaining, StrLen(Remaining) - 2);
+            //         if ConfiguratorJoint.Get(Component) then begin
+            //             ConfiguratorItem.Validate(Joint, Component);
+            //             if StrLen(Remaining) > 3 then
+            //                 Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 3)
+            //             else
+            //                 Remaining := '';
+            //         end;
+            //         Component := '';
+            //         if StrLen(Remaining) > 1 then
+            //             repeat
+            //                 Component := CopyStr(Remaining, StrLen(Remaining), 1) + Component;
+            //                 if StrLen(Remaining) > 1 then
+            //                     Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 1)
+            //                 else
+            //                     Remaining := '';
+            //                 if ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, Component) then begin
+            //                     ConfiguratorItem.Validate(Grit, Component);
+            //                     Found := true;
+            //                 end;
+            //             until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) < 1);
+            //         if not Found then
+            //             Remaining := Component + Remaining;
+            //     end;
 
-                if Found and (StrLen(Remaining) >= 10) then begin
-                    Found := false;
-                    ConfiguratorItem.Validate("Dimension 1", CopyStr(Remaining, 1, 5));
-                    ConfiguratorItem.Validate("Dimension 2", CopyStr(Remaining, 6, 5));
-                    // Remaining := COPYSTR(Remaining,10);
-                end;
+            //     if Found and (StrLen(Remaining) >= 10) then begin
+            //         Found := false;
+            //         ConfiguratorItem.Validate("Dimension 1", CopyStr(Remaining, 1, 5));
+            //         ConfiguratorItem.Validate("Dimension 2", CopyStr(Remaining, 6, 5));
+            //         // Remaining := COPYSTR(Remaining,10);
+            //     end;
 
-                /* remove as copied from T37)
-                IF NOT ConfiguratorFound THEN BEGIN
-                  COMMIT;
-                  IF CONFIRM(AG012,FALSE) THEN BEGIN
-                    ConfiguratorItem.INSERT(TRUE);
-                    COMMIT;
-                
-                    IF FORM.RUNMODAL(FORM::"Configurator Item Card",ConfiguratorItem) = ACTION::LookupOK THEN BEGIN
-                      VALIDATE("Item No.",ConfiguratorItem."Item No.");
-                      ConfiguratorFound := TRUE;
-                    END;
-                  END;
-                END;
-                */
+            //     /* remove as copied from T37)
+            //     IF NOT ConfiguratorFound THEN BEGIN
+            //       COMMIT;
+            //       IF CONFIRM(AG012,FALSE) THEN BEGIN
+            //         ConfiguratorItem.INSERT(TRUE);
+            //         COMMIT;
 
-                // UpdateConfiguration;
-                //IF NOT ConfiguratorFound THEN
-                //  ERROR(AG013);
+            //         IF FORM.RUNMODAL(FORM::"Configurator Item Card",ConfiguratorItem) = ACTION::LookupOK THEN BEGIN
+            //           VALIDATE("Item No.",ConfiguratorItem."Item No.");
+            //           ConfiguratorFound := TRUE;
+            //         END;
+            //       END;
+            //     END;
+            //     */
 
-            end;
+            //     // UpdateConfiguration;
+            //     //IF NOT ConfiguratorFound THEN
+            //     //  ERROR(AG013);
+
+            // end;
         }
         field(85110; "NV8 Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85120; "NV8 Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85121; "NV8 Original Material"; Code[10])
@@ -594,22 +595,22 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         field(85122; "NV8 Subst. Material"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85170; "NV8 Specification"; Code[10])
         {
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
             DataClassification = CustomerContent;
         }
         field(85180; "NV8 Grit"; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
         field(85190; "NV8 Joint"; Code[10])
         {
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
             DataClassification = CustomerContent;
         }
         field(85200; "NV8 Reserved Output"; Decimal)
@@ -625,7 +626,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         field(85202; "NV8 Reservation Applied Qty."; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup("Reservation Entry".Quantity where("Entry No." = field("Reservation Application"),
+            CalcFormula = lookup("Reservation Entry".Quantity where("Entry No." = field("NV8 Reservation Application"),
                                                                      Positive = const(true)));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -660,44 +661,44 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         field(85311; "NV8 Rem. Split Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details".Pieces where("Prod. Order No." = field("Order No."),
-                                                                 Shipped = const(No)));
+            CalcFormula = sum("NV8 Split Roll Details".Pieces where("Prod. Order No." = field("Order No."),
+                                                                 Shipped = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
 
-            trigger OnValidate()
-            begin
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     UpdatePieces;
+            // end;
         }
         field(85312; "NV8 Rem. Split Total Length meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Order No."),
-                                                                                Shipped = const(No)));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Order No."),
+                                                                                Shipped = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
 
-            trigger OnValidate()
-            begin
-                UpdateConfiguration;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     UpdateConfiguration;
+            // end;
         }
         field(85313; "NV8 Rem. Split Total Area m2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Order No."),
-                                                                          Shipped = const(No)));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Order No."),
+                                                                          Shipped = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
 
-            trigger OnValidate()
-            begin
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     UpdatePieces;
+            // end;
         }
         field(85325; "NV8 Allocated for Type"; Option)
         {
@@ -706,22 +707,22 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         }
         field(85326; "NV8 Allocated for Code"; Code[20])
         {
-            TableRelation = if ("Allocated for Type" = const("Sale Order")) Customer."No."
+            TableRelation = if ("NV8 Allocated for Type" = const("Sale Order")) Customer."No."
             else
-            if ("Allocated for Type" = const("Transfer Order")) Location.Code;
+            if ("NV8 Allocated for Type" = const("Transfer Order")) Location.Code;
             DataClassification = CustomerContent;
         }
         field(85328; "NV8 Allocated for Order No"; Code[20])
         {
-            TableRelation = if ("Allocated for Type" = const("Sale Order")) "Sales Header"."No." where("Document Type" = const(Order))
+            TableRelation = if ("NV8 Allocated for Type" = const("Sale Order")) "Sales Header"."No." where("Document Type" = const(Order))
             else
-            if ("Allocated for Type" = const("Transfer Order")) "Transfer Header"."No.";
+            if ("NV8 Allocated for Type" = const("Transfer Order")) "Transfer Header"."No.";
             DataClassification = CustomerContent;
         }
-        field(85411; "FG Cost ($/UOM)"; Decimal)
+        field(85411; "NV8 FG Cost ($/UOM)"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = lookup(Item."FG Cost (/UOM)" where("No." = field("Item No.")));
+            CalcFormula = lookup(Item."NV8 FG Cost (/UOM)" where("No." = field("Item No.")));
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -734,7 +735,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
 
             trigger OnValidate()
             begin
-                Validate("Pieces (Phys. Inventory)");
+                Validate("NV8 Pieces (Phys. Inventory)");
             end;
         }
         field(85501; "NV8 Pieces (Phys. Inventory)"; Decimal)
@@ -744,14 +745,14 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
 
             trigger OnValidate()
             begin
-                if "Roll ID" <> '' then
-                    if Abs("Pieces (Phys. Inventory)") > 1 then
-                        FieldError("Pieces (Phys. Inventory)", 'must not be greater than 1 when a Roll ID exists');
+                if "NV8 Roll ID" <> '' then
+                    if Abs("NV8 Pieces (Phys. Inventory)") > 1 then
+                        FieldError("NV8 Pieces (Phys. Inventory)", 'must not be greater than 1 when a Roll ID exists');
 
-                if "Pieces (Phys. Inventory)" >= "Pieces (Calculated)" then
-                    Validate(Pieces, "Pieces (Phys. Inventory)" - "Pieces (Calculated)")
+                if "NV8 Pieces (Phys. Inventory)" >= "NV8 Pieces (Calculated)" then
+                    Validate("NV8 Pieces", "NV8 Pieces (Phys. Inventory)" - "NV8 Pieces (Calculated)")
                 else
-                    Validate(Pieces, "Pieces (Calculated)" - "Pieces (Phys. Inventory)");
+                    Validate("NV8 Pieces", "NV8 Pieces (Calculated)" - "NV8 Pieces (Phys. Inventory)");
             end;
         }
         field(85550; "NV8 Found Partial Box"; Boolean)
@@ -771,7 +772,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             DataClassification = CustomerContent;
         }
-        field(85554; "Team #"; Integer)
+        field(85554; "NV8 Team #"; Integer)
         {
             DataClassification = CustomerContent;
         }

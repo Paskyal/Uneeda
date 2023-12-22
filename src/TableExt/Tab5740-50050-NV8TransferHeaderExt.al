@@ -36,7 +36,7 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
         field(68084; "NV8 PSL Lines"; Boolean)
         {
             CalcFormula = exist("Transfer Line" where("Document No." = field("No."),
-                                                       "PSL Locked" = const(true),
+                                                       "NV8 PSL Locked" = const(true),
                                                        "Outstanding Quantity" = filter(> 0.00001),
                                                        "Derived From Line No." = const(0)));
             Editable = false;
@@ -45,7 +45,7 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
         field(68085; "NV8 CNL Lines"; Boolean)
         {
             CalcFormula = exist("Transfer Line" where("Document No." = field("No."),
-                                                       CNL = const(true),
+                                                       "NV8 CNL" = const(true),
                                                        "Outstanding Quantity" = filter(> 0)));
             Editable = false;
             FieldClass = FlowField;
@@ -101,8 +101,8 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
 
             trigger OnValidate()
             begin
-                "Hold Reason Code" := '';
-                "Put on Hold By" := UserId;
+                "NV8 Hold Reason Code" := '';
+                "NV8 Put on Hold By" := UserId;
             end;
         }
         field(85017; "NV8 Hold Reason Code"; Code[10])
@@ -112,9 +112,9 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
 
             trigger OnValidate()
             begin
-                if "Hold Reason Code" <> '' then begin
-                    "Manual Hold" := true;
-                    "Put on Hold By" := UserId;
+                if "NV8 Hold Reason Code" <> '' then begin
+                    "NV8 Manual Hold" := true;
+                    "NV8 Put on Hold By" := UserId;
                 end;
             end;
         }
@@ -137,11 +137,11 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
                 ProdOrder: Record "Production Order";
             begin
                 ProdOrder.SetFilter(Status, '%1|%2', ProdOrder.Status::"Firm Planned", ProdOrder.Status::Released);
-                ProdOrder.SetRange("Source Doc Type", ProdOrder."source doc type"::"Transfer Order");
-                ProdOrder.SetRange("Source Doc No.", "No.");
+                ProdOrder.SetRange("NV8 Source Doc Type", ProdOrder."NV8 source doc type"::"Transfer Order");
+                ProdOrder.SetRange("NV8 Source Doc No.", "No.");
                 if ProdOrder.FindFirst() then
                     repeat
-                        ProdOrder.RSQ := RSQ;
+                        ProdOrder."NV8 RSQ" := "NV8 RSQ";
                         ProdOrder.Modify();
                     until ProdOrder.Next() = 0;
             end;
@@ -149,7 +149,7 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
         field(85041; "NV8 Red Dot"; Boolean)
         {
             CalcFormula = exist("Transfer Line" where("Document No." = field("No."),
-                                                       "Red Dot" = const(true)));
+                                                       "NV8 Red Dot" = const(true)));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -226,18 +226,18 @@ tableextension 50050 "NV8 Transfer Header" extends "Transfer Header" //5740
         {
             TableRelation = Customer;
             DataClassification = CustomerContent;
-
-            trigger OnValidate()
-            begin
-                if Cust.Get("Consignment Customer") then begin
-                    RSQ := Cust.RSQ; //rsq
-                    "Req. Shipping Time" := Cust."Req. Shipping Time";
-                end;
-            end;
+            // TODO PAP Uncomment
+            // trigger OnValidate()
+            // begin
+            //     if Cust.Get("NV8 Consignment Customer") then begin
+            //         "NV8 RSQ" := Cust.RSQ; //rsq
+            //         "NV8 Req. Shipping Time" := Cust."Req. Shipping Time";
+            //     end;
+            // end;
         }
         field(85093; "NV8 Customer Name"; Text[30])
         {
-            CalcFormula = lookup(Customer.Name where("No." = field("Consignment Customer")));
+            CalcFormula = lookup(Customer.Name where("No." = field("NV8 Consignment Customer")));
             Editable = false;
             FieldClass = FlowField;
         }

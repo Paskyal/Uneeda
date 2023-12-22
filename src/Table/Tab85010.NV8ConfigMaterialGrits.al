@@ -9,8 +9,9 @@ Table 85010 "NV8 Config Material-Grits"
     //   - Change Raw Material M. on Hand to use Material and Grit Code
     //   - Chane to IF statment
 
-    DrillDownPageID = UnknownPage85020;
-    LookupPageID = UnknownPage85020;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85020;
+    // LookupPageID = UnknownPage85020;
     DataClassification = CustomerContent;
 
     fields
@@ -18,12 +19,12 @@ Table 85010 "NV8 Config Material-Grits"
         field(2; "Material Code"; Code[10])
         {
             NotBlank = true;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(3; "Grit Code"; Code[10])
         {
             NotBlank = true;
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
         field(10; Description; Text[30])
         {
@@ -58,14 +59,14 @@ Table 85010 "NV8 Config Material-Grits"
                     exit;
                 end;
                 Item.Get("Material Item No.");
-                "Material Configurator No." := Item."Configurator No.";
-                Item."Raw Material Roll" := true;
+                "Material Configurator No." := Item."NV8 Configurator No.";
+                Item."NV8 Raw Material Roll" := true;
                 Item.Modify();
             end;
         }
         field(91; "Material Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item";
+            TableRelation = "NV8 Configurator Item";
 
             trigger OnValidate()
             begin
@@ -74,7 +75,7 @@ Table 85010 "NV8 Config Material-Grits"
                 if "Material Item No." = '' then
                     exit;
                 Item.Get("Material Item No.");
-                Item."Raw Material Roll" := true;
+                Item."NV8 Raw Material Roll" := true;
                 Item.Modify();
             end;
         }
@@ -83,7 +84,7 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(150; "Jumbo Pull Formula"; DateFormula)
         {
-            CalcFormula = lookup("Configurator Material"."Jumbo Pull Formula" where(Code = field("Material Code")));
+            CalcFormula = lookup("NV8 Configurator Material"."Jumbo Pull Formula" where(Code = field("Material Code")));
             Editable = false;
             FieldClass = FlowField;
         }
@@ -93,11 +94,11 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(160; "Jumbo Pull M2 for period"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Total Area m2" where(Material = field("Material Code"),
-                                                                         Grit = field("Grit Code"),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Total Area m2" where("NV8 Material" = field("Material Code"),
+                                                                         "NV8 Grit" = field("Grit Code"),
                                                                          "Location Code" = const('AA-FLOOR'),
                                                                          Positive = const(true),
-                                                                         "Jumbo Pull" = const(Yes),
+                                                                         "NV8 Jumbo Pull" = const(true),
                                                                          "Posting Date" = field("Jumbo Pull Date Filter")));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -105,11 +106,11 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(161; "Jumbo Pull Len. M for period"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Total Length meters" where(Material = field("Material Code"),
-                                                                               Grit = field("Grit Code"),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Total Length meters" where("NV8 Material" = field("Material Code"),
+                                                                               "NV8 Grit" = field("Grit Code"),
                                                                                "Location Code" = const('AA-FLOOR'),
                                                                                Positive = const(true),
-                                                                               "Jumbo Pull" = const(Yes),
+                                                                               "NV8 Jumbo Pull" = const(true),
                                                                                "Posting Date" = field("Jumbo Pull Date Filter")));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -117,9 +118,9 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(170; "Sales M2 for period"; Decimal)
         {
-            CalcFormula = - sum("Item Ledger Entry"."Total Area m2" where("Entry Type" = const(Sale),
-                                                                          Material = field("Material Code"),
-                                                                          Grit = field("Grit Code"),
+            CalcFormula = - sum("Item Ledger Entry"."NV8 Total Area m2" where("Entry Type" = const(Sale),
+                                                                          "NV8 Material" = field("Material Code"),
+                                                                          "NV8 Grit" = field("Grit Code"),
                                                                           "Posting Date" = field("Jumbo Pull Date Filter")));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -127,9 +128,9 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(171; "Sales Len. M for period"; Decimal)
         {
-            CalcFormula = - sum("Item Ledger Entry"."Total Length meters" where("Entry Type" = const(Sale),
-                                                                                Material = field("Material Code"),
-                                                                                Grit = field("Grit Code"),
+            CalcFormula = - sum("Item Ledger Entry"."NV8 Total Length meters" where("Entry Type" = const(Sale),
+                                                                                "NV8 Material" = field("Material Code"),
+                                                                                "NV8 Grit" = field("Grit Code"),
                                                                                 "Posting Date" = field("Jumbo Pull Date Filter")));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -138,8 +139,8 @@ Table 85010 "NV8 Config Material-Grits"
         field(1000; "Quantity On Hand"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Item Ledger Entry".Quantity where(Material = field("Material Code"),
-                                                                  Grit = field("Grit Code")));
+            CalcFormula = sum("Item Ledger Entry".Quantity where("NV8 Material" = field("Material Code"),
+                                                                  "NV8 Grit" = field("Grit Code")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -165,7 +166,7 @@ Table 85010 "NV8 Config Material-Grits"
             trigger OnValidate()
             begin
                 if Item.Get("Material Item No.") then begin
-                    Item."Vendor Classification" := "Vendor Classification";
+                    Item."NV8 Vendor Classification" := "Vendor Classification";
                     Item.Modify();
                 end;
             end;
@@ -199,23 +200,23 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(85164; "Jumbo Meters on Hand (UNY)"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Unit Length meters" where("Item No." = field("Material Item No."),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Unit Length meters" where("Item No." = field("Material Item No."),
                                                                               "Location Code" = const('AA-UNY'),
                                                                               "Drop Shipment" = const(false),
-                                                                              "Material Type" = const(Jumbo),
-                                                                              "Exclude From Raw Mat Status" = const(No)));
+                                                                              "NV8 Material Type" = const(Jumbo),
+                                                                              "NV8 Exclude From RawMat Status" = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(85165; "Jumbo Rolls on Hand (UNY)"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry".Pieces where("Item No." = field("Material Item No."),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Pieces" where("Item No." = field("Material Item No."),
                                                                 "Location Code" = const('AA-UNY'),
                                                                 "Drop Shipment" = const(false),
-                                                                "Material Type" = const(Jumbo),
+                                                                "NV8 Material Type" = const(Jumbo),
                                                                 Open = const(true),
-                                                                "Exclude From Raw Mat Status" = const(No)));
+                                                                "NV8 Exclude From RawMat Status" = const(false)));
             DecimalPlaces = 0 : 5;
             Description = 'UNE';
             Editable = false;
@@ -226,31 +227,31 @@ Table 85010 "NV8 Config Material-Grits"
             CalcFormula = sum("Item Ledger Entry".Quantity where("Item No." = field("Material Item No."),
                                                                   "Location Code" = const('AA-UNY'),
                                                                   "Drop Shipment" = const(false),
-                                                                  "Material Type" = const(Jumbo),
-                                                                  "Exclude From Raw Mat Status" = const(No)));
+                                                                  "NV8 Material Type" = const(Jumbo),
+                                                                  "NV8 Exclude From RawMat Status" = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(85167; "Jumbo Meters on Hand (OCEAN)"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Unit Length meters" where("Item No." = field("Material Item No."),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Unit Length meters" where("Item No." = field("Material Item No."),
                                                                               "Location Code" = const('AA-UNY'),
                                                                               "Drop Shipment" = const(false),
-                                                                              "Material Type" = const(Jumbo),
-                                                                              "Exclude From Raw Mat Status" = const(No)));
+                                                                              "NV8 Material Type" = const(Jumbo),
+                                                                              "NV8 Exclude From RawMat Status" = const(false)));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
         }
         field(85168; "Jumbo Rolls on Hand (OCEAN)"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry".Pieces where("Item No." = field("Material Item No."),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Pieces" where("Item No." = field("Material Item No."),
                                                                 "Location Code" = const('AA-OCEAN'),
                                                                 "Drop Shipment" = const(false),
-                                                                "Material Type" = const(Jumbo),
+                                                                "NV8 Material Type" = const(Jumbo),
                                                                 Open = const(true),
-                                                                "Exclude From Raw Mat Status" = const(No)));
+                                                                "NV8 Exclude From RawMat Status" = const(false)));
             DecimalPlaces = 0 : 5;
             Description = 'UNE';
             Editable = false;
@@ -258,14 +259,14 @@ Table 85010 "NV8 Config Material-Grits"
         }
         field(85169; "Raw Material M. on Hand (UNY)"; Decimal)
         {
-            CalcFormula = sum("Item Ledger Entry"."Unit Length meters" where("Item No." = field("Material Item No."),
+            CalcFormula = sum("Item Ledger Entry"."NV8 Unit Length meters" where("Item No." = field("Material Item No."),
                                                                               "Location Code" = const('AA-UNY'),
                                                                               "Drop Shipment" = const(false),
                                                                               Open = const(true),
-                                                                              Shape = const(RO),
-                                                                              Material = field("Material Code"),
-                                                                              Grit = field("Grit Code"),
-                                                                              "Exclude From Raw Mat Status" = const(No)));
+                                                                              //   "NV8 Shape" = const(RO),//TODO PAP
+                                                                              "NV8 Material" = field("Material Code"),
+                                                                              "NV8 Grit" = field("Grit Code"),
+                                                                              "NV8 Exclude From RawMat Status" = const(false)));
             DecimalPlaces = 0 : 5;
             Description = 'UNE-151,changed sum Unit Length meters';
             Editable = false;
@@ -299,16 +300,16 @@ Table 85010 "NV8 Config Material-Grits"
     trigger OnDelete()
     begin
 
-        Item.SetCurrentkey(Material, Grit);
-        Item.SetRange(Material, "Material Code");
-        Item.SetRange(Grit, "Grit Code");
+        Item.SetCurrentkey("NV8 Material", "NV8 Grit");
+        Item.SetRange("NV8 Material", "Material Code");
+        Item.SetRange("NV8 Grit", "Grit Code");
         if Item.FindFirst() then
             Error('You can not delete %1 %2 because it is used in Item %3', "Material Code", "Grit Code", Item."No.");
     end;
 
     var
         Item: Record Item;
-        ConfiguratorItem: Record "Configurator Item";
+        ConfiguratorItem: Record "NV8 Configurator Item";
 
 
     procedure SetJumboDateFilter()

@@ -40,7 +40,7 @@ tableextension 50021 "NV8 Sales Shipment Line" extends "Sales Shipment Line" //1
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
         }
-        field(50007; "NV8 Original Unit Length (Meters)"; Decimal)
+        field(50007; "NV8 OriginalUnitLength(Meters)"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
@@ -175,43 +175,43 @@ tableextension 50021 "NV8 Sales Shipment Line" extends "Sales Shipment Line" //1
         }
         field(85101; "NV8 Shape"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Shape where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Shape where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(85102; "NV8 Material"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Material where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Material where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85107; "NV8 Specification"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Specification where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Specification where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
         }
         field(85108; "NV8 Grit"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Grit where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Grit where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
         field(85109; "NV8 Joint"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Joint where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Joint where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
         }
         field(85311; "NV8 Split Pieces"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details".Pieces where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details".Pieces where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -219,7 +219,7 @@ tableextension 50021 "NV8 Sales Shipment Line" extends "Sales Shipment Line" //1
         field(85312; "NV8 Split Total Length meters"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Length meters" where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Length meters" where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -227,7 +227,7 @@ tableextension 50021 "NV8 Sales Shipment Line" extends "Sales Shipment Line" //1
         field(85313; "NV8 Split Total Area m2"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("Split Roll Details"."Total Area m2" where("Prod. Order No." = field("Production Order No.")));
+            CalcFormula = sum("NV8 Split Roll Details"."Total Area m2" where("Prod. Order No." = field("NV8 Production Order No.")));
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
@@ -240,7 +240,7 @@ tableextension 50021 "NV8 Sales Shipment Line" extends "Sales Shipment Line" //1
         }
         field(89102; "NV8 Production Order No."; Code[20])
         {
-            TableRelation = "Production Order"."No." where(Status = field("Production Order Status"));
+            TableRelation = "Production Order"."No." where(Status = field("NV8 Production Order Status"));
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }

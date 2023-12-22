@@ -1,7 +1,8 @@
 Table 85016 "NV8 Shape Production Area"
 {
-    DrillDownPageID = UnknownPage85016;
-    LookupPageID = UnknownPage85016;
+    // TODO PAP
+    // DrillDownPageID = UnknownPage85016;
+    // LookupPageID = UnknownPage85016;
     DataClassification = CustomerContent;
 
     fields

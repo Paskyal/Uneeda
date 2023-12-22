@@ -23,7 +23,7 @@ tableextension 50059 "NV8 Warehouse Setup" extends "Warehouse Setup" //5769
         field(50003; "NV8 Auto Reclass Batch"; Code[10])
         {
             Description = 'EC1.LOT1.01';
-            TableRelation = "Warehouse Journal Batch".Name where("Journal Template Name" = field("Auto Reclass Template"),
+            TableRelation = "Warehouse Journal Batch".Name where("Journal Template Name" = field("NV8 Auto Reclass Template"),
                                                                   "Template Type" = const(Reclassification));
             DataClassification = CustomerContent;
         }
@@ -36,7 +36,7 @@ tableextension 50059 "NV8 Warehouse Setup" extends "Warehouse Setup" //5769
         field(50005; "NV8 Put-Away Worksheet Name"; Code[10])
         {
             Description = 'EC1.LOT1.01';
-            TableRelation = "Whse. Worksheet Name".Name where("Worksheet Template Name" = field("Put-Away Template"),
+            TableRelation = "Whse. Worksheet Name".Name where("Worksheet Template Name" = field("NV8 Put-Away Template"),
                                                                "Template Type" = const("Put-away"));
             DataClassification = CustomerContent;
         }
@@ -49,7 +49,7 @@ tableextension 50059 "NV8 Warehouse Setup" extends "Warehouse Setup" //5769
         field(50007; "NV8 Pick Worksheet Name"; Code[10])
         {
             Description = 'EC1.LOT1.01';
-            TableRelation = "Whse. Worksheet Name".Name where("Worksheet Template Name" = field("Pick Template Name"),
+            TableRelation = "Whse. Worksheet Name".Name where("Worksheet Template Name" = field("NV8 Pick Template Name"),
                                                                "Template Type" = const(Pick));
             DataClassification = CustomerContent;
         }
@@ -62,7 +62,7 @@ tableextension 50059 "NV8 Warehouse Setup" extends "Warehouse Setup" //5769
         field(50009; "NV8 Consumption Worksheet Name"; Code[10])
         {
             Description = 'EC1.LOT1.01';
-            TableRelation = "Item Journal Batch".Name where("Journal Template Name" = field("Consumption Template Name"));
+            TableRelation = "Item Journal Batch".Name where("Journal Template Name" = field("NV8 Consumption Template Name"));
             DataClassification = CustomerContent;
         }
         field(50010; "NV8 Waste Adj. Template Name"; Code[10])
@@ -74,7 +74,7 @@ tableextension 50059 "NV8 Warehouse Setup" extends "Warehouse Setup" //5769
         field(50011; "NV8 Waste Adj. Batch Name"; Code[10])
         {
             Description = 'EC1.LOT1.01';
-            TableRelation = "Warehouse Journal Batch".Name where("Journal Template Name" = field("Waste Adj. Template Name"));
+            TableRelation = "Warehouse Journal Batch".Name where("Journal Template Name" = field("NV8 Waste Adj. Template Name"));
             DataClassification = CustomerContent;
         }
         field(50012; "NV8 Floor Zone Filter"; Code[250])
@@ -93,7 +93,7 @@ tableextension 50059 "NV8 Warehouse Setup" extends "Warehouse Setup" //5769
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
         }
-        field(50020; "NV8 Last Lot open Entry Processed"; Integer)
+        field(50020; "NV8 Last Lot open Entry Proc"; Integer)
         {
             Description = 'UE-559';
             DataClassification = CustomerContent;
