@@ -496,7 +496,7 @@ Table 85007 "NV8 Roll Selector Line"
         field(85321; "Allocated Quantity"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("NV8 Item Ledger Entry No." = field("Entry No."),
+            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
                                                                                 "Line No." = filter(> 0)));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -504,13 +504,13 @@ Table 85007 "NV8 Roll Selector Line"
         }
         field(85322; "Allocated On"; Date)
         {
-            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated On" where("NV8 Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated On" where("Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85323; "Allocated By"; Code[20])
         {
-            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated By" where("NV8 Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated By" where("Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = User;
@@ -821,7 +821,7 @@ Table 85007 "NV8 Roll Selector Line"
     begin
         RollAlloc.Reset();
         NewAlloc := 0;
-        RollAlloc.SetRange("NV8 Item Ledger Entry No.", "Entry No.");
+        RollAlloc.SetRange("Item Ledger Entry No.", "Entry No.");
         if RollAlloc.FindSet() then begin
             repeat
                 NewAlloc += RollAlloc."NV8 Allocated Quantity";

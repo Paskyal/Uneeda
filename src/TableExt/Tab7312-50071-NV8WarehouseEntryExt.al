@@ -106,7 +106,7 @@ tableextension 50071 "NV8 Warehouse Entry" extends "Warehouse Entry" //7312
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -114,17 +114,17 @@ tableextension 50071 "NV8 Warehouse Entry" extends "Warehouse Entry" //7312
         }
         field(85110; "NV8 Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85120; "NV8 Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85180; "NV8 Grit"; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
         field(90001; "NV8 Lot Group Code"; Code[20])
@@ -144,7 +144,7 @@ tableextension 50071 "NV8 Warehouse Entry" extends "Warehouse Entry" //7312
         }
         field(91100; "NV8 Lot Creation Date"; Date)
         {
-            CalcFormula = lookup("Lot No. Information"."Creation Date" where("Item No." = field("Item No."),
+            CalcFormula = lookup("Lot No. Information"."NV8 Creation Date" where("Item No." = field("Item No."),
                                                                               "Lot No." = field("Lot No.")));
             Description = 'UE-606';
             FieldClass = FlowField;

@@ -2,14 +2,16 @@ tableextension 50076 "NV8 Posted Whse. Shipment Hdr" extends "Posted Whse. Shipm
 {
     fields
     {
-        ield(50000;"Created On Date";Date)
+        field(50000; "NV8 Created On Date"; Date)
         {
             Description = 'UE-537';
             Editable = false;
+            DataClassification = CustomerContent;
         }
         field(51002; "NV8 Web"; Boolean)
         {
             Description = 'UE-657';
+            DataClassification = CustomerContent;
         }
     }
 }

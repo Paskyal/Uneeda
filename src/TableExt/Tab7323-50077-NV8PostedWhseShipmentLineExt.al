@@ -101,7 +101,7 @@ tableextension 50077 "NV8 Posted Whse. Shipment Line" extends "Posted Whse. Ship
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -109,17 +109,17 @@ tableextension 50077 "NV8 Posted Whse. Shipment Line" extends "Posted Whse. Ship
         }
         field(85110; "NV8 Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85120; "NV8 Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85180; "NV8 Grit"; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
     }

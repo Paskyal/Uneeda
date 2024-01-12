@@ -1,4 +1,6 @@
 tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
+//PAP 
+// Table 7002 Sales Price is marked for removal, added custom fields from Table 7002 to Table 7001 Price List Line
 {
     fields
     {
@@ -9,14 +11,14 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
         }
         field(50001; "NV8 Item Blocked"; Boolean)
         {
-            CalcFormula = lookup(Item.Blocked where("No." = field("Item No.")));
+            // CalcFormula = lookup(Item.Blocked where("No." = field("Item No."))); //TODO PAP Check the field
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
         }
         field(50002; "NV8 Customer Name"; Text[50])
         {
-            CalcFormula = lookup(Customer.Name where("No." = field("Sales Code")));
+            // CalcFormula = lookup(Customer.Name where("No." = field("Sales Code"))); //TODO PAP
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
@@ -36,7 +38,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
         }
         field(50005; "NV8 Customer Blocked"; Option)
         {
-            CalcFormula = lookup(Customer.Blocked where("No." = field("Sales Code")));
+            // CalcFormula = lookup(Customer.Blocked where("No." = field("Sales Code")));// TODO PAP
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
@@ -46,20 +48,20 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
         field(50006; "NV8 Configurator No."; Code[100])
         {
             Description = 'EC1.SAL1.01';
-            TableRelation = "Configurator Item"."Configurator No.";
+            TableRelation = "NV8 Configurator Item"."Configurator No.";
             DataClassification = CustomerContent;
-
-            trigger OnValidate()
-            var
-                ConfigItem: Record UnknownRecord85001;
-            begin
-                //EC1.SAL1.01
-                if ConfigItem.Get("Configurator No.") then begin
-                    if "Item No." <> ConfigItem."Item No." then
-                        Validate("Item No.", ConfigItem."Item No.");
-                    Shape := ConfigItem.Shape;
-                end;
-            end;
+            // TODO PAP uncomment
+            // trigger OnValidate()
+            // var
+            //     ConfigItem: Record "NV8 Configurator Item";
+            // begin
+            //     //EC1.SAL1.01
+            //     if ConfigItem.Get("NV8 Configurator No.") then begin
+            //         if "Item No." <> ConfigItem."Item No." then
+            //             Validate("Item No.", ConfigItem."Item No.");
+            //         Shape := ConfigItem.Shape;
+            //     end;
+            // end;
         }
         field(50007; "NV8 Shape"; Code[10])
         {
@@ -82,7 +84,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
         }
         field(50010; "NV8 Item Search Description"; Code[200])
         {
-            CalcFormula = lookup(Item."Search Description" where("No." = field("Item No.")));
+            // CalcFormula = lookup(Item."Search Description" where("No." = field("Item No.")));//TODO PAP
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;

@@ -1,5 +1,6 @@
-tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-away Line" //7332
+tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-away Line" //7332
 {
+    // TODO PAP Uncomment triggers
     fields
     {
         field(50000; "NV8 Slitting Put/Pick"; Boolean)
@@ -18,10 +19,10 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     UpdatePieces;
+            // end;
         }
         field(85051; "NV8 Unit Width Inches"; Decimal)
         {
@@ -31,13 +32,13 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
             MinValue = 0;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                Temp := ROUND("Unit Width Inches", 1, '<') * 100;
-                Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
+            // trigger OnValidate()
+            // begin
+            //     Temp := ROUND("Unit Width Inches", 1, '<') * 100;
+            //     Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
 
-                //VALIDATE("Unit Width Code",FORMAT(Temp,5,'<integer>'));
-            end;
+            //     //VALIDATE("Unit Width Code",FORMAT(Temp,5,'<integer>'));
+            // end;
         }
         field(85052; "NV8 Unit Length meters"; Decimal)
         {
@@ -45,11 +46,11 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "NV8 Unit Length Inches" := ROUND("NV8 Unit Length meters" * 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85053; "NV8 Unit Length Inches"; Decimal)
         {
@@ -57,11 +58,11 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "NV8 Unit Length meters" := ROUND("NV8 Unit Length Inches" / 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85054; "NV8 Unit Area m2"; Decimal)
         {
@@ -79,8 +80,8 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
 
             trigger OnValidate()
             begin
-                TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                TestField("NV8 Pieces");
+                Validate("NV8 Unit Length meters", ROUND("NV8 Total Length meters" / "NV8 Pieces", 0.00001));
             end;
         }
         field(85064; "NV8 Total Area m2"; Decimal)
@@ -92,7 +93,7 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
-            TableRelation = "Configurator Item" where(Status = filter(Item .. "Valid Item"));
+            TableRelation = "NV8 Configurator Item" where(Status = filter(Item .. "Valid Item"));
             //This property is currently not supported
             //TestTableRelation = false;
             ValidateTableRelation = false;
@@ -204,33 +205,33 @@ tableextension 50081 "Whse. Internal Put-away Line" extends "Whse. Internal Put-
         }
         field(85110; "NV8 Shape"; Code[10])
         {
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
         }
         field(85120; "NV8 Material"; Code[10])
         {
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85122; "NV8 Subst. Material"; Code[10])
         {
             Editable = false;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
         }
         field(85170; "NV8 Specification"; Code[10])
         {
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
             DataClassification = CustomerContent;
         }
         field(85180; "NV8 Grit"; Code[10])
         {
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
         }
         field(85190; "NV8 Joint"; Code[10])
         {
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
             DataClassification = CustomerContent;
         }
     }

@@ -1,8 +1,9 @@
 tableextension 50084 "NV8 Production BOM Line" extends "Production BOM Line" //99000772
 {
+    // TODO PAP Uncomment triggers
     fields
     {
-        field(85000; "NV8 Configurator Calc. per Meter"; Option)
+        field(85000; "NV8 ConfiguratorCalc.perMeter"; Option)
         {
             DataClassification = CustomerContent;
             Description = 'EC1.INV4.01';
@@ -14,32 +15,32 @@ tableextension 50084 "NV8 Production BOM Line" extends "Production BOM Line" //9
             Description = 'EC1.INV4.01';
             OptionMembers = "BOM Line",Configurator,"Material-Grit","New Raw Material";
 
-            trigger OnValidate()
-            begin
-                case "Configurator Type" of
-                    "configurator type"::"BOM Line":
-                        begin
-                            if "Configurator Calc. per Meter" <> "configurator calc. per meter"::" " then
-                                "Configurator Calc. per Meter" := "configurator calc. per meter"::" ";
-                            TestField("Configurator Factor", 0);
-                        end;
-                    "configurator type"::Configurator:
-                        begin
-                            if "Configurator Calc. per Meter" = "configurator calc. per meter"::" " then
-                                "Configurator Calc. per Meter" := "configurator calc. per meter"::Factor;
-                            TestField("Quantity per", 0);
-                        end;
-                    "configurator type"::"Material-Grit":
-                        begin
-                            Validate(Type, Type::" ");
-                            "No." := '';
-                            "Configurator Type" := "configurator type"::"Material-Grit";
-                            if "Configurator Calc. per Meter" = "configurator calc. per meter"::" " then
-                                "Configurator Calc. per Meter" := "configurator calc. per meter"::Factor;
-                            TestField("Quantity per", 0);
-                        end;
-                end;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     case "Configurator Type" of
+            //         "configurator type"::"BOM Line":
+            //             begin
+            //                 if "Configurator Calc. per Meter" <> "configurator calc. per meter"::" " then
+            //                     "Configurator Calc. per Meter" := "configurator calc. per meter"::" ";
+            //                 TestField("Configurator Factor", 0);
+            //             end;
+            //         "configurator type"::Configurator:
+            //             begin
+            //                 if "Configurator Calc. per Meter" = "configurator calc. per meter"::" " then
+            //                     "Configurator Calc. per Meter" := "configurator calc. per meter"::Factor;
+            //                 TestField("Quantity per", 0);
+            //             end;
+            //         "configurator type"::"Material-Grit":
+            //             begin
+            //                 Validate(Type, Type::" ");
+            //                 "No." := '';
+            //                 "Configurator Type" := "configurator type"::"Material-Grit";
+            //                 if "Configurator Calc. per Meter" = "configurator calc. per meter"::" " then
+            //                     "Configurator Calc. per Meter" := "configurator calc. per meter"::Factor;
+            //                 TestField("Quantity per", 0);
+            //             end;
+            //     end;
+            // end;
         }
         field(85010; "NV8 Configurator Factor"; Decimal)
         {
@@ -49,10 +50,10 @@ tableextension 50084 "NV8 Production BOM Line" extends "Production BOM Line" //9
 
             trigger OnValidate()
             begin
-                if "Qty. per Unit of Measure" = 0 then
-                    "Configurator Factor (Base)" := "Configurator Factor"
+                if "NV8 Qty. per Unit of Measure" = 0 then
+                    "NV8 Configurator Factor (Base)" := "NV8 Configurator Factor"
                 else
-                    "Configurator Factor (Base)" := ROUND("Configurator Factor" * "Qty. per Unit of Measure", 0.00001);
+                    "NV8 Configurator Factor (Base)" := ROUND("NV8 Configurator Factor" * "NV8 Qty. per Unit of Measure", 0.00001);
             end;
         }
         field(85080; "NV8 Comp. Standard Cost"; Decimal)

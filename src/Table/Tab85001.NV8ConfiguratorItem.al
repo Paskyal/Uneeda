@@ -1689,21 +1689,21 @@ Table 85001 "NV8 Configurator Item"
                             end;
                     end;
 
-                    case "NV8 Configurator Calc. per Meter" of
-                        "NV8 configurator calc. per meter"::" ":
+                    case "NV8 ConfiguratorCalc.perMeter" of
+                        "NV8 ConfiguratorCalc.perMeter"::" ":
                             ;
-                        "NV8 configurator calc. per meter"::Factor:
+                        "NV8 ConfiguratorCalc.perMeter"::Factor:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor";
-                        "NV8 configurator calc. per meter"::FactorxD1:
+                        "NV8 ConfiguratorCalc.perMeter"::FactorxD1:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" / 39;
-                        "NV8 configurator calc. per meter"::FactorxD2:
+                        "NV8 ConfiguratorCalc.perMeter"::FactorxD2:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 2" / 39;
-                        "NV8 configurator calc. per meter"::FactorxD1xD2:
+                        "NV8 ConfiguratorCalc.perMeter"::FactorxD1xD2:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 2" / 39 / 39;
-                        "NV8 configurator calc. per meter"::"FactorxD1^2":
+                        "NV8 ConfiguratorCalc.perMeter"::"FactorxD1^2":
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 1" / 39 / 39;
                         else
-                            FieldError("NV8 Configurator Calc. per Meter", AG007);
+                            FieldError("NV8 ConfiguratorCalc.perMeter", AG007);
                     end;
                     Validate("Unit of Measure Code");
                     Validate("Quantity per");
@@ -2068,21 +2068,21 @@ Table 85001 "NV8 Configurator Item"
                             "NV8 Configurator Type" := "NV8 configurator type"::"BOM Line";
                     end;
 
-                    case "NV8 Configurator Calc. per Meter" of
-                        "NV8 configurator calc. per meter"::" ":
+                    case "NV8 ConfiguratorCalc.perMeter" of
+                        "NV8 ConfiguratorCalc.perMeter"::" ":
                             ;
-                        "NV8 configurator calc. per meter"::Factor:
+                        "NV8 ConfiguratorCalc.perMeter"::Factor:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor";
-                        "NV8 configurator calc. per meter"::FactorxD1:
+                        "NV8 ConfiguratorCalc.perMeter"::FactorxD1:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" / 39;
-                        "NV8 configurator calc. per meter"::FactorxD2:
+                        "NV8 ConfiguratorCalc.perMeter"::FactorxD2:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 2" / 39;
-                        "NV8 configurator calc. per meter"::FactorxD1xD2:
+                        "NV8 ConfiguratorCalc.perMeter"::FactorxD1xD2:
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 2" / 39 / 39;
-                        "NV8 configurator calc. per meter"::"FactorxD1^2":
+                        "NV8 ConfiguratorCalc.perMeter"::"FactorxD1^2":
                             "Quantity per" := ProductionBOMComp."NV8 Configurator Factor" * "Quantity 1" * "Quantity 1" / 39 / 39;
                         else
-                            FieldError("NV8 Configurator Calc. per Meter", AG007);
+                            FieldError("NV8 ConfiguratorCalc.perMeter", AG007);
                     end;
                     Validate("Unit of Measure Code");
                     Validate("Quantity per");

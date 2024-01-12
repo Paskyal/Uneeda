@@ -205,7 +205,7 @@ Table 50008 "NV8 Posted Roll Allocator Line"
         //                                                                  Grit = filter(<> 0)));
         //     Editable = false;
         //     FieldClass = FlowField;
-        //     TableRelation = "Configurator Material";
+        //     TableRelation = "NV8 Configurator Material";
         // }
         // field(68206; "Cons. Grit"; Code[10])
         // {
@@ -213,7 +213,7 @@ Table 50008 "NV8 Posted Roll Allocator Line"
         //                                                              Grit = filter(<> 0)));
         //     Editable = false;
         //     FieldClass = FlowField;
-        //     TableRelation = "Configurator Grit";
+        //     TableRelation = "NV8 Configurator Grit";
         // }
         // field(68210; "Cons. Quantity (Base)"; Decimal)
         // {
@@ -402,12 +402,12 @@ Table 50008 "NV8 Posted Roll Allocator Line"
         }
         field(85120; Material; Code[10])
         {
-            // TableRelation = "Configurator Material";//TODO PAP Uncomment
+            // TableRelation = "NV8 Configurator Material";//TODO PAP Uncomment
         }
         field(85122; "Subst. Material"; Code[10])
         {
             Editable = false;
-            // TableRelation = "Configurator Material"; //TODO PAP Uncomment
+            // TableRelation = "NV8 Configurator Material"; //TODO PAP Uncomment
         }
         field(85170; Specification; Code[10])
         {
@@ -415,7 +415,7 @@ Table 50008 "NV8 Posted Roll Allocator Line"
         }
         field(85180; Grit; Code[10])
         {
-            // TableRelation = "Configurator Grit"; //TODO PAP Uncomment
+            // TableRelation = "NV8 Configurator Grit"; //TODO PAP Uncomment
         }
         field(85190; Joint; Code[10])
         {

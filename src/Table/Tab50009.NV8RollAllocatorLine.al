@@ -31,7 +31,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
     fields
     {
-        field(1; "NV8 Item Ledger Entry No."; Integer)
+        field(1; "Item Ledger Entry No."; Integer)
         {
         }
         field(2; "Line No."; Integer)
@@ -429,7 +429,7 @@ Table 50009 "NV8 Roll Allocator Line"
             //                                                              Grit = filter(<> 0)));
             // Editable = false;
             // FieldClass = FlowField;
-            // TableRelation = "Configurator Material";
+            // TableRelation = "NV8 Configurator Material";
         }
         field(68206; "Cons. Grit"; Code[10])//TODO PAP Uncomment
         {
@@ -437,7 +437,7 @@ Table 50009 "NV8 Roll Allocator Line"
             //                                                          Grit = filter(<> 0)));
             // Editable = false;
             // FieldClass = FlowField;
-            // TableRelation = "Configurator Grit";
+            // TableRelation = "NV8 Configurator Grit";
         }
         field(68210; "Cons. Quantity"; Decimal)//TODO PAP Uncomment
         {
@@ -817,12 +817,12 @@ Table 50009 "NV8 Roll Allocator Line"
         }
         field(85120; Material; Code[10])
         {
-            // TableRelation = "Configurator Material";  v
+            // TableRelation = "NV8 Configurator Material";  v
         }
         field(85122; "Subst. Material"; Code[10])
         {
             Editable = false;
-            // TableRelation = "Configurator Material"; //TODO PAP Uncomment
+            // TableRelation = "NV8 Configurator Material"; //TODO PAP Uncomment
         }
         field(85170; Specification; Code[10])
         {
@@ -830,7 +830,7 @@ Table 50009 "NV8 Roll Allocator Line"
         }
         field(85180; Grit; Code[10])
         {
-            // TableRelation = "Configurator Grit";  //TODO PAP Uncomment
+            // TableRelation = "NV8 Configurator Grit";  //TODO PAP Uncomment
         }
         field(85190; Joint; Code[10])
         {
@@ -937,7 +937,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
     keys
     {
-        key(Key1; "NV8 Item Ledger Entry No.", "Line No.")
+        key(Key1; "Item Ledger Entry No.", "Line No.")
         {
             Clustered = true;
             SumIndexFields = Quantity, "Quantity (Base)", "NV8 Allocated Quantity";
@@ -1361,7 +1361,7 @@ Table 50009 "NV8 Roll Allocator Line"
     begin
         if CalledLocal then begin
             RollAllocatorLine.Reset();
-            RollAllocatorLine.SetRange("NV8 Item Ledger Entry No.", "NV8 Item Ledger Entry No.");
+            RollAllocatorLine.SetRange("Item Ledger Entry No.", "Item Ledger Entry No.");
             RollAllocatorLine.SetFilter("Line No.", '<>%1', "Line No.");
             if RollAllocatorLine.Find('-') then
                 repeat
@@ -1420,7 +1420,7 @@ Table 50009 "NV8 Roll Allocator Line"
     procedure LockRoll(EntryNo: Integer; SetUser: Code[200]; SetDate: Date)
     begin
         RollAllocatorLine.Init();
-        RollAllocatorLine."NV8 Item Ledger Entry No." := EntryNo;
+        RollAllocatorLine."Item Ledger Entry No." := EntryNo;
         RollAllocatorLine."Line No." := 0;
         RollAllocatorLine.SetUpNewLine(EntryNo, SetUser, SetDate);
         RollAllocatorLine."Allocation Type" := RollAllocatorLine."allocation type"::"Transfer From Stock";
@@ -1744,7 +1744,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
     procedure CreateWasteLine(CheckRollAllocationLine: Record "NV8 Roll Allocator Line")
     begin
-        ItemLedgEntry.Get(CheckRollAllocationLine."NV8 Item Ledger Entry No.");
+        ItemLedgEntry.Get(CheckRollAllocationLine."Item Ledger Entry No.");
         ItemLedgEntry.CalcFields("NV8 Allocated Quantity");
     end;
 
@@ -1758,7 +1758,7 @@ Table 50009 "NV8 Roll Allocator Line"
         SetCurrentkey("Allocated By");
         //TESTING Remove temporarily
         //SETRANGE("Allocated By",LoggedUser);
-        SetRange("NV8 Item Ledger Entry No.", EntryNo);
+        SetRange("Item Ledger Entry No.", EntryNo);
         if not Find('-') then
             Error('There are no lines in the selected range that are Marked to Post.');
         if not Confirm('Do you want to process the Allocation Lines?', false) then
@@ -1895,8 +1895,8 @@ Table 50009 "NV8 Roll Allocator Line"
         NextSortingNo: Integer;
     begin
         Reset();
-        SetCurrentkey("NV8 Item Ledger Entry No.");
-        SetRange("NV8 Item Ledger Entry No.", RollSelectorLine."Entry No.");
+        SetCurrentkey("Item Ledger Entry No.");
+        SetRange("Item Ledger Entry No.", RollSelectorLine."Entry No.");
         NextSortingNo := Count;
         Reset();
 
@@ -1921,7 +1921,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
 
-        SetRange("NV8 Item Ledger Entry No.", RollSelectorLine."Entry No.");
+        SetRange("Item Ledger Entry No.", RollSelectorLine."Entry No.");
         if not Find('+') then begin
             LockRoll(RollSelectorLine."Entry No.", SetUser, WorkDate());
             NextLineNo := 10000;
@@ -1930,7 +1930,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
         // Set up the new line
         Init();
-        "NV8 Item Ledger Entry No." := RollSelectorLine."Entry No.";
+        "Item Ledger Entry No." := RollSelectorLine."Entry No.";
         // for reservation oif allocation entry.
         "Allocation ID" := RollSelectorLine."Entry No.";
         "Line No." := NextLineNo;
@@ -3184,7 +3184,7 @@ Table 50009 "NV8 Roll Allocator Line"
     begin
 
         TtlQty := 0;
-        l_RollSel2.SetRange(l_RollSel2."NV8 Item Ledger Entry No.", l_RollSel."NV8 Item Ledger Entry No.");
+        l_RollSel2.SetRange(l_RollSel2."Item Ledger Entry No.", l_RollSel."Item Ledger Entry No.");
         l_RollSel2.SetRange(l_RollSel2."Entry Type", l_RollSel2."entry type"::Consumption);
         if l_RollSel2.FindSet then
             repeat

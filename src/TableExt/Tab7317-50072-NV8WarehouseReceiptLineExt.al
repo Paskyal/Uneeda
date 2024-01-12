@@ -1,5 +1,6 @@
 tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Line" //7317
 {
+    // TODO PAP uncomment triggers
     fields
     {
         field(50000; "NV8 Configurator No."; Code[100])
@@ -7,97 +8,97 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
+            // trigger OnValidate()
+            // begin
 
-                //>>AG003 - Start
-                ConfiguratorFound := false;
-                Found := false;
-                if "Configurator No." = '' then
-                    exit;
-                if (ConfiguratorItem.Get("Configurator No.")) then begin
-                    if ConfiguratorItem."Item No." <> '' then begin
-                        //  VALIDATE(Type,Type::Item);
-                        Validate("No.", ConfiguratorItem."Item No.");
-                        ConfiguratorFound := true;
-                    end;
-                end;
+            //     //>>AG003 - Start
+            //     ConfiguratorFound := false;
+            //     Found := false;
+            //     if "Configurator No." = '' then
+            //         exit;
+            //     if (ConfiguratorItem.Get("Configurator No.")) then begin
+            //         if ConfiguratorItem."Item No." <> '' then begin
+            //             //  VALIDATE(Type,Type::Item);
+            //             Validate("No.", ConfiguratorItem."Item No.");
+            //             ConfiguratorFound := true;
+            //         end;
+            //     end;
 
-                if not ConfiguratorFound then begin
-                    if (StrLen("Configurator No.") <= 20) then begin
-                        if (Item.Get("Configurator No.")) then begin
-                            //      VALIDATE(Type,Type::Item);
-                            Validate("No.", Item."No.");
-                            ConfiguratorFound := true;
-                        end;
-                    end;
-                end;
+            //     if not ConfiguratorFound then begin
+            //         if (StrLen("Configurator No.") <= 20) then begin
+            //             if (Item.Get("Configurator No.")) then begin
+            //                 //      VALIDATE(Type,Type::Item);
+            //                 Validate("No.", Item."No.");
+            //                 ConfiguratorFound := true;
+            //             end;
+            //         end;
+            //     end;
 
-                if not ConfiguratorFound then begin
-                    Component := CopyStr("Configurator No.", 1, 2);
-                    Remaining := CopyStr("Configurator No.", 3);
+            //     if not ConfiguratorFound then begin
+            //         Component := CopyStr("Configurator No.", 1, 2);
+            //         Remaining := CopyStr("Configurator No.", 3);
 
-                    ConfiguratorItem.Init;
-                    ConfiguratorItem."Configurator No." := '';
-                    ConfiguratorItem."Temp Configurator No." := "Configurator No.";
-                    if ConfiguratorShape.Get(Component) then begin
-                        ConfiguratorItem.Validate(Shape, Component);
-                        Component := '';
-                        if StrLen(Remaining) > 2 then
-                            repeat
-                                Component := Component + CopyStr(Remaining, 1, 1);
-                                if StrLen(Remaining) > 1 then
-                                    Remaining := CopyStr(Remaining, 2)
-                                else
-                                    Remaining := '';
-                                if ConfiguratorMaterial.Get(Component) then begin
-                                    ConfiguratorItem.Validate(Material, Component);
-                                    Found := true;
-                                end;
-                            until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) = 0);
-                        if not Found then
-                            Remaining := Component + Remaining;
-                    end;
-                end;
+            //         ConfiguratorItem.Init;
+            //         ConfiguratorItem."Configurator No." := '';
+            //         ConfiguratorItem."Temp Configurator No." := "Configurator No.";
+            //         if ConfiguratorShape.Get(Component) then begin
+            //             ConfiguratorItem.Validate(Shape, Component);
+            //             Component := '';
+            //             if StrLen(Remaining) > 2 then
+            //                 repeat
+            //                     Component := Component + CopyStr(Remaining, 1, 1);
+            //                     if StrLen(Remaining) > 1 then
+            //                         Remaining := CopyStr(Remaining, 2)
+            //                     else
+            //                         Remaining := '';
+            //                     if ConfiguratorMaterial.Get(Component) then begin
+            //                         ConfiguratorItem.Validate(Material, Component);
+            //                         Found := true;
+            //                     end;
+            //                 until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) = 0);
+            //             if not Found then
+            //                 Remaining := Component + Remaining;
+            //         end;
+            //     end;
 
-                if Found and (StrLen(Remaining) >= 3) then begin
-                    Found := false;
-                    Component := CopyStr(Remaining, StrLen(Remaining) - 2);
-                    if ConfiguratorJoint.Get(Component) then begin
-                        ConfiguratorItem.Validate(Joint, Component);
-                        if StrLen(Remaining) > 3 then
-                            Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 3)
-                        else
-                            Remaining := '';
-                    end;
-                    Component := '';
-                    if StrLen(Remaining) > 1 then
-                        repeat
-                            Component := CopyStr(Remaining, StrLen(Remaining), 1) + Component;
-                            if StrLen(Remaining) > 1 then
-                                Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 1)
-                            else
-                                Remaining := '';
-                            if ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, Component) then begin
-                                ConfiguratorItem.Validate(Grit, Component);
-                                Found := true;
-                            end;
-                        until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) < 1);
-                    if not Found then
-                        Remaining := Component + Remaining;
-                end;
+            //     if Found and (StrLen(Remaining) >= 3) then begin
+            //         Found := false;
+            //         Component := CopyStr(Remaining, StrLen(Remaining) - 2);
+            //         if ConfiguratorJoint.Get(Component) then begin
+            //             ConfiguratorItem.Validate(Joint, Component);
+            //             if StrLen(Remaining) > 3 then
+            //                 Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 3)
+            //             else
+            //                 Remaining := '';
+            //         end;
+            //         Component := '';
+            //         if StrLen(Remaining) > 1 then
+            //             repeat
+            //                 Component := CopyStr(Remaining, StrLen(Remaining), 1) + Component;
+            //                 if StrLen(Remaining) > 1 then
+            //                     Remaining := CopyStr(Remaining, 1, StrLen(Remaining) - 1)
+            //                 else
+            //                     Remaining := '';
+            //                 if ConfiguratorMaterialGrit.Get(ConfiguratorItem.Material, Component) then begin
+            //                     ConfiguratorItem.Validate(Grit, Component);
+            //                     Found := true;
+            //                 end;
+            //             until Found or (StrLen(Component) >= 10) or (StrLen(Remaining) < 1);
+            //         if not Found then
+            //             Remaining := Component + Remaining;
+            //     end;
 
-                if Found and (StrLen(Remaining) >= 10) then begin
-                    Found := false;
-                    ConfiguratorItem.Validate("Dimension 1", CopyStr(Remaining, 1, 5));
-                    ConfiguratorItem.Validate("Dimension 2", CopyStr(Remaining, 6, 5));
-                    // Remaining := COPYSTR(Remaining,10);
-                end;
-            end;
+            //     if Found and (StrLen(Remaining) >= 10) then begin
+            //         Found := false;
+            //         ConfiguratorItem.Validate("Dimension 1", CopyStr(Remaining, 1, 5));
+            //         ConfiguratorItem.Validate("Dimension 2", CopyStr(Remaining, 6, 5));
+            //         // Remaining := COPYSTR(Remaining,10);
+            //     end;
+            // end;
         }
         field(50001; "NV8 Print Receipt Labels"; Boolean)
         {
-            CalcFormula = lookup(Item."Print Receipt Labels" where("No." = field("Item No.")));
+            CalcFormula = lookup(Item."NV8 Print Receipt Labels" where("No." = field("Item No.")));
             Description = 'EC1.01';
             FieldClass = FlowField;
         }
@@ -106,42 +107,42 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                UpdatePieces;
-                //VALIDATE(Quantity,Pieces);  //EC1.SAL1.01
-            end;
+            // trigger OnValidate()
+            // begin
+            //     UpdatePieces;
+            //     //VALIDATE(Quantity,Pieces);  //EC1.SAL1.01
+            // end;
         }
         field(50006; "NV8 Pieces to Receive"; Decimal)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            var
-                l_ResEntry: Record "Reservation Entry";
-                scanFoundation: Codeunit UnknownCodeunit16016231;
-            begin
-                // >>EC1.02
-                if scanFoundation.GetItemConfiguration("Item No.") = 0 then
-                    exit;
-                // <<EC1.02
+            // trigger OnValidate()
+            // var
+            //     l_ResEntry: Record "Reservation Entry";
+            //     scanFoundation: Codeunit UnknownCodeunit16016231;
+            // begin
+            //     // >>EC1.02
+            //     if scanFoundation.GetItemConfiguration("Item No.") = 0 then
+            //         exit;
+            //     // <<EC1.02
 
-                TestField(Pieces);
+            //     TestField(Pieces);
 
 
-                Validate("Qty. to Receive", ROUND("Pieces to Receive" * Quantity / Pieces, 0.00001));
+            //     Validate("Qty. to Receive", ROUND("Pieces to Receive" * Quantity / Pieces, 0.00001));
 
-                //UE-365
-                l_ResEntry.SetRange(l_ResEntry."Source Type", "Source Type");
-                l_ResEntry.SetRange(l_ResEntry."Source Subtype", "Source Subtype");
-                l_ResEntry.SetRange(l_ResEntry."Source ID", "Source No.");
-                l_ResEntry.SetRange(l_ResEntry."Source Ref. No.", "Source Line No.");
+            //     //UE-365
+            //     l_ResEntry.SetRange(l_ResEntry."Source Type", "Source Type");
+            //     l_ResEntry.SetRange(l_ResEntry."Source Subtype", "Source Subtype");
+            //     l_ResEntry.SetRange(l_ResEntry."Source ID", "Source No.");
+            //     l_ResEntry.SetRange(l_ResEntry."Source Ref. No.", "Source Line No.");
 
-                if l_ResEntry.FindFirst() then
-                    //VALIDATE("Qty. to Receive (Base)",ROUND(l_ResEntry."Quantity (Base)" * Rec."Pieces to Receive",0.00001))
-                    "Qty. to Receive (Base)" := ROUND(l_ResEntry."Quantity (Base)" * Rec."Pieces to Receive", 0.00001)
-            end;
+            //     if l_ResEntry.FindFirst() then
+            //         //VALIDATE("Qty. to Receive (Base)",ROUND(l_ResEntry."Quantity (Base)" * Rec."Pieces to Receive",0.00001))
+            //         "Qty. to Receive (Base)" := ROUND(l_ResEntry."Quantity (Base)" * Rec."Pieces to Receive", 0.00001)
+            // end;
         }
         field(50007; "NV8 Pieces to Invoice"; Decimal)
         {
@@ -173,23 +174,23 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                //
-                // IF Type = Type::Item THEN BEGIN
-                if "Fully Received" then begin
-                    //   GetPurchHeader;
-                    Validate("Qty. to Receive");
+            // trigger OnValidate()
+            // begin
+            //     //
+            //     // IF Type = Type::Item THEN BEGIN
+            //     if "Fully Received" then begin
+            //         //   GetPurchHeader;
+            //         Validate("Qty. to Receive");
 
-                    if "Unit Area m2" <> 0 then Validate(Pieces, (Quantity / "Unit Area m2"));  //Lhr *************
-                end;
-                // IF NOT "Fully Received" THEN BEGIN
-                //  GetPurchHeader;
-                //  VALIDATE(Quantity,"Original Ordered Quantity");
-                // END;
-                // END ELSE
-                //    "Fully Received" := FALSE;
-            end;
+            //         if "Unit Area m2" <> 0 then Validate(Pieces, (Quantity / "Unit Area m2"));  //Lhr *************
+            //     end;
+            //     // IF NOT "Fully Received" THEN BEGIN
+            //     //  GetPurchHeader;
+            //     //  VALIDATE(Quantity,"Original Ordered Quantity");
+            //     // END;
+            //     // END ELSE
+            //     //    "Fully Received" := FALSE;
+            // end;
         }
         field(85010; "NV8 Overage Quantity"; Decimal)
         {
@@ -197,33 +198,33 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             DecimalPlaces = 2 : 2;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                //AG046 BLD2 vmj 07.09.02
-                //IF "Document Type" = "Document Type"::Order THEN BEGIN
-                // IF Type = Type::Item THEN BEGIN
-                //    IF "Fully Received" THEN
-                //      ERROR(text85001);
-                if ("Overage Quantity" <> 0) and (xRec."Overage Quantity" = 0) then begin
-                    //GetPurchHeader;
-                    /*{PurchHeader.Status := PurchHeader.Status::Open;
-                    PurchHeader.MODIFY;}*/
-                    Validate(Quantity, Quantity + "Overage Quantity");
-                    /*{PurchHeader.Status := PurchHeader.Status::Released;
-                    PurchHeader.MODIFY;}*/
-                end;
-                if ("Overage Quantity" = 0) and (xRec."Overage Quantity" <> 0) then begin
-                    //  GetPurchHeader;
-                    /*{PurchHeader.Status := PurchHeader.Status::Open;
-                    PurchHeader.MODIFY;}*/
-                    Validate(Quantity, Quantity - xRec."Overage Quantity");
-                    /*{PurchHeader.Status := PurchHeader.Status::Released;
-                    PurchHeader.MODIFY;}*/
-                end;
-                //E/ND ELSE  //end doc type
-                // "Overage Quantity" := 0;
+            // trigger OnValidate()
+            // begin
+            //     //AG046 BLD2 vmj 07.09.02
+            //     //IF "Document Type" = "Document Type"::Order THEN BEGIN
+            //     // IF Type = Type::Item THEN BEGIN
+            //     //    IF "Fully Received" THEN
+            //     //      ERROR(text85001);
+            //     if ("Overage Quantity" <> 0) and (xRec."Overage Quantity" = 0) then begin
+            //         //GetPurchHeader;
+            //         /*{PurchHeader.Status := PurchHeader.Status::Open;
+            //         PurchHeader.MODIFY;}*/
+            //         Validate(Quantity, Quantity + "Overage Quantity");
+            //         /*{PurchHeader.Status := PurchHeader.Status::Released;
+            //         PurchHeader.MODIFY;}*/
+            //     end;
+            //     if ("Overage Quantity" = 0) and (xRec."Overage Quantity" <> 0) then begin
+            //         //  GetPurchHeader;
+            //         /*{PurchHeader.Status := PurchHeader.Status::Open;
+            //         PurchHeader.MODIFY;}*/
+            //         Validate(Quantity, Quantity - xRec."Overage Quantity");
+            //         /*{PurchHeader.Status := PurchHeader.Status::Released;
+            //         PurchHeader.MODIFY;}*/
+            //     end;
+            //     //E/ND ELSE  //end doc type
+            //     // "Overage Quantity" := 0;
 
-            end;
+            // end;
         }
         field(85040; "NV8 Material Type"; Option)
         {
@@ -239,16 +240,16 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             MinValue = 0;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                /*TEMP := ROUND("Unit Width Inches",1,'<') * 100;
-                TEMP := TEMP + ROUND((("Unit Width Inches" MOD 1) * 64),1,'<');
-                
-                VALIDATE("Unit Width Code",FORMAT(TEMP,5,'<integer>'));
-                */
-                UpdatePieces;
+            // trigger OnValidate()
+            // begin
+            //     /*TEMP := ROUND("Unit Width Inches",1,'<') * 100;
+            //     TEMP := TEMP + ROUND((("Unit Width Inches" MOD 1) * 64),1,'<');
 
-            end;
+            //     VALIDATE("Unit Width Code",FORMAT(TEMP,5,'<integer>'));
+            //     */
+            //     UpdatePieces;
+
+            // end;
         }
         field(85052; "NV8 Unit Length meters"; Decimal)
         {
@@ -256,22 +257,22 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85053; "NV8 Unit Length Inches"; Decimal)
         {
             BlankZero = true;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
+            //     UpdatePieces;
+            // end;
         }
         field(85054; "NV8 Unit Area m2"; Decimal)
         {
@@ -285,16 +286,16 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             CharAllowed = '09';
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                ConfiguratorSetup.Get;
-                ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
-                "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
-                "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
-                //IF "Unit Width Inches" <> 0 THEN
-                //  VALIDATE("Direct Unit Cost","Cost Per meter" / "Unit Width Inches" * 39);
-                UpdatePieces;
-            end;
+            // trigger OnValidate()
+            // begin
+            //     ConfiguratorSetup.Get;
+            //     ConfiguratorSetup.SetDimLen("Unit Width Code", 5, "Unit Width Code", 0);
+            //     "Unit Width Inches" := ConfiguratorSetup.GetDecimal("Unit Width Code");
+            //     "Unit Width Text" := ConfiguratorSetup.GetDecimalText("Unit Width Code");
+            //     //IF "Unit Width Inches" <> 0 THEN
+            //     //  VALIDATE("Direct Unit Cost","Cost Per meter" / "Unit Width Inches" * 39);
+            //     UpdatePieces;
+            // end;
         }
         field(85056; "NV8 Unit Width Text"; Text[30])
         {
@@ -307,15 +308,15 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
 
-            trigger OnValidate()
-            begin
-                TestField(Pieces);
-                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+            // trigger OnValidate()
+            // begin
+            //     TestField(Pieces);
+            //     Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
 
-                // RSQ begin
-                if "Original Total Length Meters" = 0 then "Original Total Length Meters" := "Total Length meters";
-                // RSQ end
-            end;
+            //     // RSQ begin
+            //     if "Original Total Length Meters" = 0 then "Original Total Length Meters" := "Total Length meters";
+            //     // RSQ end
+            // end;
         }
         field(85059; "NV8 Cost Per meter"; Decimal)
         {
@@ -351,45 +352,45 @@ tableextension 50072 "NV8 Warehouse Receipt Line" extends "Warehouse Receipt Lin
         }
         field(85101; "NV8 Shape"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Shape where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Shape where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Shape";
+            TableRelation = "NV8 Configurator Shape";
         }
         field(85102; "NV8 Material"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Material where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Material where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Material";
+            TableRelation = "NV8 Configurator Material";
         }
         field(85107; "NV8 Specification"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Specification where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Specification where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Specification";
+            TableRelation = "NV8 Configurator Specification";
         }
         field(85108; "NV8 Grit"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Grit where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Grit where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Grit";
+            TableRelation = "NV8 Configurator Grit";
         }
         field(85109; "NV8 Joint"; Code[10])
         {
-            CalcFormula = lookup("Configurator Item".Joint where("Configurator No." = field("Configurator No.")));
+            CalcFormula = lookup("NV8 Configurator Item".Joint where("Configurator No." = field("NV8 Configurator No.")));
             Editable = false;
             FieldClass = FlowField;
-            TableRelation = "Configurator Joint";
+            TableRelation = "NV8 Configurator Joint";
         }
-        field(85204; "NV8 Original Total Length Meters"; Decimal)
+        field(85204; "NV8 OriginalTotalLengthMeters"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
         }
-        field(86000; "NV8 User Defined Direct Unit Cost"; Decimal)
+        field(86000; "NV8 User DefinedDirectUnitCost"; Decimal)
         {
             AutoFormatType = 2;
             DataClassification = CustomerContent;

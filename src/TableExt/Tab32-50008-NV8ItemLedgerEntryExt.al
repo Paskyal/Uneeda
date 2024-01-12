@@ -593,14 +593,14 @@ tableextension 50008 "NV8 Item Ledger Entry" extends "Item Ledger Entry" //32
         }
         field(85320; "NV8 Locked for Allocation"; Boolean)
         {
-            CalcFormula = exist("NV8 Roll Allocator Line" where("NV8 Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = exist("NV8 Roll Allocator Line" where("Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85321; "NV8 Allocated Quantity"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("NV8 Item Ledger Entry No." = field("Entry No."),
+            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
                                                                                 "Line No." = filter(> 0)));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -608,13 +608,13 @@ tableextension 50008 "NV8 Item Ledger Entry" extends "Item Ledger Entry" //32
         }
         field(85322; "NV8 Allocated On"; Date)
         {
-            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated On" where("NV8 Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated On" where("Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
         }
         field(85323; "NV8 Allocated By"; Code[20])
         {
-            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated By" where("NV8 Item Ledger Entry No." = field("Entry No.")));
+            CalcFormula = lookup("NV8 Roll Allocator Line"."Allocated By" where("Item Ledger Entry No." = field("Entry No.")));
             Editable = false;
             FieldClass = FlowField;
             TableRelation = User;
