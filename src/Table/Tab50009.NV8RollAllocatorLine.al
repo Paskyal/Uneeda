@@ -164,12 +164,12 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
                 if "Entry Type" in ["entry type"::"Positive Adjmt.", "entry type"::Output] then
-                    "NV8 Allocated Quantity" := -Quantity
+                    "Allocated Quantity" := -Quantity
                 else
-                    "NV8 Allocated Quantity" := Quantity;
+                    "Allocated Quantity" := Quantity;
             end;
         }
-        field(14; "NV8 Allocated Quantity"; Decimal)
+        field(14; "Allocated Quantity"; Decimal)
         {
             DecimalPlaces = 0 : 5;
         }
@@ -557,7 +557,7 @@ Table 50009 "NV8 Roll Allocator Line"
                 UpdatePieces();
             end;
         }
-        field(85051; "NV8 Unit Width Inches"; Decimal)
+        field(85051; "Unit Width Inches"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 2 : 5;
@@ -566,20 +566,20 @@ Table 50009 "NV8 Roll Allocator Line"
 
             trigger OnValidate()
             begin
-                Temp := ROUND("NV8 Unit Width Inches", 1, '<') * 100;
-                Temp := Temp + ROUND((("NV8 Unit Width Inches" MOD 1) * 64), 1, '<');
+                Temp := ROUND("Unit Width Inches", 1, '<') * 100;
+                Temp := Temp + ROUND((("Unit Width Inches" MOD 1) * 64), 1, '<');
 
                 Validate("Unit Width Code", Format(Temp, 5, '<integer>'));
             end;
         }
-        field(85052; "NV8 Unit Length meters"; Decimal)
+        field(85052; "Unit Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 2 : 5;
 
             trigger OnValidate()
             begin
-                "Unit Length Inches" := ROUND("NV8 Unit Length meters" * 39, 0.00001);
+                "Unit Length Inches" := ROUND("Unit Length meters" * 39, 0.00001);
                 UpdatePieces();
             end;
         }
@@ -590,7 +590,7 @@ Table 50009 "NV8 Roll Allocator Line"
 
             trigger OnValidate()
             begin
-                "NV8 Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
+                "Unit Length meters" := ROUND("Unit Length Inches" / 39, 0.00001);
                 UpdatePieces();
             end;
         }
@@ -626,7 +626,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85059; "Cost Per meter"; Decimal)
@@ -666,7 +666,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85083; "Overage Length meters"; Decimal)
@@ -677,7 +677,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85084; "Original Unit Length meters"; Decimal)
@@ -688,7 +688,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85085; "Overage Unit Length meters"; Decimal)
@@ -699,7 +699,7 @@ Table 50009 "NV8 Roll Allocator Line"
             trigger OnValidate()
             begin
                 TestField(Pieces);
-                Validate("NV8 Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
+                Validate("Unit Length meters", ROUND("Total Length meters" / Pieces, 0.00001));
             end;
         }
         field(85100; "Configurator No."; Code[100])
@@ -940,25 +940,25 @@ Table 50009 "NV8 Roll Allocator Line"
         key(Key1; "Item Ledger Entry No.", "Line No.")
         {
             Clustered = true;
-            SumIndexFields = Quantity, "Quantity (Base)", "NV8 Allocated Quantity";
+            SumIndexFields = Quantity, "Quantity (Base)", "Allocated Quantity";
         }
         key(Key2; "Entry Type", "Item No.", "Variant Code", "Location Code", "Bin Code", "Posting Date")
         {
-            SumIndexFields = "Quantity (Base)", "NV8 Allocated Quantity";
+            SumIndexFields = "Quantity (Base)", "Allocated Quantity";
         }
         key(Key3; "Entry Type", "Item No.", "Variant Code", "New Location Code", "New Bin Code", "Posting Date")
         {
-            SumIndexFields = "Quantity (Base)", "NV8 Allocated Quantity";
+            SumIndexFields = "Quantity (Base)", "Allocated Quantity";
         }
         key(Key4; "Allocated By", "Sort No.")
         {
-            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "NV8 Allocated Quantity";
+            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "Allocated Quantity";
         }
         key(Key5; "Allocated By", "Configurator No.", "Sort No.")
         {
-            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "NV8 Allocated Quantity";
+            SumIndexFields = Quantity, "Quantity (Base)", Pieces, "Allocated Quantity";
         }
-        key(Key6; "NV8 Unit Width Inches", "NV8 Unit Length meters")
+        key(Key6; "Unit Width Inches", "Unit Length meters")
         {
         }
         key(Key7; "Roll ID")
@@ -1277,9 +1277,9 @@ Table 50009 "NV8 Roll Allocator Line"
     procedure UpdateQuantity()
     begin
         exit;
-        "Unit Area m2" := ROUND("NV8 Unit Width Inches" * "NV8 Unit Length meters" / 39, 0.00001);
+        "Unit Area m2" := ROUND("Unit Width Inches" * "Unit Length meters" / 39, 0.00001);
         "Total Area m2" := Pieces * "Unit Area m2";
-        "Total Length meters" := Pieces * "NV8 Unit Length meters";
+        "Total Length meters" := Pieces * "Unit Length meters";
 
         if "Material Type" = "material type"::" " then begin
             Validate(Quantity, Pieces);
@@ -1296,9 +1296,9 @@ Table 50009 "NV8 Roll Allocator Line"
                 Pieces := ROUND(Quantity / "Unit Area m2");
         end;
 
-        "Unit Area m2" := ROUND("NV8 Unit Width Inches" * "NV8 Unit Length meters" / 39, 0.00001);
+        "Unit Area m2" := ROUND("Unit Width Inches" * "Unit Length meters" / 39, 0.00001);
         "Total Area m2" := Pieces * "Unit Area m2";
-        "Total Length meters" := Pieces * "NV8 Unit Length meters";
+        "Total Length meters" := Pieces * "Unit Length meters";
     end;
 
 
@@ -1497,10 +1497,10 @@ Table 50009 "NV8 Roll Allocator Line"
         // Check the type of line to create
         if "Allocation Type" in
           ["allocation type"::"Transfer From Stock", "allocation type"::"Return To Stock", "allocation type"::"Jumbo Pull Request"] then begin
-            if Abs(ItemLedgerEntry."NV8 Unit Width Inches" - "NV8 Unit Width Inches") > 0.0001 then
-                ItemLedgerEntry.TestField("NV8 Unit Width Inches", "NV8 Unit Width Inches");
-            if Abs(ItemLedgerEntry."NV8 Unit Length meters" - "NV8 Unit Length meters") > 0.0001 then
-                ItemLedgerEntry.TestField("NV8 Unit Length meters", "NV8 Unit Length meters");
+            if Abs(ItemLedgerEntry."NV8 Unit Width Inches" - "Unit Width Inches") > 0.0001 then
+                ItemLedgerEntry.TestField("NV8 Unit Width Inches", "Unit Width Inches");
+            if Abs(ItemLedgerEntry."NV8 Unit Length meters" - "Unit Length meters") > 0.0001 then
+                ItemLedgerEntry.TestField("NV8 Unit Length meters", "Unit Length meters");
             if Pieces <> ROUND(Pieces, 1) then
                 Error('You can only Transfer whole pieces. %1 is not allowed', Pieces);
             if ItemLedgerEntry."NV8 Remaining Pieces" > 0 then
@@ -1508,7 +1508,7 @@ Table 50009 "NV8 Roll Allocator Line"
                     Error('You can not transfer more than %1 pieces', ItemLedgerEntry."NV8 Remaining Pieces");
         end;
 
-        CheckRollAllocationLine.TestField("NV8 Allocated Quantity");
+        CheckRollAllocationLine.TestField("Allocated Quantity");
 
         case "Allocation Type" of
             "allocation type"::"Transfer From Stock":
@@ -1943,9 +1943,9 @@ Table 50009 "NV8 Roll Allocator Line"
         "Bin Location" := BinLocation;
         Quantity := AllocateQuantity;
 
-        Validate("NV8 Unit Length meters", AllocateLength); // fix the issue with no length and width
+        Validate("Unit Length meters", AllocateLength); // fix the issue with no length and width
         Pieces := AllocatePieces;
-        Validate("NV8 Unit Width Inches", AllocateWidth);  // fix the issue with no length and width
+        Validate("Unit Width Inches", AllocateWidth);  // fix the issue with no length and width
         "FIFO Date" := RollSelectorLine."FIFO Date";
 
         "Allocated By" := SetUser;
@@ -2096,8 +2096,8 @@ Table 50009 "NV8 Roll Allocator Line"
         end;
 
         if
-          (Abs("NV8 Unit Width Inches" - RollSelectorLine."Unit Width Inches") > 0.0001) or
-          (Abs("NV8 Unit Length meters" - RollSelectorLine."Unit Length meters") > 0.0001) then
+          (Abs("Unit Width Inches" - RollSelectorLine."Unit Width Inches") > 0.0001) or
+          (Abs("Unit Length meters" - RollSelectorLine."Unit Length meters") > 0.0001) then
             "Transfer Whole Pieces" := false;
 
         "Re-Cut" := RollSelectorLine."Re-Cut";
@@ -2348,8 +2348,8 @@ Table 50009 "NV8 Roll Allocator Line"
         //<< UE-489  1/18/18
 
         l_ItemJnl."NV8 Pieces" := RollAlloc.Pieces;
-        l_ItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_ItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_ItemJnl."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_ItemJnl."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_ItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_ItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_ItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -2544,14 +2544,14 @@ Table 50009 "NV8 Roll Allocator Line"
         //<< UE-499
 
         l_WhseItemJnl.Description := 'Remnant Reclass for: ' + RollAlloc."Prod. Order No.";
-        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."NV8 Allocated Quantity");
+        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."Allocated Quantity");
 
         l_WhseItemJnl."Whse. Document Type" := l_WhseItemJnl."whse. document type"::"Whse. Journal";
 
 
         l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
-        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -2567,8 +2567,8 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
-        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -2642,8 +2642,8 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         //Insert lot info with new lot number;
-        l_LotNoInfo."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
-        l_LotNoInfo."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
+        l_LotNoInfo."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
+        l_LotNoInfo."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
         l_LotNoInfo."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_LotNoInfo."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_LotNoInfo."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -2830,7 +2830,7 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseItemJnl."Location Code" := RollAlloc."Location Code";
         l_WhseItemJnl.Validate(l_WhseItemJnl."Item No.", RollAlloc."Item No.");
         l_WhseItemJnl."Registering Date" := WorkDate();
-        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."NV8 Allocated Quantity");
+        l_WhseItemJnl.Validate(l_WhseItemJnl.Quantity, RollAlloc."Allocated Quantity");
         //l_WhseItemJnl."Whse. Document Line No." := 10000;
         l_WhseItemJnl."Entry Type" := l_WhseItemJnl."entry type"::"Negative Adjmt.";
         l_WhseItemJnl.Description := 'Waste Adjustment for: ' + RollAlloc."Prod. Order No.";
@@ -2844,8 +2844,8 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseItemJnl."Lot No." := RollAlloc."Roll ID";
 
         l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
-        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -2864,8 +2864,8 @@ Table 50009 "NV8 Roll Allocator Line"
 
 
         l_WhseItemJnl."NV8 Pieces" := RollAlloc.Pieces;
-        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseItemJnl."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_WhseItemJnl."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_WhseItemJnl."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_WhseItemJnl."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_WhseItemJnl."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -2984,7 +2984,7 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseWksht."Whse. Document Type" := l_WhseWksht."whse. document type"::Production;
         l_WhseWksht.Validate("Item No.", RollAlloc."Item No.");
         l_WhseWksht.Validate(l_WhseWksht."Whse. Document No.", RollAlloc."Prod. Order No.");
-        l_WhseWksht.Validate(l_WhseWksht.Quantity, RollAlloc."NV8 Allocated Quantity");
+        l_WhseWksht.Validate(l_WhseWksht.Quantity, RollAlloc."Allocated Quantity");
 
         l_WhseWksht."Whse. Document Line No." := 10000;
 
@@ -3008,8 +3008,8 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseWksht."To Zone Code" := l_WhseSetup."NV8 Warehouse Zone";
         l_WhseWksht."To Bin Code" := l_Location."From-Assembly Bin Code"; //Hope thats the right one
         l_WhseWksht."NV8 Pieces" := RollAlloc.Pieces;
-        l_WhseWksht."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_WhseWksht."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_WhseWksht."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_WhseWksht."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_WhseWksht."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_WhseWksht."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_WhseWksht."NV8 Total Length meters" := RollAlloc."Total Length meters";
@@ -3019,9 +3019,9 @@ Table 50009 "NV8 Roll Allocator Line"
         l_WhseWksht."NV8 Material" := RollAlloc.Material;
         l_WhseWksht."NV8 Grit" := RollAlloc.Grit;
         //l_WhseWksht."Lot Group Code" := l_LotNoInfo."Lot Group Code";
-        l_WhseWksht."Qty. (Base)" := RollAlloc."NV8 Allocated Quantity";
-        l_WhseWksht."Qty. to Handle" := RollAlloc."NV8 Allocated Quantity";
-        l_WhseWksht."Qty. to Handle (Base)" := RollAlloc."NV8 Allocated Quantity";
+        l_WhseWksht."Qty. (Base)" := RollAlloc."Allocated Quantity";
+        l_WhseWksht."Qty. to Handle" := RollAlloc."Allocated Quantity";
+        l_WhseWksht."Qty. to Handle (Base)" := RollAlloc."Allocated Quantity";
         ;
 
 
@@ -3106,23 +3106,23 @@ Table 50009 "NV8 Roll Allocator Line"
         l_IntPickLine."Item No." := RollAlloc."Item No.";
         //l_IntPickLine.VALIDATE(l_IntPickLine."Item No.",RollAlloc."Item No.");
         //l_IntPickLine.VALIDATE(l_IntPickLine.Quantity,RollAlloc."NV8 Allocated Quantity");
-        l_IntPickLine.Quantity := RollAlloc."NV8 Allocated Quantity";
+        l_IntPickLine.Quantity := RollAlloc."Allocated Quantity";
         l_IntPickLine."From Zone Code" := l_WhseSetup."NV8 Floor Zone";
         l_IntPickLine."From Bin Code" := FindLotBin(RollAlloc."Location Code", RollAlloc."Item No.", l_LotNoInfo."Lot No.", l_WhseSetup."NV8 Floor Zone");
         l_IntPickLine.Description := 'Internal Put away for Lot: ' + l_LotNoInfo."Lot No.";
 
 
         /*Maybe, maybe not */
-        l_IntPickLine."Qty. (Base)" := RollAlloc."NV8 Allocated Quantity";
-        l_IntPickLine."Qty. Outstanding" := RollAlloc."NV8 Allocated Quantity";
-        l_IntPickLine."Qty. Outstanding (Base)" := RollAlloc."NV8 Allocated Quantity";
+        l_IntPickLine."Qty. (Base)" := RollAlloc."Allocated Quantity";
+        l_IntPickLine."Qty. Outstanding" := RollAlloc."Allocated Quantity";
+        l_IntPickLine."Qty. Outstanding (Base)" := RollAlloc."Allocated Quantity";
 
 
 
         l_IntPickLine."NV8 Material Type" := RollAlloc."Material Type";
         l_IntPickLine."NV8 Pieces" := RollAlloc.Pieces;
-        l_IntPickLine."NV8 Unit Width Inches" := RollAlloc."NV8 Unit Width Inches";
-        l_IntPickLine."NV8 Unit Length meters" := RollAlloc."NV8 Unit Length meters";
+        l_IntPickLine."NV8 Unit Width Inches" := RollAlloc."Unit Width Inches";
+        l_IntPickLine."NV8 Unit Length meters" := RollAlloc."Unit Length meters";
         l_IntPickLine."NV8 Unit Length Inches" := RollAlloc."Unit Length Inches";
         l_IntPickLine."NV8 Unit Area m2" := RollAlloc."Unit Area m2";
         l_IntPickLine."NV8 Total Length meters" := RollAlloc."Total Length meters";

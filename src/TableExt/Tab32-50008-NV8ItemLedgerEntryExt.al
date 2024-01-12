@@ -600,7 +600,7 @@ tableextension 50008 "NV8 Item Ledger Entry" extends "Item Ledger Entry" //32
         field(85321; "NV8 Allocated Quantity"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
+            CalcFormula = sum("NV8 Roll Allocator Line"."Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
                                                                                 "Line No." = filter(> 0)));
             DecimalPlaces = 0 : 5;
             Editable = false;

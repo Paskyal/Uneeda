@@ -496,7 +496,7 @@ Table 85007 "NV8 Roll Selector Line"
         field(85321; "Allocated Quantity"; Decimal)
         {
             BlankZero = true;
-            CalcFormula = sum("NV8 Roll Allocator Line"."NV8 Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
+            CalcFormula = sum("NV8 Roll Allocator Line"."Allocated Quantity" where("Item Ledger Entry No." = field("Entry No."),
                                                                                 "Line No." = filter(> 0)));
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -824,7 +824,7 @@ Table 85007 "NV8 Roll Selector Line"
         RollAlloc.SetRange("Item Ledger Entry No.", "Entry No.");
         if RollAlloc.FindSet() then begin
             repeat
-                NewAlloc += RollAlloc."NV8 Allocated Quantity";
+                NewAlloc += RollAlloc."Allocated Quantity";
             until RollAlloc.Next() = 0;
             exit(NewAlloc);
         end else

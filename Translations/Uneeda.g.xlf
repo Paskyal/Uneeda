@@ -4803,6 +4803,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Invoiced Quantity - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 660655506 - Field 2684044605 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item Ledger Entry No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Item Ledger Entry No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 660655506 - Field 568743302 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Item No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4892,11 +4897,6 @@
           <source>NV8 Allocated Quantity</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field NV8 Allocated Quantity - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 660655506 - Field 160964397 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>NV8 Item Ledger Entry No.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field NV8 Item Ledger Entry No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 660655506 - Field 3669076334 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>NV8 Unit Length meters</source>
