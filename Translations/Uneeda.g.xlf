@@ -4613,6 +4613,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Allocated On - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 660655506 - Field 729485110 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Allocated Quantity</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Allocated Quantity - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 660655506 - Field 798341371 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Allocated Quantity (Total)</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4893,21 +4898,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field No. Roll IDs Printed - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 660655506 - Field 754359558 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>NV8 Allocated Quantity</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field NV8 Allocated Quantity - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 660655506 - Field 3669076334 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>NV8 Unit Length meters</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field NV8 Unit Length meters - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 660655506 - Field 2554101414 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>NV8 Unit Width Inches</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field NV8 Unit Width Inches - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Table 660655506 - Field 2632124822 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Order Date</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -5143,6 +5133,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Unit Length Inches - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 660655506 - Field 878988894 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unit Length meters</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Unit Length meters - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 660655506 - Field 2385270358 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Unit of Measure Code</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -5152,6 +5147,11 @@
           <source>Unit Width Code</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Unit Width Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 660655506 - Field 4048740022 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unit Width Inches</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table NV8 Roll Allocator Line - Field Unit Width Inches - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 660655506 - Field 919093823 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Unit Width Text</source>

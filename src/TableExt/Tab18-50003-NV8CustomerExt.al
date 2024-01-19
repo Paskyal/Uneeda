@@ -406,6 +406,11 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             DataClassification = CustomerContent;
             Description = 'BF032023';
         }
+        field(50065; "NV8 Top 8"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Description = 'BF082823';
+        }
         field(51002; "NV8 Web"; Boolean)
         {
             Description = 'UE-657';
