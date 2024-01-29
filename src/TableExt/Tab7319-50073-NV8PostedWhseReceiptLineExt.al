@@ -6,23 +6,28 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
         field(55000; "NV8 Slitting Put/Pick"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Slitting Put/Pick';
         }
         field(68110; "NV8 Roll ID"; Code[20])
         {
             Description = 'EC1.MFG04.01';
             DataClassification = CustomerContent;
+            Caption = 'Roll ID';
         }
         field(85019; "NV8 Jumbo Pull"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Jumbo Pull';
         }
         field(85026; "NV8 FIFO Code"; Code[7])
         {
             DataClassification = CustomerContent;
+            Caption = 'FIFO Code';
         }
         field(85027; "NV8 FIFO Date"; Date)
         {
             DataClassification = CustomerContent;
+            Caption = 'FIFO Date';
 
             // trigger OnValidate()
             // begin
@@ -34,12 +39,14 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             OptionCaption = ' ,Jumbo,Short Remnant,Narrow Remnant,Scrap';
             OptionMembers = " ",Jumbo,"Short Remnant","Narrow Remnant",Scrap;
             DataClassification = CustomerContent;
+            Caption = 'Material Type';
         }
         field(85050; "NV8 Pieces"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Description = 'ECMISC';
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
 
             // trigger OnValidate()
             // begin
@@ -55,7 +62,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
-
+            Caption = 'Unit Width Inches';
             trigger OnValidate()
             var
                 Temp: Decimal;
@@ -72,6 +79,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             DecimalPlaces = 2 : 5;
             Description = 'ECMISC';
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
 
             //     trigger OnValidate()
             //     begin
@@ -83,6 +91,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
         {
             BlankZero = true;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
 
             // trigger OnValidate()
             // begin
@@ -96,6 +105,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             Description = 'Width / 36 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
@@ -103,7 +113,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             DecimalPlaces = 0 : 5;
             Description = 'ECMISC';
             DataClassification = CustomerContent;
-
+            Caption = 'Total Length meters';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -115,6 +125,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Pieces';
         }
         field(85062; "NV8 Remaining Length meters"; Decimal)
         {
@@ -122,6 +133,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             DecimalPlaces = 0 : 5;
             Description = 'Error on decimals';
             DataClassification = CustomerContent;
+            Caption = 'Remaining Length meters';
         }
         field(85064; "NV8 Total Area m2"; Decimal)
         {
@@ -129,6 +141,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85065; "NV8 Remaining Area m2"; Decimal)
         {
@@ -136,6 +149,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             Description = 'Error on decimals';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Area m2';
         }
         field(85070; "NV8 Put-Away Pieces"; Decimal)
         {
@@ -149,12 +163,14 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             DecimalPlaces = 0 : 5;
             Description = 'UE-365';
             FieldClass = FlowField;
+            Caption = 'Put-Away Pieces';
         }
         field(85071; "NV8 Pieces Put-Away"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Description = 'UE-365';
             DataClassification = CustomerContent;
+            Caption = 'Pieces Put-Away';
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
@@ -163,6 +179,7 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
 
             // trigger OnValidate()
             // begin
@@ -273,16 +290,19 @@ tableextension 50073 "NV8 Posted Whse. Receipt Line" extends "Posted Whse. Recei
         {
             TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
+            Caption = 'Shape';
         }
         field(85120; "NV8 Material"; Code[10])
         {
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Material';
         }
         field(85180; "NV8 Grit"; Code[10])
         {
             TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
+            Caption = 'Grit';
         }
     }
 }

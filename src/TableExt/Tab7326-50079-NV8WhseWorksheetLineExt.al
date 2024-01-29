@@ -10,6 +10,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'UE-464';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Customer Name';
         }
         field(50001; "NV8 Prod. Order No."; Code[20])
         {
@@ -20,6 +21,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'UE-464,EN-092822';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Prod. Order No.';
         }
         field(50002; "NV8 Prod. Order Quantity"; Decimal)
         {
@@ -31,6 +33,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'UE-464,EN-092822';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Prod. Order Quantity';
         }
         field(50003; "NV8 No Charge (Sample)"; Boolean)
         {
@@ -41,6 +44,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'UE-464';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'No Charge (Sample)';
         }
         field(50004; "NV8 SO Orig. Order Quantity"; Decimal)
         {
@@ -50,6 +54,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'UE-464';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'SO Orig. Order Quantity';
         }
         field(50005; "NV8 TO Orig. Order Quantity"; Decimal)
         {
@@ -58,6 +63,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'UE-464';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'TO Orig. Order Quantity';
         }
         field(50006; "NV8 External Document No."; Code[35])
         {
@@ -76,23 +82,28 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             FieldClass = FlowField;
             OptionCaption = 'Simulated,Planned,Firm Planned,Released,Finished';
             OptionMembers = Simulated,Planned,"Firm Planned",Released,Finished;
+            Caption = 'Prod. Order Status';
         }
         field(68110; "NV8 Roll ID"; Code[20])
         {
             Description = 'EC1.MFG04.01';
             DataClassification = CustomerContent;
+            Caption = 'Roll ID';
         }
         field(85019; "NV8 Jumbo Pull"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Jumbo Pull';
         }
         field(85026; "NV8 FIFO Code"; Code[7])
         {
             DataClassification = CustomerContent;
+            Caption = 'FIFO Code';
         }
         field(85027; "NV8 FIFO Date"; Date)
         {
             DataClassification = CustomerContent;
+            Caption = 'FIFO Date';
 
             // trigger OnValidate()
             // begin
@@ -104,12 +115,14 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             OptionCaption = ' ,Jumbo,Short Remnant,Narrow Remnant,Scrap';
             OptionMembers = " ",Jumbo,"Short Remnant","Narrow Remnant",Scrap;
             DataClassification = CustomerContent;
+            Caption = 'Material Type';
         }
         field(85050; "NV8 Pieces"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Description = 'ECMISC';
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
 
             // trigger OnValidate()
             // begin
@@ -130,6 +143,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Inches';
 
             // trigger OnValidate()
             // var
@@ -149,6 +163,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             DecimalPlaces = 2 : 5;
             Description = 'ECMISC';
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
 
             // trigger OnValidate()
             // begin
@@ -160,6 +175,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
         {
             BlankZero = true;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
 
             // trigger OnValidate()
             // begin
@@ -173,6 +189,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'Width / 36 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
@@ -180,7 +197,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             DecimalPlaces = 0 : 5;
             Description = 'ECMISC';
             DataClassification = CustomerContent;
-
+            Caption = 'Total Length meters';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -192,7 +209,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Remaining Pieces';
             trigger OnValidate()
             begin
                 Validate("NV8 Pieces to Handle", "NV8 Remaining Pieces");  // UE-365
@@ -203,6 +220,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             DecimalPlaces = 0 : 5;
             Description = 'UE-365';
             DataClassification = CustomerContent;
+            Caption = 'Pieces to Handle';
 
             // trigger OnValidate()
             // var
@@ -238,13 +256,14 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             DecimalPlaces = 0 : 5;
             Description = 'Error on decimals';
             DataClassification = CustomerContent;
+            Caption = 'Remaining Length meters';
         }
         field(85063; "NV8 Pieces Handled"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Description = 'UE-365';
             DataClassification = CustomerContent;
-
+            Caption = 'Pieces Handled';
             trigger OnValidate()
             begin
                 //UE-365
@@ -257,6 +276,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85065; "NV8 Remaining Area m2"; Decimal)
         {
@@ -264,6 +284,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             Description = 'Error on decimals';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Area m2';
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
@@ -272,6 +293,7 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
 
             // trigger OnValidate()
             // begin
@@ -382,16 +404,19 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
         {
             TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
+            Caption = 'Shape';
         }
         field(85120; "NV8 Material"; Code[10])
         {
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Material';
         }
         field(85180; "NV8 Grit"; Code[10])
         {
             TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
+            Caption = 'Grit';
         }
         field(85185; "NV8 No. of Lots"; Integer)
         {
@@ -399,11 +424,13 @@ tableextension 50079 "NV8 Whse. Worksheet Line" extends "Whse. Worksheet Line" /
                                                                   "Item No." = field("Item No.")));
             Description = 'UE-227';
             FieldClass = FlowField;
+            Caption = 'No. of Lots';
         }
         field(85186; "NV8 From Allocation"; Boolean)
         {
             DataClassification = CustomerContent;
             Description = 'UNE-35';
+            Caption = 'From Allocation';
         }
     }
 }

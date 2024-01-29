@@ -8,6 +8,7 @@ tableextension 50078 "NV8 Whse. Put-away Request" extends "Whse. Put-away Reques
             Description = 'Postind Date from the Whse Receipt UE-480';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Posting Date';
         }
         field(50001; "NV8 Vendor Shipment No."; Code[35])
         {
@@ -15,6 +16,7 @@ tableextension 50078 "NV8 Whse. Put-away Request" extends "Whse. Put-away Reques
             Description = 'UE-480';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Vendor Shipment No.';
         }
     }
 }

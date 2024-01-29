@@ -9,12 +9,14 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Allocated Raw Material Qty';
         }
         field(68091; "NV8 Allocation Status"; Option)
         {
             OptionCaption = 'Unknown,Closed,Transition,Open,Ready To Finish,Allocation Wrong,Partial Output,Slit Roll,New Method,Error,RoutingNeeded,PSA,Tape,RawMissing,PSAOK,TapeOK';
             OptionMembers = Unknown,Closed,Transition,Open,"Ready To Finish","Allocation Wrong","Partial Output","Slit Roll","New Method",Error,RoutingNeeded,PSA,Tape,RawMissing,PSAOK,TapeOK;
             DataClassification = CustomerContent;
+            Caption = 'Allocation Status';
         }
         field(68092; "NV8 Allocated Item"; Code[20])
         {
@@ -22,15 +24,18 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Item;
+            Caption = 'Allocated Item';
         }
         field(68093; "NV8 Original Quantity"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Original Quantity';
         }
         field(68094; "NV8 Allocated Line"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Allocated Line';
         }
         field(68095; "NV8 Allocated ILE"; Integer)
         {
@@ -39,6 +44,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "Item Ledger Entry";
+            Caption = 'Allocated ILE';
         }
         field(68096; "NV8 Quantity On Hand"; Decimal)
         {
@@ -47,6 +53,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Quantity On Hand';
         }
         field(68100; "NV8 MFG Quantity"; Decimal)
         {
@@ -56,6 +63,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'MFG Quantity';
         }
         field(68400; "NV8 Catalog No."; Code[20])
         {
@@ -73,16 +81,19 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Output Quantity';
         }
         field(85041; "NV8 Red Dot"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Red Dot';
         }
         field(85042; "NV8 Red Dot Level"; Option)
         {
             Description = 'Not used';
             OptionMembers = "1","2","3";
             DataClassification = CustomerContent;
+            Caption = 'Red Dot Level';
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
@@ -93,6 +104,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
         }
         field(85101; "NV8 Shape"; Code[10])
         {
@@ -100,6 +112,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             Editable = false;
             TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
+            Caption = 'Shape';
         }
         field(85102; "NV8 Material"; Code[10])
         {
@@ -107,6 +120,7 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             Editable = false;
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Material';
         }
         field(85108; "NV8 Grit"; Code[10])
         {
@@ -114,30 +128,36 @@ tableextension 50046 "NV8 Prod. Order Component" extends "Prod. Order Component"
             Editable = false;
             TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
+            Caption = 'Grit';
         }
         field(85120; "NV8 Substitute Material"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Substitute Material';
         }
         field(85121; "NV8 Ori. Shape"; Code[10])
         {
             TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
+            Caption = 'Ori. Shape';
         }
         field(85122; "NV8 Ori. Material"; Code[10])
         {
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Ori. Material';
         }
         field(85128; "NV8 Ori. Grit"; Code[10])
         {
             TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
+            Caption = 'Ori. Grit';
         }
         field(85130; "NV8 Ori. Item No."; Code[20])
         {
             TableRelation = Item;
             DataClassification = CustomerContent;
+            Caption = 'Ori. Item No.';
             // TODO PAP Uncomment
             // trigger OnValidate()
             // begin

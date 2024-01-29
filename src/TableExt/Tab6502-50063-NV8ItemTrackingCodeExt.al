@@ -6,6 +6,7 @@ tableextension 50063 "NV8 Item Tracking Code" extends "Item Tracking Code" //650
         {
             Description = 'EC1.LOT1.01';
             DataClassification = CustomerContent;
+            Caption = 'Auto Track';
         }
     }
 }

@@ -6,6 +6,7 @@ tableextension 50039 "NV8 Approval Entry" extends "Approval Entry" //454
         {
             Description = 'UE-666';
             DataClassification = CustomerContent;
+            Caption = 'Buy-From/Sell-To Name';
         }
     }
 }

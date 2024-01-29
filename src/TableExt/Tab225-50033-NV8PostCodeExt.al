@@ -6,6 +6,7 @@ tableextension 50033 "NV8 Post Code" extends "Post Code" //225
         {
             Description = 'VAR003';
             DataClassification = CustomerContent;
+            Caption = 'US County';
         }
     }
 }

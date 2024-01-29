@@ -12,6 +12,7 @@ tableextension 50060 "NV8 Registered WhseActivityHdr" extends "Registered Whse. 
         {
             Description = 'UE-657';
             DataClassification = CustomerContent;
+            Caption = 'Web';
         }
     }
 }

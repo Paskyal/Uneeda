@@ -6,18 +6,21 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
         field(50000; "NV8 Slitting Put/Pick"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Slitting Put/Pick';
         }
         field(85040; "NV8 Material Type"; Option)
         {
             OptionCaption = ' ,Jumbo,Short Remnant,Narrow Remnant,Scrap';
             OptionMembers = " ",Jumbo,"Short Remnant","Narrow Remnant",Scrap;
             DataClassification = CustomerContent;
+            Caption = 'Material Type';
         }
         field(85050; "NV8 Pieces"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
 
             // trigger OnValidate()
             // begin
@@ -31,6 +34,7 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Inches';
 
             // trigger OnValidate()
             // begin
@@ -45,6 +49,7 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
             BlankZero = true;
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
 
             // trigger OnValidate()
             // begin
@@ -57,6 +62,7 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
 
             // trigger OnValidate()
             // begin
@@ -71,13 +77,14 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
             Description = 'Width / 36 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Total Length meters';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -90,6 +97,7 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
@@ -98,7 +106,7 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
-
+            Caption = 'Configurator No.';
             trigger OnValidate()
             begin
                 /*//>>AG003 - Start
@@ -207,32 +215,38 @@ tableextension 50081 "NV8 Whse. Int. Put-away Line" extends "Whse. Internal Put-
         {
             TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
+            Caption = 'Shape';
         }
         field(85120; "NV8 Material"; Code[10])
         {
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Material';
         }
         field(85122; "NV8 Subst. Material"; Code[10])
         {
             Editable = false;
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Subst. Material';
         }
         field(85170; "NV8 Specification"; Code[10])
         {
             TableRelation = "NV8 Configurator Specification";
             DataClassification = CustomerContent;
+            Caption = 'Specification';
         }
         field(85180; "NV8 Grit"; Code[10])
         {
             TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
+            Caption = 'Grit';
         }
         field(85190; "NV8 Joint"; Code[10])
         {
             TableRelation = "NV8 Configurator Joint";
             DataClassification = CustomerContent;
+            Caption = 'Joint';
         }
     }
 }

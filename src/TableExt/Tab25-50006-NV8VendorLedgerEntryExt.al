@@ -6,11 +6,13 @@ tableextension 50006 "NV8 Vendor Ledger Entry" extends "Vendor Ledger Entry" //2
         {
             Description = 'UE-279';
             DataClassification = CustomerContent;
+            Caption = 'Commissionable Amount';
         }
         field(50001; "NV8 Commission Rate"; Decimal)
         {
             Description = 'UE-279';
             DataClassification = CustomerContent;
+            Caption = 'Commission Rate';
         }
     }
 }

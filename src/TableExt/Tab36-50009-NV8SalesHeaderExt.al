@@ -6,6 +6,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'No Charge (Sample)';
             // TODO PAP Addon field Free Freight
             // trigger OnValidate()
             // var
@@ -41,11 +42,13 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'No Freight Charge';
         }
         field(50002; "NV8 No Minimum Charge"; Boolean)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'No Minimum Charge';
         }
         field(50003; "NV8 RSQ"; Option)
         {
@@ -53,11 +56,13 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             OptionCaption = ' ,Variable,Exact';
             OptionMembers = " ",Variable,Exact;
             DataClassification = CustomerContent;
+            Caption = 'RSQ';
         }
         field(50004; "NV8 Over/Under %"; Decimal)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Over/Under %';
         }
         field(50005; "NV8 Packaging Requirement"; Option)
         {
@@ -65,6 +70,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             OptionCaption = ' ,Standard,Full Box,Private Label';
             OptionMembers = " ",Standard,"Full Box","Private Label";
             DataClassification = CustomerContent;
+            Caption = 'Packaging Requirement';
         }
         field(50006; "NV8 Customer Packaging Type"; Option)
         {
@@ -72,16 +78,19 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             OptionCaption = ' ,End User,Distributor';
             OptionMembers = " ","End User",Distributor;
             DataClassification = CustomerContent;
+            Caption = 'Customer Packaging Type';
         }
         field(50007; "NV8 Shipment Method Threshold"; Decimal)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Shipment Method Threshold';
         }
         field(50008; "NV8 Shipment Nos. (Text)"; Code[100])
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Shipment Nos. (Text)';
         }
         field(50009; "NV8 No. of Freight Charges"; Integer)
         {
@@ -89,6 +98,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'EC1SAL1..01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'No. of Freight Charges';
         }
         field(50010; "NV8 Total Freight"; Decimal)
         {
@@ -96,30 +106,35 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'EC1SAL1..01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Total Freight';
         }
         field(50012; "NV8 Created On"; Date)
         {
             Description = 'EC1SAL1..01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Created On';
         }
         field(50013; "NV8 Edited By"; Code[50])
         {
             Description = 'EC1SAL1..01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Edited By';
         }
         field(50014; "NV8 Edited On"; Date)
         {
             Description = 'EC1SAL1..01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Edited On';
         }
         field(50015; "NV8 Duplicate PO Allowed by"; Code[50])
         {
             Description = 'EC1SAL1..01';
             TableRelation = User."User Name";
             DataClassification = CustomerContent;
+            Caption = 'Duplicate PO Allowed by';
             //This property is currently not supported
             //TestTableRelation = false;
         }
@@ -127,16 +142,19 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Consignment Order Incomplete';
         }
         field(50017; "NV8 Order On Hold"; Boolean)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Order On Hold';
         }
         field(50018; "NV8 Credit Hold"; Boolean)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Credit Hold';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -158,6 +176,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Price Hold';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -179,6 +198,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Manual Hold';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -205,6 +225,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'EC1SAL1..01';
             TableRelation = "Reason Code";
             DataClassification = CustomerContent;
+            Caption = 'Hold Reason Code';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -220,6 +241,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'EC1SAL1..01';
             TableRelation = User."User Name";
             DataClassification = CustomerContent;
+            Caption = 'Credit Hold Released By';
             //This property is currently not supported
             //TestTableRelation = false;
         }
@@ -228,37 +250,44 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'EC1SAL1..01';
             TableRelation = User."User Name";
             DataClassification = CustomerContent;
+            Caption = 'Price Hold Released By';
         }
         field(50024; "NV8 Manual Hold Released By"; Code[50])
         {
             Description = 'EC1SAL1..01';
             TableRelation = User."User Name";
             DataClassification = CustomerContent;
+            Caption = 'Manual Hold Released By';
         }
         field(50025; "NV8 Credit Hold Released On"; Date)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Credit Hold Released On';
         }
         field(50026; "NV8 Price Hold Released On"; Date)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Price Hold Released On';
         }
         field(50027; "NV8 Manual Hold Released On"; Date)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Manual Hold Released On';
         }
         field(50028; "NV8 Order Released"; Boolean)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Order Released';
         }
         field(50029; "NV8 Item Hold"; Boolean)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Item Hold';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -286,11 +315,13 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'EC1SAL1..01';
             TableRelation = User."User Name";
             DataClassification = CustomerContent;
+            Caption = 'Item Hold Released By';
         }
         field(50031; "NV8 Item Hold Released On"; Date)
         {
             Description = 'EC1SAL1..01';
             DataClassification = CustomerContent;
+            Caption = 'Item Hold Released On';
         }
         field(50035; "NV8 Created By"; Code[50])
         {
@@ -300,6 +331,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Created By';
         }
         field(50040; "NV8 Original Ordered Amount"; Decimal)
         {
@@ -309,6 +341,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             DecimalPlaces = 2 : 2;
             Description = 'UE-105';
             FieldClass = FlowField;
+            Caption = 'Original Ordered Amount';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -340,6 +373,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Freight Chg. Never';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -357,6 +391,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Freight Chg.  Always';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -373,6 +408,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Freight Chg. Threshhold';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -390,11 +426,13 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             Description = 'UE-635';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Freight Check Run';
         }
         field(50064; "NV8 No Free Freight"; Boolean)
         {
             Description = 'UE-635';
             DataClassification = CustomerContent;
+            Caption = 'No Free Freight';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -412,7 +450,7 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             DataClassification = CustomerContent;
             Description = 'BF11-18-22';
-
+            Caption = 'Blanket';
             trigger OnValidate()
             begin
                 UpdateSalesLines(FieldCaption("NV8 Blanket"), true);  //CAS-37795-W2P2K8
@@ -422,16 +460,19 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
         {
             Description = 'UE-657';
             DataClassification = CustomerContent;
+            Caption = 'Web';
         }
         field(51003; "NV8 Comments Displayed"; Boolean)
         {
             Description = 'UE-657';
             DataClassification = CustomerContent;
+            Caption = 'Comments Displayed';
         }
         field(51004; "NV8 Credit Hold Grace Due Date"; Date)
         {
             DataClassification = CustomerContent;
             Description = 'UNE-148';
+            Caption = 'Credit Hold Grace Due Date';
         }
         field(51051; "NV8 Additional Shipping Advice"; Option)
         {
@@ -439,16 +480,19 @@ tableextension 50009 "NV8 Sales Header" extends "Sales Header" //36
             OptionCaption = 'Partial,Complete';
             OptionMembers = Partial,Complete;
             DataClassification = CustomerContent;
+            Caption = 'Additional Shipping Advice';
         }
         field(51052; "NV8 Ignore Initial Shipping Advice"; Boolean)
         {
             Description = 'EC1.WMS11.01';
             DataClassification = CustomerContent;
+            Caption = 'Ignore Initial Shipping Advice';
         }
         field(52000; "NV8 Original Shipment Date"; Date)
         {
             DataClassification = CustomerContent;
             Description = 'UNE-175';
+            Caption = 'Original Shipment Date';
         }
     }
 }

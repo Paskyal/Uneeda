@@ -8,6 +8,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Special Price Code';
         }
         field(50001; "NV8 Item Blocked"; Boolean)
         {
@@ -15,6 +16,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Item Blocked';
         }
         field(50002; "NV8 Customer Name"; Text[50])
         {
@@ -22,12 +24,14 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Customer Name';
         }
         field(50003; "NV8 Item Description"; Text[100])
         {
             Description = 'EC1.SAL1.01,CAS-40665-Y3X3S1';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Item Description';
         }
         field(50004; "NV8 Item Description 2"; Text[50])
         {
@@ -35,6 +39,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             Editable = false;
             FieldClass = Normal;
             DataClassification = CustomerContent;
+            Caption = 'Item Description 2';
         }
         field(50005; "NV8 Customer Blocked"; Option)
         {
@@ -44,12 +49,14 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             FieldClass = FlowField;
             OptionCaption = ' ,Ship,Invoice,All';
             OptionMembers = " ",Ship,Invoice,All;
+            Caption = 'Customer Blocked';
         }
         field(50006; "NV8 Configurator No."; Code[100])
         {
             Description = 'EC1.SAL1.01';
             TableRelation = "NV8 Configurator Item"."Configurator No.";
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
             // TODO PAP uncomment
             // trigger OnValidate()
             // var
@@ -68,12 +75,14 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             Description = 'EC1.SAL1.01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Shape';
         }
         field(50008; "NV8 Created Date"; Date)
         {
             Description = 'EC1.SAL1.01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Created Date';
         }
         field(50009; "NV8 Status"; Option)
         {
@@ -81,6 +90,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             OptionCaption = 'Quote,Active,On Hold,Closed,Inactive,New Quote,Expired Quote';
             OptionMembers = "New Quote",Active,"On Hold",Closed,Inactive,Quote,"Expired Quote";
             DataClassification = CustomerContent;
+            Caption = 'Status';
         }
         field(50010; "NV8 Item Search Description"; Code[200])
         {
@@ -88,6 +98,7 @@ tableextension 50068 "NV8 Price List Line" extends "Price List Line" //7001
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Item Search Description';
         }
     }
 }

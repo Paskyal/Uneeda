@@ -7,15 +7,18 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Original Unit Length (Meters)';
         }
         field(50006; "NV8 Original Ordered Pieces"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Original Ordered Pieces';
         }
         field(50120; "NV8 Prod. Order Created"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Prod. Order Created';
         }
         field(50125; "NV8 Prod. Order Status"; Option)
         {
@@ -31,24 +34,28 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             TableRelation = "Production Order"."No." where("No." = field("NV8 Prod. Order No."),
                                                             Status = filter("Firm Planned" | Released));
             DataClassification = CustomerContent;
+            Caption = 'Prod. Order No.';
         }
         field(50200; "NV8 External Document No."; Code[35])
         {
             CalcFormula = lookup("Transfer Header"."External Document No." where("No." = field("Document No.")));
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'External Document No.';
         }
         field(50202; "NV8 Prod Order Scheduled Date"; Date)
         {
             CalcFormula = lookup("Production Order"."NV8 Scheduled Date" where("No." = field("NV8 Prod. Order No.")));
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'Prod Order Scheduled Date';
         }
         field(50203; "NV8 Created By"; Code[50])
         {
             // CalcFormula = lookup("Transfer Header"."Created By User ID" where("No." = field("Document No.")));// TODO PAP Addon field
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'Created By';
         }
         field(68025; "NV8 Reserved Inventory"; Decimal)
         {
@@ -57,6 +64,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'Disabled';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Reserved Inventory';
         }
         field(68056; "NV8 Material Reviewed"; Boolean)
         {
@@ -65,6 +73,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "Production Order"."NV8 Material Reviewed" where("No." = field("NV8 Prod. Order No."));
+            Caption = 'Material Reviewed';
         }
         field(68070; "NV8 Process Location"; Option)
         {
@@ -74,24 +83,29 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             FieldClass = FlowField;
             OptionCaption = ' ,Waiting For Material,Ready To Allocate,Allocation,Slitting,External Contractor,,,,,,,,,,,,Partial,Green,Finished,Closed';
             OptionMembers = " ","Waiting For Material","Ready To Allocate",Allocation,Slitting,"External Contractor",,,,,,,,,,,,Partial,Green,Finished,Closed;
+            Caption = 'Process Location';
         }
         field(68081; "NV8 CNL"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'CNL';
         }
         field(68082; "NV8 PSL Locked"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'PSL Locked';
         }
         field(68083; "NV8 Stagging"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Stagging';
         }
         field(68100; "NV8 Order Queue Status"; Option)
         {
             Description = ',Entering,,,,Ready To Plan,Planning,Planned,,,,Ready To Pick,Picking,Picked,,,,Ready To Ship,Shipping,Shipped,,,,Billing,,,Complete';
             OptionMembers = ,Entering,,,,"Ready To Plan",,Planned,,,,,Picking,Picked,CNL,,PSL,"Ready To Ship",Shipping,Shipped,"Back Ordered",,,Billing,,,Complete;
             DataClassification = CustomerContent;
+            Caption = 'Order Queue Status';
         }
         field(68101; "NV8 Qty. on Prod. Order"; Decimal)
         {
@@ -102,6 +116,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Qty. on Prod. Order';
         }
         field(68110; "NV8 Sec. Territory Code"; Code[10])
         {
@@ -109,11 +124,13 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Editable = false;
             FieldClass = FlowField;
             TableRelation = Territory;
+            Caption = 'Sec. Territory Code';
         }
         field(68120; "NV8 Pack Size"; Option)
         {
             OptionMembers = " ",,,"3",,"5",,,,,"10";
             DataClassification = CustomerContent;
+            Caption = 'Pack Size';
         }
         field(68400; "NV8 Catalog No."; Code[20])
         {
@@ -150,23 +167,28 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         {
             OptionMembers = Each,Rolls,"Split Rolls";
             DataClassification = CustomerContent;
+            Caption = 'Unit Type';
         }
         field(84001; "NV8 Unit Qty."; Decimal)
         {
             DataClassification = CustomerContent;
+            Caption = 'Unit Qty.';
         }
         field(84003; "NV8 Unit Qty. Allocated"; Decimal)
         {
             DataClassification = CustomerContent;
+            Caption = 'Unit Qty. Allocated';
         }
         field(85003; "NV8 Skid No."; Text[30])
         {
             DataClassification = CustomerContent;
+            Caption = 'Skid No.';
         }
         field(85011; "NV8 Fully Shipped"; Boolean)
         {
             Description = 'RSQ';
             DataClassification = CustomerContent;
+            Caption = 'Fully Shipped';
 
             // trigger OnValidate()
             // begin
@@ -210,18 +232,21 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Original Ordered Quantity';
         }
         field(85013; "NV8 Qty. To Pick"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Qty. To Pick';
         }
         field(85014; "NV8 Pieces To Ship"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Pieces To Ship';
 
             // trigger OnValidate()
             // begin
@@ -233,17 +258,20 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         {
             TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Transfer-from Code"));
             DataClassification = CustomerContent;
+            Caption = 'From Bin Location';
         }
         field(85021; "NV8 To Bin Location"; Code[20])
         {
             TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Transfer-to Code"));
             DataClassification = CustomerContent;
+            Caption = 'To Bin Location';
         }
         field(85025; "NV8 Reserve"; Option)
         {
             OptionCaption = 'Never,Optional,Always';
             OptionMembers = Never,Optional,Always;
             DataClassification = CustomerContent;
+            Caption = 'Reserve';
 
             // trigger OnValidate()
             // begin
@@ -266,16 +294,19 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             OptionCaption = ' ,Jumbo,Short Remnant,Narrow Remnant,Scrap';
             OptionMembers = " ",Jumbo,"Short Remnant","Narrow Remnant",Scrap;
             DataClassification = CustomerContent;
+            Caption = 'Material Type';
         }
         field(85041; "NV8 Red Dot"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Red Dot';
         }
         field(85042; "NV8 Red Dot Level"; Option)
         {
             Description = 'Not used';
             OptionMembers = "1","2","3";
             DataClassification = CustomerContent;
+            Caption = 'Red Dot Level';
         }
         field(85044; "NV8 Original Ship Date"; Date)
         {
@@ -293,17 +324,20 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             CalcFormula = lookup("Transfer Header"."NV8 Created On" where("No." = field("Document No.")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Created On';
         }
         field(85049; "NV8 Exported On"; Date)
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Exported On';
         }
         field(85050; "NV8 Pieces"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
 
             // trigger OnValidate()
             // begin
@@ -322,6 +356,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Inches';
 
             // trigger OnValidate()
             // begin
@@ -336,6 +371,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         {
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
 
             // trigger OnValidate()
             // begin
@@ -346,6 +382,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         field(85053; "NV8 Unit Length Inches"; Decimal)
         {
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
 
             // trigger OnValidate()
             // begin
@@ -358,11 +395,13 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'Width / 36 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85055; "NV8 Unit Width Code"; Code[10])
         {
             CharAllowed = '09';
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Code';
 
             // trigger OnValidate()
             // begin
@@ -377,12 +416,14 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Text';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Total Length meters';
 
             // trigger OnValidate()
             // begin
@@ -398,6 +439,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85080; "NV8 Qty. On Hand"; Decimal)
         {
@@ -409,22 +451,25 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Qty. On Hand';
         }
         field(85090; "NV8 Consignment Location"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Consignment Location';
         }
         field(85091; "NV8 Consignment Customer"; Code[20])
         {
             TableRelation = Customer;
             DataClassification = CustomerContent;
+            Caption = 'Consignment Customer';
         }
         field(85092; "NV8 Cross-Reference No."; Code[20])
         {
             TableRelation = "Item Reference"."Reference No." where("Reference Type" = const(Customer),
                                                                                 "Reference Type No." = field("NV8 Consignment Customer"));
             DataClassification = CustomerContent;
-
+            Caption = 'Cross-Reference No.';
             trigger OnValidate()
             var
                 ReturnedCrossRef: Record "Item Reference";
@@ -451,6 +496,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'UE-631';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Customer Name';
         }
         field(85094; "NV8 Sales Price UEI"; Decimal)
         {
@@ -459,6 +505,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Editable = false;
             FieldClass = Normal;
             DataClassification = CustomerContent;
+            Caption = 'Sales Price UEI';
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
@@ -467,6 +514,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
 
             // trigger OnValidate()
             // begin
@@ -578,6 +626,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Split Pieces';
         }
         field(85312; "NV8 Split Total Length meters"; Decimal)
         {
@@ -586,6 +635,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Split Total Length meters';
         }
         field(85313; "NV8 Split Total Area m2"; Decimal)
         {
@@ -594,6 +644,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Split Total Area m2';
         }
         field(85511; "NV8 Rem. Split Pieces"; Decimal)
         {
@@ -601,11 +652,12 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             DecimalPlaces = 0 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Rem. Split Pieces';
         }
         field(89100; "NV8 Pick List"; Code[10])
         {
             DataClassification = CustomerContent;
-
+            Caption = 'Pick List';
             trigger OnValidate()
             begin
                 /*IF "Pick List" = '' THEN
@@ -624,26 +676,31 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             OptionCaption = 'Simulated,Planned,Firm Planned,Released,Finished';
             OptionMembers = Simulated,Planned,"Firm Planned",Released,Finished;
             DataClassification = CustomerContent;
+            Caption = 'Production Order Status';
         }
         field(89102; "NV8 Production Order No."; Code[20])
         {
             TableRelation = "Production Order"."No." where(Status = field("NV8 Production Order Status"));
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Production Order No.';
         }
         field(89103; "NV8 Problem NOT resolved"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Problem NOT resolved';
         }
         field(89108; "NV8 Production Due Date"; Date)
         {
             DataClassification = CustomerContent;
+            Caption = 'Production Due Date';
         }
         field(89113; "NV8 Original Total Length Meters"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Description = 'RSQ';
             DataClassification = CustomerContent;
+            Caption = 'Original Total Length Meters';
         }
         field(90041; "NV8 Scannded Work Center Desc"; Text[100])
         {
@@ -651,12 +708,14 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'UNE-152';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Scannded Work Center Desc';
         }
         field(90042; "NV8 Scanned Work Center"; Code[20])
         {
             DataClassification = CustomerContent;
             Description = 'UNE-152';
             Editable = false;
+            Caption = 'Scanned Work Center';
         }
         field(90043; "NV8 Material"; Code[10])
         {
@@ -665,6 +724,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Material";
+            Caption = 'Material';
         }
         field(90044; "NV8 Grit"; Code[10])
         {
@@ -673,6 +733,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Grit";
+            Caption = 'Grit';
         }
         field(90045; "NV8 Jumbo Raw Material Status"; Option)
         {
@@ -682,6 +743,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Editable = false;
             FieldClass = FlowField;
             OptionMembers = ,Normal,Low,"Jumbo Out",Out,Discontinued;
+            Caption = 'Jumbo Raw Material Status';
         }
         field(99000; "NV8 No. Of Ships"; Integer)
         {
@@ -691,6 +753,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'No. Of Ships';
         }
         field(99001; "NV8 No. Of Recs"; Integer)
         {
@@ -700,6 +763,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'No. Of Recs';
         }
         field(99002; "NV8 Qty. on Ships"; Decimal)
         {
@@ -709,6 +773,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Qty. on Ships';
         }
         field(99003; "NV8 Qty. on Rec"; Decimal)
         {
@@ -718,6 +783,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Qty. on Rec';
         }
         field(99004; "NV8 Original Ship Qty"; Decimal)
         {
@@ -727,6 +793,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Original Ship Qty';
         }
         field(99005; "NV8 Original Rec Qty"; Decimal)
         {
@@ -736,6 +803,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Original Rec Qty';
         }
         field(99006; "NV8 Header Exists"; Boolean)
         {
@@ -743,6 +811,7 @@ tableextension 50051 "NV8 Transfer Line" extends "Transfer Line" //5741
             Description = 'VJ';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Header Exists';
         }
     }
 }

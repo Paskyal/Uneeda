@@ -5,7 +5,7 @@ tableextension 50085 "NV8 Sales Planning Line" extends "Sales Planning Line"// 9
         field(50100; "NV8 Qty. to Make (Base)"; Decimal)
         {
             DataClassification = CustomerContent;
-
+            Caption = 'Qty. to Make (Base)';
             trigger OnValidate()
             var
                 SalesLine: Record "Sales Line";
@@ -22,18 +22,22 @@ tableextension 50085 "NV8 Sales Planning Line" extends "Sales Planning Line"// 9
         field(50110; "NV8 Description 2"; Text[50])
         {
             DataClassification = CustomerContent;
+            Caption = 'Description 2';
         }
         field(50120; "NV8 Prod. Order Created"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Prod. Order Created';
         }
         field(50130; "NV8 Order Qty."; Decimal)
         {
             DataClassification = CustomerContent;
+            Caption = 'Order Qty.';
         }
         field(50140; "NV8 Outstanding Order Qty."; Decimal)
         {
             DataClassification = CustomerContent;
+            Caption = 'Outstanding Order Qty.';
         }
     }
 }

@@ -6,6 +6,7 @@ tableextension 50086 "NV8 Production Forecast Entry" extends "Production Forecas
         {
             Description = 'UE-406';
             DataClassification = CustomerContent;
+            Caption = 'Description 2';
         }
     }
 }

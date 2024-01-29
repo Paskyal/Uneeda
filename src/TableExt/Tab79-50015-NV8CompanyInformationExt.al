@@ -6,6 +6,7 @@ tableextension 50015 "NV8 Company Information" extends "Company Information"  //
         {
             SubType = Bitmap;
             DataClassification = CustomerContent;
+            Caption = 'Color Logo';
         }
     }
 }

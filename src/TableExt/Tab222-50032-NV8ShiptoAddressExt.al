@@ -7,11 +7,13 @@ tableextension 50032 "NV8 Ship-to Address" extends "Ship-to Address" //222
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Shipment Method Threshold';
         }
         field(50001; "NV8 Headquarters"; Boolean)
         {
             Description = 'EC VAR003';
             DataClassification = CustomerContent;
+            Caption = 'Headquarters';
 
             // trigger OnValidate()
             // begin
@@ -26,6 +28,7 @@ tableextension 50032 "NV8 Ship-to Address" extends "Ship-to Address" //222
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Freight Chg. Never';
 
             // trigger OnValidate()
             // begin
@@ -43,6 +46,7 @@ tableextension 50032 "NV8 Ship-to Address" extends "Ship-to Address" //222
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Freight Chg.  Always';
 
             // trigger OnValidate()
             // begin
@@ -62,6 +66,7 @@ tableextension 50032 "NV8 Ship-to Address" extends "Ship-to Address" //222
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Freight Chg. Threshhold';
 
             // trigger OnValidate()
             // begin
@@ -81,6 +86,7 @@ tableextension 50032 "NV8 Ship-to Address" extends "Ship-to Address" //222
         {
             Description = 'UE-635';
             DataClassification = CustomerContent;
+            Caption = 'No Free Freight';
 
             // trigger OnValidate()
             // begin
@@ -99,6 +105,7 @@ tableextension 50032 "NV8 Ship-to Address" extends "Ship-to Address" //222
             Editable = false;
             TableRelation = "No. Series";
             DataClassification = CustomerContent;
+            Caption = 'No. Series';
         }
     }
 }

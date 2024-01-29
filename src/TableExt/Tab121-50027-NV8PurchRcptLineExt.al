@@ -7,6 +7,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
 
             // trigger OnValidate()
             // begin
@@ -100,6 +101,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Original Ordered Quantity';
 
             // trigger OnValidate()
             // begin
@@ -113,6 +115,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Original Ordered Pieces';
 
             // trigger OnValidate()
             // begin
@@ -127,6 +130,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'OriginalUnitLength(Meters)';
 
             // trigger OnValidate()
             // begin
@@ -142,6 +146,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
 
             // trigger OnValidate()
             // begin
@@ -171,6 +176,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Unit Length (Meters)';
 
             // trigger OnValidate()
             // begin
@@ -184,7 +190,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Pieces to Receive';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -195,32 +201,37 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces to Invoice';
         }
         field(50008; "NV8 Pieces Received"; Decimal)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces Received';
         }
         field(50009; "NV8 Pieces Invoiced"; Decimal)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces Invoiced';
         }
         field(50010; "NV8 Meters Received"; Decimal)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Meters Received';
         }
         field(50011; "NV8 Meters Invoiced"; Decimal)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
+            Caption = 'Meters Invoiced';
         }
         field(50012; "NV8 Fully Received"; Boolean)
         {
             Description = 'EC1.PO4.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Fully Received';
             trigger OnValidate()
             begin
                 /*//>>EC1.PO4.01
@@ -259,13 +270,14 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Description = 'UE-686';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Buy-From Vendor Name';
         }
         field(85010; "NV8 Overage Quantity"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 2 : 2;
             DataClassification = CustomerContent;
-
+            Caption = 'Overage Quantity';
             trigger OnValidate()
             begin
                 /*
@@ -316,7 +328,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
-
+            Caption = 'Unit Width Inches';
             trigger OnValidate()
             begin
                 /*TEMP := ROUND("Unit Width Inches",1,'<') * 100;
@@ -332,6 +344,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             BlankZero = true;
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
 
             //     trigger OnValidate()
             //     begin
@@ -343,6 +356,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             BlankZero = true;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
 
             // trigger OnValidate()
             // begin
@@ -356,11 +370,13 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Description = 'Width / 36 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85055; "NV8 Unit Width Code"; Code[10])
         {
             CharAllowed = '09';
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Code';
 
             // trigger OnValidate()
             // begin
@@ -377,13 +393,14 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Text';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Total Length meters';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -400,7 +417,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             AutoFormatType = 2;
             BlankZero = true;
             DataClassification = CustomerContent;
-
+            Caption = 'Cost Per meter';
             trigger OnValidate()
             begin
                 if "NV8 Unit Width Inches" <> 0 then
@@ -413,12 +430,14 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Pieces';
         }
         field(85062; "NV8 Remaining Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 4;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Length meters';
         }
         field(85064; "NV8 Total Area m2"; Decimal)
         {
@@ -426,6 +445,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85101; "NV8 Shape"; Code[10])
         {
@@ -433,6 +453,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Shape";
+            Caption = 'Shape';
         }
         field(85102; "NV8 Material"; Code[10])
         {
@@ -440,6 +461,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Material";
+            Caption = 'Material';
         }
         field(85107; "NV8 Specification"; Code[10])
         {
@@ -447,6 +469,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Specification";
+            Caption = 'Specification';
         }
         field(85108; "NV8 Grit"; Code[10])
         {
@@ -454,6 +477,7 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Grit";
+            Caption = 'Grit';
         }
         field(85109; "NV8 Joint"; Code[10])
         {
@@ -461,41 +485,49 @@ tableextension 50027 "NV8 Purch. Rcpt. Line" extends "Purch. Rcpt. Line" //121
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Joint";
+            Caption = 'Joint';
         }
         field(85130; "NV8 Dimension 1"; Code[10])
         {
             Description = 'UE-420';
             DataClassification = CustomerContent;
+            Caption = 'Dimension 1';
         }
         field(85140; "NV8 Dimension 2"; Code[10])
         {
             Description = 'UE-420';
             DataClassification = CustomerContent;
+            Caption = 'Dimension 2';
         }
         field(85150; "NV8 Dimension 3"; Code[10])
         {
             Description = 'UE-420';
             DataClassification = CustomerContent;
+            Caption = 'Dimension 3';
         }
         field(85160; "NV8 Dimension 4"; Code[10])
         {
             Description = 'UE-420';
             DataClassification = CustomerContent;
+            Caption = 'Dimension 4';
         }
         field(85204; "NV8 OriginalTotalLengthMeters"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'OriginalTotalLengthMeters';
         }
         field(86000; "NV8 User Defined Direct Unit Cost"; Decimal)
         {
             AutoFormatExpression = "Currency Code";
             AutoFormatType = 2;
             DataClassification = CustomerContent;
+            Caption = 'User Defined Direct Unit Cost';
         }
         field(86001; "NV8 Sample Order"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Sample Order';
         }
     }
 }

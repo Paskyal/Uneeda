@@ -9,6 +9,7 @@ tableextension 50047 "NV8 Prod. Order Routing Line" extends "Prod. Order Routing
             Description = 'UE-376';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Subcontractor PO';
         }
     }
 }

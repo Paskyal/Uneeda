@@ -6,7 +6,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Consignment Customer';
             trigger OnValidate()
             begin
                 //>>EC1.SAL1.01
@@ -20,7 +20,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             Description = 'EC1.SAL1.01';
             TableRelation = Location;
             DataClassification = CustomerContent;
-
+            Caption = 'Consignment Location Code';
             trigger OnValidate()
             var
                 Location: Record Location;
@@ -41,11 +41,13 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionCaption = ' ,A,B,C,D';
             OptionMembers = " ",A,B,C,D;
             DataClassification = CustomerContent;
+            Caption = 'Customer Class';
         }
         field(50003; "NV8 Hide Blank Lines"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Hide Blank Lines';
         }
         field(50004; "NV8 Last Invoice Date"; Date)
         {
@@ -54,13 +56,14 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Last Invoice Date';
         }
         field(50005; "NV8 AP Contact No."; Code[20])
         {
             Description = 'EC1.SAL1.01';
             TableRelation = Contact;
             DataClassification = CustomerContent;
-
+            Caption = 'AP Contact No.';
             trigger OnLookup()
             var
                 Cont: Record Contact;
@@ -109,7 +112,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'AP Contact Name';
             trigger OnValidate()
             var
                 RMSetup: Record "Marketing Setup";
@@ -128,11 +131,13 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'AP Contact E-Mail';
         }
         field(50008; "NV8 A/R Insurance Coverage ()"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'A/R Insurance Coverage ()';
         }
         field(50009; "NV8 RSQ"; Option)
         {
@@ -140,12 +145,14 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionCaption = ' ,Variable,Exact';
             OptionMembers = " ",Variable,Exact;
             DataClassification = CustomerContent;
+            Caption = 'RSQ';
         }
         field(50010; "NV8 Over/Under %"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             InitValue = 10;
             DataClassification = CustomerContent;
+            Caption = 'Over/Under %';
         }
         field(50011; "NV8 Packaging Requirement"; Option)
         {
@@ -153,6 +160,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionCaption = ' ,Standard,Full Box,Private Label';
             OptionMembers = " ",Standard,"Full Box","Private Label";
             DataClassification = CustomerContent;
+            Caption = 'Packaging Requirement';
         }
         field(50012; "NV8 Customer Packaging Type"; Option)
         {
@@ -160,12 +168,13 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionCaption = ' ,End User,Distributor';
             OptionMembers = " ","End User",Distributor;
             DataClassification = CustomerContent;
+            Caption = 'Customer Packaging Type';
         }
         field(50013; "NV8 Shipment Method Threshold"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Shipment Method Threshold';
             trigger OnValidate()
             var
                 ShipTo: Record "Ship-to Address";
@@ -189,35 +198,41 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionCaption = ' ,1-Day,2-Day,3-Day,4-Day,5-Day,6-Day,7-Day';
             OptionMembers = " ","1-Day","2-Day","3-Day","4-Day","5-Day","6-Day","7-Day";
             DataClassification = CustomerContent;
+            Caption = 'Req. Shipping Time';
         }
         field(50016; "NV8 Created By"; Code[50])
         {
             Description = 'EC1.SAL1.01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Created By';
         }
         field(50017; "NV8 Created On"; Date)
         {
             Description = 'EC1.SAL1.01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Created On';
         }
         field(50018; "NV8 Edited By"; Code[50])
         {
             Description = 'EC1.SAL1.01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Edited By';
         }
         field(50019; "NV8 Edited On"; Date)
         {
             Description = 'EC1.SAL1.01';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Edited On';
         }
         field(50020; "NV8 Auto. Price End Date Override"; Date)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Auto. Price End Date Override';
         }
         field(50021; "NV8 Longest Days to Pay"; Decimal)
         {
@@ -229,6 +244,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Longest Days to Pay';
         }
         field(50022; "NV8 Average Days to Pay"; Decimal)
         {
@@ -240,11 +256,13 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             Description = 'EC1.SAL1.01';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Average Days to Pay';
         }
         field(50023; "NV8 Credit Hold Grace Period"; DateFormula)
         {
             DataClassification = CustomerContent;
             Description = 'UNE-148';
+            Caption = 'Credit Hold Grace Period';
         }
         field(50024; "NV8 CH Grace Balance Due (LCY)"; Decimal)
         {
@@ -264,6 +282,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             Description = 'Customer Source, DC082718';
             TableRelation = "NV8 Customer Source Code"."Source Code";
             DataClassification = CustomerContent;
+            Caption = 'Customer Source';
         }
         field(50040; "NV8 Bill-To No.Pstd.Samp.Ord"; Integer)
         {
@@ -271,6 +290,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                                                                "Sell-to Customer No." = filter('206162')));
             Description = 'UE-667';
             FieldClass = FlowField;
+            Caption = 'Bill-To No.Pstd.Samp.Ord';
         }
         field(50041; "NV8 Bill-To No. Sample Orders"; Integer)
         {
@@ -278,12 +298,13 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                                                       "Sell-to Customer No." = filter('206162')));
             Description = 'UE-667';
             FieldClass = FlowField;
+            Caption = 'Bill-To No. Sample Orders';
         }
         field(50060; "NV8 Freight Chg. Never"; Boolean)
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
-
+            Caption = 'Freight Chg. Never';
             trigger OnValidate()
             var
                 ShipTo: Record "Ship-to Address";
@@ -313,7 +334,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
-
+            Caption = 'Freight Chg.  Always';
             trigger OnValidate()
             var
                 ShipTo: Record "Ship-to Address";
@@ -344,7 +365,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             Description = 'UE-105';
             DataClassification = CustomerContent;
-
+            Caption = 'Freight Chg. Threshhold';
             trigger OnValidate()
             var
                 ShipTo: Record "Ship-to Address";
@@ -375,7 +396,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             Description = 'UE-635';
             DataClassification = CustomerContent;
-
+            Caption = 'No Free Freight';
             trigger OnValidate()
             var
                 ShipTo: Record "Ship-to Address";
@@ -405,16 +426,19 @@ tableextension 50003 "NV8 Customer" extends Customer //18
         {
             DataClassification = CustomerContent;
             Description = 'BF032023';
+            Caption = 'ECOMM Setup';
         }
         field(50065; "NV8 Top 8"; Boolean)
         {
             DataClassification = CustomerContent;
             Description = 'BF082823';
+            Caption = 'Top 8';
         }
         field(51002; "NV8 Web"; Boolean)
         {
             Description = 'UE-657';
             DataClassification = CustomerContent;
+            Caption = 'Web';
         }
         field(51051; "NV8 Additional Shipping Advice"; Option)
         {
@@ -422,6 +446,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
             OptionCaption = 'Partial,Complete';
             OptionMembers = Partial,Complete;
             DataClassification = CustomerContent;
+            Caption = 'Additional Shipping Advice';
         }
         field(52000; "NV8 Sales Item ($)"; Decimal)
         {
@@ -431,6 +456,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                                                                         "Posting Date" = field("Date Filter")));
             Description = 'UNE-129';
             FieldClass = FlowField;
+            Caption = 'Sales Item ($)';
         }
         field(52001; "NV8 Credits Item ($)"; Decimal)
         {
@@ -440,6 +466,7 @@ tableextension 50003 "NV8 Customer" extends Customer //18
                                                                         "Posting Date" = field("Date Filter")));
             Description = 'UNE-185';
             FieldClass = FlowField;
+            Caption = 'Credits Item ($)';
         }
     }
     var

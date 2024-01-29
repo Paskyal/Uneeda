@@ -6,6 +6,7 @@ tableextension 50013 "NV8 Purch. Comment Line" extends "Purch. Comment Line" //4
         {
             DataClassification = CustomerContent;
             Description = 'UNE-107';
+            Caption = 'Created By';
         }
     }
 }

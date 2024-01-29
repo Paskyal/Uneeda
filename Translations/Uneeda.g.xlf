@@ -6578,6 +6578,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension NV8 Customer - Field NV8 Shipment Method Threshold - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2808392560 - Field 780398829 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1994964448">
+          <source>NV8 Top 8</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension NV8 Customer - Field NV8 Top 8 - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2808392560 - Field 1986044660 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1994964448">
           <source>NV8 Web</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -11062,6 +11067,21 @@
           <source>NV8 User DefinedDirectUnitCost</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension NV8 Requisition Line - Field NV8 User DefinedDirectUnitCost - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4028643398 - Field 3246974379 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 348912950">
+          <source>NV8 Exclude from Sales Stats</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension NV8 Resource - Field NV8 Exclude from Sales Stats - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4028643398 - Field 2723464084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 348912950">
+          <source>NV8 Sales Type</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension NV8 Resource - Field NV8 Sales Type - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4028643398 - Field 2723464084 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 348912950">
+          <source>Revenue,Freight,Surcharge,Minimum Charge,Other</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension NV8 Resource - Field NV8 Sales Type - Property OptionCaption</note>
         </trans-unit>
         <trans-unit id="TableExtension 11107403 - Field 1986123989 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2925931323">
           <source>NV8 Created By</source>

@@ -6,6 +6,7 @@ tableextension 50043 "NV8 Item Unit of Measure" extends "Item Unit of Measure" /
         {
             Description = 'EC1.01';
             DataClassification = CustomerContent;
+            Caption = 'Round Down';
         }
     }
 }

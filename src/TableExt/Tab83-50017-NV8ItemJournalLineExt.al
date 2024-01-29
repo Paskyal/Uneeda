@@ -13,11 +13,13 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             Description = 'UE-657';
             DataClassification = CustomerContent;
+            Caption = 'Web';
         }
         field(55000; "NV8 Partial"; Boolean)
         {
             Description = 'ECL';
             DataClassification = CustomerContent;
+            Caption = 'Partial';
             // TODO PAP
             // trigger OnValidate() 
             // begin
@@ -28,6 +30,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             Description = 'ECL';
             DataClassification = CustomerContent;
+            Caption = 'Complete';
 
             // trigger OnValidate()
             // begin
@@ -78,6 +81,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Remaining On Hand';
         }
         field(68051; "NV8 Quantity On Journal"; Decimal)
         {
@@ -88,12 +92,14 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Quantity On Journal';
         }
         field(68052; "NV8 Quantity After Post"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Quantity After Post';
         }
         field(68053; "NV8 Quantity On Hand"; Decimal)
         {
@@ -102,24 +108,28 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Quantity On Hand';
         }
         field(68060; "NV8 FG Unit Width Inches"; Decimal)
         {
             CalcFormula = lookup("Production Order"."NV8 Unit Width Inches" where("No." = field("Order No.")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'FG Unit Width Inches';
         }
         field(68061; "NV8 FG Qty"; Decimal)
         {
             CalcFormula = lookup("Production Order".Quantity where("No." = field("Order No.")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'FG Qty';
         }
         field(68062; "NV8 FG Config"; Code[100])
         {
             CalcFormula = lookup("Production Order"."NV8 Configurator No." where("No." = field("Order No.")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'FG Config';
         }
         field(68090; "NV8 Allocated Raw Material Qty"; Decimal)
         {
@@ -128,10 +138,12 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Allocated Raw Material Qty';
         }
         field(68100; "NV8 Green To Follow"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Green To Follow';
 
             // trigger OnValidate()
             // begin
@@ -142,19 +154,23 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         field(68101; "NV8 Allocation ID"; Integer)
         {
             DataClassification = CustomerContent;
+            Caption = 'Allocation ID';
         }
         field(68110; "NV8 Roll ID"; Code[20])
         {
             DataClassification = CustomerContent;
+            Caption = 'Roll ID';
         }
         field(68901; "NV8 OldRes"; Integer)
         {
             DataClassification = CustomerContent;
+            Caption = 'OldRes';
         }
         field(68902; "NV8 MFG Raw Material"; Code[20])
         {
             TableRelation = "Production Order"."No." where(Status = const(Released));
             DataClassification = CustomerContent;
+            Caption = 'MFG Raw Material';
 
             // trigger OnValidate()
             // var
@@ -193,29 +209,35 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             OptionCaption = 'Purchase,Sale,Positive Adjmt.,Negative Adjmt.,Transfer,Consumption,Output';
             OptionMembers = Purchase,Sale,"Positive Adjmt.","Negative Adjmt.",Transfer,Consumption,Output;
             DataClassification = CustomerContent;
+            Caption = 'From Entry Type';
         }
         field(84011; "NV8 Bin Type"; Option)
         {
             OptionMembers = PutAway,Staging,Inactive;
             DataClassification = CustomerContent;
+            Caption = 'Bin Type';
         }
         field(85001; "NV8 FilePro No."; Code[100])
         {
             DataClassification = CustomerContent;
+            Caption = 'FilePro No.';
         }
         field(85003; "NV8 Skid No."; Text[30])
         {
             DataClassification = CustomerContent;
+            Caption = 'Skid No.';
         }
         field(85008; "NV8 Bin Sorting"; Code[30])
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Bin Sorting';
         }
         field(85016; "NV8 Jumbo Prod. Order"; Code[20])
         {
             TableRelation = "Production Order"."No." where(Status = const(Released));
             DataClassification = CustomerContent;
+            Caption = 'Jumbo Prod. Order';
         }
         field(85017; "NV8 Jumbo Prod. Order Line No."; Integer)
         {
@@ -223,19 +245,23 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             TableRelation = "Prod. Order Line"."Line No." where(Status = const(Released),
                                                                  "Prod. Order No." = field("NV8 Jumbo Prod. Order"));
             DataClassification = CustomerContent;
+            Caption = 'Jumbo Prod. Order Line No.';
         }
         field(85018; "NV8 Jumbo Comment"; Text[80])
         {
             DataClassification = CustomerContent;
+            Caption = 'Jumbo Comment';
         }
         field(85019; "NV8 Jumbo Pull"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Jumbo Pull';
         }
         field(85020; "NV8 Bin Location"; Code[20])
         {
             TableRelation = "NV8 Bin Location".Code where("Location Code" = field("Location Code"));
             DataClassification = CustomerContent;
+            Caption = 'Bin Location';
 
             // trigger OnValidate()
             // begin
@@ -250,37 +276,44 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             TableRelation = "NV8 Bin Location".Code where("Location Code" = field("New Location Code"));
             DataClassification = CustomerContent;
+            Caption = 'New Bin Location';
         }
         field(85022; "NV8 From Bin Location"; Code[20])
         {
             CalcFormula = lookup("Item Ledger Entry"."NV8 Bin Location" where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'From Bin Location';
         }
         field(85023; "NV8 From FIFO Code"; Code[20])
         {
             CalcFormula = lookup("Item Ledger Entry"."NV8 FIFO Code" where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'From FIFO Code';
         }
         field(85024; "NV8 From Skid No."; Text[30])
         {
             CalcFormula = lookup("Item Ledger Entry"."NV8 Skid No." where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'From Skid No.';
         }
         field(85025; "NV8 New Item No."; Code[20])
         {
             TableRelation = Item;
             DataClassification = CustomerContent;
+            Caption = 'New Item No.';
         }
         field(85026; "NV8 FIFO Code"; Code[7])
         {
             DataClassification = CustomerContent;
+            Caption = 'FIFO Code';
         }
         field(85027; "NV8 FIFO Date"; Date)
         {
             DataClassification = CustomerContent;
+            Caption = 'FIFO Date';
 
             // trigger OnValidate()
             // begin
@@ -294,6 +327,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Bin Pieces Remaining';
         }
         field(85029; "NV8 Bin Quantity Remaining"; Decimal)
         {
@@ -302,29 +336,34 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Bin Quantity Remaining';
         }
         field(85030; "NV8 From FIFO Date"; Date)
         {
             CalcFormula = lookup("Item Ledger Entry"."NV8 FIFO Date" where("Entry No." = field("Applies-to Entry")));
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'From FIFO Date';
         }
         field(85031; "NV8 Transfer-To Locaiton Code"; Code[10])
         {
             Description = 'UE-476';
             TableRelation = Location;
             DataClassification = CustomerContent;
+            Caption = 'Transfer-To Locaiton Code';
         }
         field(85040; "NV8 Material Type"; Option)
         {
             OptionCaption = ' ,Jumbo,Short Remnant,Narrow Remnant,Scrap';
             OptionMembers = " ",Jumbo,"Short Remnant","Narrow Remnant",Scrap;
             DataClassification = CustomerContent;
+            Caption = 'Material Type';
         }
         field(85050; "NV8 Pieces"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
 
             // trigger OnValidate()
             // begin
@@ -342,6 +381,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Inches';
 
             // trigger OnValidate()
             // begin
@@ -358,6 +398,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             BlankZero = true;
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
 
             //     trigger OnValidate()
             //     begin
@@ -369,6 +410,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             BlankZero = true;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
 
             // trigger OnValidate()
             // begin
@@ -382,11 +424,13 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             Description = 'Width / 36 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85055; "NV8 Unit Width Code"; Code[10])
         {
             CharAllowed = '09';
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Code';
 
             // trigger OnValidate()
             // begin
@@ -403,13 +447,14 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Text';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Total Length meters';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -421,7 +466,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Cost Per meter';
             trigger OnValidate()
             begin
                 if "NV8 Unit Width Inches" <> 0 then
@@ -434,6 +479,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Pieces';
         }
         field(85062; "NV8 Remaining Length meters"; Decimal)
         {
@@ -441,6 +487,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Description = 'Error on decimals';
             DataClassification = CustomerContent;
+            Caption = 'Remaining Length meters';
         }
         field(85064; "NV8 Total Area m2"; Decimal)
         {
@@ -448,6 +495,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85065; "NV8 Remaining Area m2"; Decimal)
         {
@@ -455,15 +503,18 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             Description = 'Error on decimals';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Remaining Area m2';
         }
         field(85066; "NV8 Description 2"; Text[50])
         {
             Description = 'UE-443';
             DataClassification = CustomerContent;
+            Caption = 'Description 2';
         }
         field(85069; "NV8 Allocator Comment"; Text[80])
         {
             DataClassification = CustomerContent;
+            Caption = 'Allocator Comment';
         }
         field(85100; "NV8 Configurator No."; Code[100])
         {
@@ -472,6 +523,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             //TestTableRelation = false;
             ValidateTableRelation = false;
             DataClassification = CustomerContent;
+            Caption = 'Configurator No.';
 
             // trigger OnValidate()
             // begin
@@ -582,46 +634,55 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             TableRelation = "NV8 Configurator Shape";
             DataClassification = CustomerContent;
+            Caption = 'Shape';
         }
         field(85120; "NV8 Material"; Code[10])
         {
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Material';
         }
         field(85121; "NV8 Original Material"; Code[10])
         {
             DataClassification = CustomerContent;
+            Caption = 'Original Material';
         }
         field(85122; "NV8 Subst. Material"; Code[10])
         {
             Editable = false;
             TableRelation = "NV8 Configurator Material";
             DataClassification = CustomerContent;
+            Caption = 'Subst. Material';
         }
         field(85170; "NV8 Specification"; Code[10])
         {
             TableRelation = "NV8 Configurator Specification";
             DataClassification = CustomerContent;
+            Caption = 'Specification';
         }
         field(85180; "NV8 Grit"; Code[10])
         {
             TableRelation = "NV8 Configurator Grit";
             DataClassification = CustomerContent;
+            Caption = 'Grit';
         }
         field(85190; "NV8 Joint"; Code[10])
         {
             TableRelation = "NV8 Configurator Joint";
             DataClassification = CustomerContent;
+            Caption = 'Joint';
         }
         field(85200; "NV8 Reserved Output"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Reserved Output';
         }
         field(85201; "NV8 Reservation Application"; Integer)
         {
             DataClassification = CustomerContent;
+            Caption = 'Reservation Application';
         }
         field(85202; "NV8 Reservation Applied Qty."; Decimal)
         {
@@ -631,32 +692,39 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Reservation Applied Qty.';
         }
         field(85250; "NV8 Apply Only To Correct Width"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Apply Only To Correct Width';
         }
         field(85251; "NV8 Apply Only To Correct Length"; Boolean)
         {
             Description = 'Not used';
             DataClassification = CustomerContent;
+            Caption = 'Apply Only To Correct Length';
         }
         field(85290; "NV8 Re-Cut"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Re-Cut';
         }
         field(85291; "NV8 Re-Cut No."; Code[20])
         {
             TableRelation = User;
             DataClassification = CustomerContent;
+            Caption = 'Re-Cut No.';
         }
         field(85300; "NV8 Roll Allocation Line"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Roll Allocation Line';
         }
         field(85310; "NV8 Rem. Split Roll"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Rem. Split Roll';
         }
         field(85311; "NV8 Rem. Split Pieces"; Decimal)
         {
@@ -666,6 +734,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Rem. Split Pieces';
 
             // trigger OnValidate()
             // begin
@@ -680,6 +749,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Rem. Split Total Length meters';
 
             // trigger OnValidate()
             // begin
@@ -694,6 +764,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 0 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Rem. Split Total Area m2';
 
             // trigger OnValidate()
             // begin
@@ -704,6 +775,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             OptionMembers = " ","Sale Order","Transfer Order";
             DataClassification = CustomerContent;
+            Caption = 'Allocated for Type';
         }
         field(85326; "NV8 Allocated for Code"; Code[20])
         {
@@ -711,6 +783,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             else
             if ("NV8 Allocated for Type" = const("Transfer Order")) Location.Code;
             DataClassification = CustomerContent;
+            Caption = 'Allocated for Code';
         }
         field(85328; "NV8 Allocated for Order No"; Code[20])
         {
@@ -718,6 +791,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             else
             if ("NV8 Allocated for Type" = const("Transfer Order")) "Transfer Header"."No.";
             DataClassification = CustomerContent;
+            Caption = 'Allocated for Order No';
         }
         field(85411; "NV8 FG Cost ($/UOM)"; Decimal)
         {
@@ -726,13 +800,14 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
             DecimalPlaces = 2 : 5;
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'FG Cost ($/UOM)';
         }
         field(85500; "NV8 Pieces (Calculated)"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Editable = false;
             DataClassification = CustomerContent;
-
+            Caption = 'Pieces (Calculated)';
             trigger OnValidate()
             begin
                 Validate("NV8 Pieces (Phys. Inventory)");
@@ -742,7 +817,7 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         {
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Pieces (Phys. Inventory)';
             trigger OnValidate()
             begin
                 if "NV8 Roll ID" <> '' then
@@ -758,28 +833,34 @@ tableextension 50017 "NV8 Item Journal Line" extends "Item Journal Line" //83
         field(85550; "NV8 Found Partial Box"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Found Partial Box';
         }
         field(85551; "NV8 Phys. Posting Description"; Text[50])
         {
             DataClassification = CustomerContent;
+            Caption = 'Phys. Posting Description';
         }
         field(85552; "NV8 Found Item"; Boolean)
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Found Item';
         }
         field(85553; "NV8 Recounted by Supervisor"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Recounted by Supervisor';
         }
         field(85554; "NV8 Team #"; Integer)
         {
             DataClassification = CustomerContent;
+            Caption = 'Team #';
         }
         field(90001; "NV8 Lot Group Code"; Code[20])
         {
             Description = 'EC1.LOT1.01';
             DataClassification = CustomerContent;
+            Caption = 'Lot Group Code';
         }
     }
     procedure "NV8 SkipCheck"()

@@ -6,7 +6,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'No Charge (Sample)';
             trigger OnValidate()
             begin
                 if "NV8 No Charge (Sample)" = true then
@@ -22,12 +22,13 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             OptionCaption = 'Revenue,Freight,Surcharge,Minimum Charge,Other';
             OptionMembers = Revenue,Freight,Surcharge,"Minimum Charge",Other;
             DataClassification = CustomerContent;
+            Caption = 'Sales Type';
         }
         field(50002; "NV8 Sales Price Code"; Code[10])
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Sales Price Code';
             trigger OnValidate()
             begin
                 UpdateUnitPrice(FieldNo("NV8 Sales Price Code"));
@@ -38,7 +39,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Description = 'EC1.SAL1.01';
             TableRelation = "NV8 Item Catalog Table"."Catalog No.";
             DataClassification = CustomerContent;
-
+            Caption = 'Catalog No.';
             trigger OnValidate()
             var
                 ItemCatalog: Record "NV8 Item Catalog Table";
@@ -54,7 +55,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Description = 'EC1.SAL1.01';
             TableRelation = "NV8 Configurator Item"."Configurator No.";
             DataClassification = CustomerContent;
-
+            Caption = 'Configurator No.';
             trigger OnValidate()
             var
                 ConfigItem: Record "NV8 Configurator Item";
@@ -159,7 +160,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Original Ordered Quantity';
             trigger OnValidate()
             begin
                 //>>UE-105
@@ -171,16 +172,19 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Original Ordered Pieces';
         }
         field(50007; "NV8 Original Unit Length (Meters)"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Original Unit Length (Meters)';
         }
         field(50008; "NV8 Pieces"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -192,6 +196,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Unit Length (Meters)';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -207,7 +212,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             OptionCaption = 'Manual,List,Valid';
             OptionMembers = Manual,List,Valid;
             DataClassification = CustomerContent;
-
+            Caption = 'Price Type';
             trigger OnValidate()
             begin
                 //IF "Price Type" = "Price Type"::Manual THEN
@@ -218,12 +223,13 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Manual Price Entered By';
         }
         field(50012; "NV8 Manual Discount %"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Manual Discount %';
             trigger OnValidate()
             begin
                 if "Allow Line Disc." then
@@ -234,12 +240,13 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Exclude from Sales Stats';
         }
         field(50014; "NV8 Pieces to Ship"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Pieces to Ship';
             trigger OnValidate()
             begin
                 //UE-282
@@ -251,7 +258,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
-
+            Caption = 'Pieces to Invoice';
             trigger OnValidate()
             begin
                 //UE-282
@@ -263,26 +270,31 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces Shipped';
         }
         field(50017; "NV8 Pieces Invoiced"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Pieces Invoiced';
         }
         field(50018; "NV8 Meters Shipped"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Meters Shipped';
         }
         field(50019; "NV8 Meters Invoiced"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Meters Invoiced';
         }
         field(50020; "NV8 Fully Shipped"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Fully Shipped';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -313,47 +325,55 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'On Hold';
         }
         field(50022; "NV8 Consignment Order Line"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Consignment Order Line';
         }
         field(50023; "NV8 Consignment Quantity"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Consignment Quantity';
         }
         field(50024; "NV8 Consignment Pieces"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Consignment Pieces';
         }
         field(50025; "NV8 Consignment Length (Meters)"; Decimal)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Consignment Length (Meters)';
         }
         field(50027; "NV8 Ignore Shipping Advice"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Ignore Shipping Advice';
         }
         field(50028; "NV8 Price Hold"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Price Hold';
         }
         field(50029; "NV8 Item Hold"; Boolean)
         {
             Description = 'EC1.SAL1.01';
             DataClassification = CustomerContent;
+            Caption = 'Item Hold';
         }
         field(50030; "NV8 Special Price Code"; Code[10])
         {
             Description = 'Jira-59';
             DataClassification = CustomerContent;
-
+            Caption = 'Special Price Code';
             trigger OnValidate()
             begin
                 //EC1.01  Jira 131
@@ -364,7 +384,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Description = 'UE-482';
             DataClassification = CustomerContent;
-
+            Caption = 'Return Pieces to Receive';
             trigger OnValidate()
             begin
                 //>> UE-482
@@ -379,18 +399,21 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Description = 'UE-482';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Return Pieces Received';
         }
         field(50035; "NV8 Return Meters Received"; Decimal)
         {
             Description = 'UE-482';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Return Meters Received';
         }
         field(50040; "NV8 Original Ordered Amount"; Decimal)
         {
             DecimalPlaces = 2 : 2;
             Description = 'UE-105';
             DataClassification = CustomerContent;
+            Caption = 'Original Ordered Amount';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -403,10 +426,12 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             DataClassification = CustomerContent;
             Description = 'CAS-37795-W2P2K8';
+            Caption = 'Blanket';
         }
         field(50120; "NV8 Prod. Order Created"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'Prod. Order Created';
         }
         field(50125; "NV8 Prod. Order Status"; Option)
         {
@@ -421,6 +446,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             TableRelation = "Production Order"."No." where("No." = field("NV8 Prod. Order No."),
                                                             Status = filter("Firm Planned" | Released));
             DataClassification = CustomerContent;
+            Caption = 'Prod. Order No.';
         }
         field(50200; "NV8 External Document No."; Code[35])
         {
@@ -428,6 +454,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
                                                                                "No." = field("Document No.")));
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'External Document No.';
         }
         field(50201; "NV8 Created On"; Date)
         {
@@ -435,12 +462,14 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
                                                                     "No." = field("Document No.")));
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'Created On';
         }
         field(50202; "NV8 Prod Order Scheduled Date"; Date)
         {
             CalcFormula = lookup("Production Order"."NV8 Scheduled Date" where("No." = field("NV8 Prod. Order No.")));
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'Prod Order Scheduled Date';
         }
         field(50203; "NV8 Created By"; Code[50])
         {
@@ -448,6 +477,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
                                                                     "No." = field("Document No.")));
             Description = 'UNE-217';
             FieldClass = FlowField;
+            Caption = 'Created By';
         }
         field(68055; "NV8 Jumbo Raw Material Status"; Option)
         {
@@ -457,6 +487,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             OptionMembers = ,Normal,Low,"Jumbo Out",Out,Discontinued;
+            Caption = 'Jumbo Raw Material Status';
         }
         field(68056; "NV8 Material Reviewed"; Boolean)
         {
@@ -465,6 +496,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "Production Order"."NV8 Material Reviewed" where("No." = field("NV8 Prod. Order No."));
+            Caption = 'Material Reviewed';
         }
         field(85051; "NV8 Unit Width Inches"; Decimal)
         {
@@ -473,6 +505,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             MaxValue = 999;
             MinValue = 0;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Inches';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -489,6 +522,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             BlankZero = true;
             DecimalPlaces = 2 : 5;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length meters';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -501,6 +535,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             BlankZero = true;
             DataClassification = CustomerContent;
+            Caption = 'Unit Length Inches';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -514,11 +549,13 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Description = 'Width / 39 x Length';
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Area m2';
         }
         field(85055; "NV8 Unit Width Code"; Code[10])
         {
             CharAllowed = '09';
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Code';
             // TODO PAP
             // trigger OnValidate()
             // begin
@@ -539,13 +576,14 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
         {
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Unit Width Text';
         }
         field(85058; "NV8 Total Length meters"; Decimal)
         {
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
-
+            Caption = 'Total Length meters';
             trigger OnValidate()
             begin
                 TestField("NV8 Pieces");
@@ -561,7 +599,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             AutoFormatType = 2;
             BlankZero = true;
             DataClassification = CustomerContent;
-
+            Caption = 'Price Per meter';
             trigger OnValidate()
             begin
                 if "NV8 Unit Width Inches" <> 0 then
@@ -574,6 +612,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             DecimalPlaces = 2 : 5;
             Editable = false;
             DataClassification = CustomerContent;
+            Caption = 'Total Area m2';
         }
         field(85101; "NV8 Shape"; Code[10])
         {
@@ -581,6 +620,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Shape";
+            Caption = 'Shape';
         }
         field(85102; "NV8 Material"; Code[10])
         {
@@ -588,6 +628,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Material";
+            Caption = 'Material';
         }
         field(85107; "NV8 Specification"; Code[10])
         {
@@ -595,6 +636,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Specification";
+            Caption = 'Specification';
         }
         field(85108; "NV8 Grit"; Code[10])
         {
@@ -602,6 +644,7 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Grit";
+            Caption = 'Grit';
         }
         field(85109; "NV8 Joint"; Code[10])
         {
@@ -609,18 +652,21 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "NV8 Configurator Joint";
+            Caption = 'Joint';
         }
         field(89113; "NV8 Original Total Length Meters"; Decimal)
         {
             DecimalPlaces = 0 : 5;
             Description = 'RSQ';
             DataClassification = CustomerContent;
+            Caption = 'Original Total Length Meters';
         }
         field(89114; "NV8 Original Unit LengthMeters_old"; Decimal)
         {
             DecimalPlaces = 2 : 5;
             Description = 'RSQ';
             DataClassification = CustomerContent;
+            Caption = 'Original Unit LengthMeters_old';
         }
         field(90041; "NV8 Scannded Work Center Desc"; Text[100])
         {
@@ -628,12 +674,14 @@ tableextension 50010 "NV8 Sales Line" extends "Sales Line" //37
             Description = 'UNE-152';
             Editable = false;
             FieldClass = FlowField;
+            Caption = 'Scannded Work Center Desc';
         }
         field(90042; "NV8 Scanned Work Center"; Code[20])
         {
             DataClassification = CustomerContent;
             Description = 'UNE-152';
             Editable = false;
+            Caption = 'Scanned Work Center';
         }
     }
 }
